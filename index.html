@@ -4,9 +4,11 @@
         <title>Find your major</title>
         <meta charset="UTF-8">
         <meta name="author" content="Khoa Luong, Erin Chang">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css">
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
         <link rel="stylesheet" href="css/style.css">
         <link href="https://fonts.googleapis.com/css?family=Encode+Sans|Open+Sans" rel="stylesheet">
-
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
     </head>
     <body>
         <div class="body-flex">
@@ -16,70 +18,21 @@
                         <img src="../img/logo.png">
                     </div>
                     <ul>
-                        <li><a href="#home" class="active">Dashboard</a></li>
-                        <li><a href="#courses">Find Courses</a></li>
-                        <li><a href="#courses">Find Programs</a></li>
-                        <li><a href="#profile">Profile</a></li>
+                        <li><a href="#home" class="active"><i class="fas fa-columns" aria-hidden="true"><span>&nbsp;&nbsp;</span></i>Dashboard</a></li>
+                        <li><a href="#courses"><i class="fas fa-book-reader" aria-hidden="true"></i><span>&nbsp;&nbsp;</span>Courses</a></li>
+                        <li><a href="index2.html"><i class="fas fa-graduation-cap" aria-hidden="true"></i><span>&nbsp;</span>Programs</a></li>
+                        <li><a href="#profile"><i class="fas fa-user-alt" aria-hidden="true"></i><span>&nbsp;&nbsp;</span>Profile</a></li>
                     </ul>
                 </nav>
             </div>
             <div id="element-2">
                 <header>
-                    <h1>Dashboard</h1>
+                    <!-- <div class="hamburger-menu"><a href="#"><i class="fa fa-bars" aria-label="menu"></i></a></div> -->
+                    <h1><div class="hamburger-menu"><a href="#"><i class="fa fa-bars" aria-label="menu"></i></a></div>Dashboard<button><i class="fas fa-sign-out-alt" aria-label="Log out"></i></button></h1>
                 </header>
                 <main>
                     <div class="flex-container">
-                        <section class="subSection">
-                            <h2>Current Courses</h2>
-                            <div class="card">
-                                <h3>INFO 201</h3>
-                                <p>I&S</p>
-                            </div>
-                            <div class="card">
-                                    <h3>INFO 200</h3>
-                                    <p>I&S</p>
-                            </div>
-                            <div class="card">
-                                    <h3>CSE 142</h3>
-                                    <p>NW</p>
-                            </div>
-                            <div class="card">
-                                    <h3>CSE 143</h3>
-                                    <p>NW</p>
-                            </div>
-                            <div class="card">
-                                <h3>ECON 200</h3>
-                                <p>NW</p>
-                            </div>
-                            <div class="card">
-                                    <h3>ENGL 131</h3>
-                                    <p>NW</p>
-                            </div>
-                        </section>
-                        <section class="subSection">
-                            <h2>Future Courses</h2>
-                            <div class="card">
-                                <h3>MATH 126</h3>
-                                <p>NW</p>
-                            </div>
-                            <div class="card">
-                                    <h3>PSYCH 210</h3>
-                                    <p>I&S</p>
-                            </div>
-                            <div class="card">
-                                    <h3>INFO 340</h3>
-                                    <p>NW</p>
-                            </div>
-                            <div class="card">
-                                    <h3>CSE 373</h3>
-                                    <p>NW</p>
-                            </div>
-                            <div class="card">
-                                <h3>INFO 102</h3>
-                                <p>I&S DIV</p>
-                            </div>
-                        </section>
-                        <section class="subSection">
+                    <section class="subSection">
                             <div class="profile">
                                 <h2>Student Profile</h2>
                                 <div class="card">
@@ -103,20 +56,95 @@
                                 </div>
                             </div>
                         </section>
+                        <section class="subSection">
+                            <h2>Current Courses</h2>
+                            <div class="card">
+                                <h3>INFO 201</h3>
+                                <p>AU18 | I&S</p>
+                            </div>
+                            <div class="card">
+                                    <h3>INFO 200</h3>
+                                    <p>AU18 | I&S</p>
+                            </div>
+                            <div class="card">
+                                    <h3>CSE 142</h3>
+                                    <p>AU17 | NW</p>
+                            </div>
+                            <div class="card">
+                                    <h3>CSE 143</h3>
+                                    <p>AU18 | NW</p>
+                            </div>
+                            <div class="card">
+                                <h3>ECON 200</h3>
+                                <p>AU17 | NW</p>
+                            </div>
+                            <div class="card">
+                                    <h3>ENGL 131</h3>
+                                    <p>AU17 | C</p>
+                            </div>
+                            <div class="card" class="expand">
+                                <p>Click to reveal more</p>
+                            </div>
+                        </section>
+                        <section class="subSection">
+                            <h2>Future Courses</h2>
+                            <div class="card">
+                                <h3>MATH 126</h3>
+                                <p>WIN19 | NW</p>
+                            </div>
+                            <div class="card">
+                                    <h3>PSYCH 210</h3>
+                                    <p>WIN19 | I&S</p>
+                            </div>
+                            <div class="card">
+                                    <h3>INFO 340</h3>
+                                    <p>SPR19 | NW</p>
+                            </div>
+                            <div class="card">
+                                    <h3>CSE 373</h3>
+                                    <p>WIN19 | NW</p>
+                            </div>
+                            <div class="card">
+                                <h3>INFO 360</h3>
+                                <p>SPR19 | VLPA</p>
+                            </div>
+                            <div class="card">
+                                <h3>INFO 350</h3>
+                                <p>SPR19 | I&S W</p>
+                            </div>
+                            <div class="card" class="expand">
+                                <p>Click to reveal more</p>
+                            </div>
+                        </section>
                     </div>
-                    <section>
-                        <h2>Recommended Events</h2>
+                    <section class="schedule">
+                        <h2>Recommended Courses</h2>
                         <div class="card">
-                            <h3>INFO 201</h3>
-                            <p>I&S</p>
+                            <h3>INFO 300</h3>
+                            <p>Required Course for Informatics Major</p>
                         </div>
                         <div class="card">
-                            <h3>INFO 201</h3>
-                            <p>I&S</p>
+                            <h3>ART 190</h3>
+                            <p>Recommended VLPA Course</p>
                         </div>
                         <div class="card">
-                            <h3>INFO 201</h3>
-                            <p>I&S</p>
+                            <h3>INFO 362</h3>
+                            <p>Recommended for HCI Track</p>
+                        </div>
+                    </section>
+                    <section class="schedule">
+                        <h2>Recommended Programs</h2>
+                        <div class="card">
+                            <h3>Bachelor of Arts in Geography</h3>
+                            <p>You share 15 credits with this program</p>
+                        </div>
+                        <div class="card">
+                            <h3>Minor in Geography</h3>
+                            <p>You share 15 credits with this program</p>
+                        </div>
+                        <div class="card">
+                            <h3>Bachelor of Science in Computer Science</h3>
+                            <p>You share 30 credits with this program</p>
                         </div>
                     </section>
                 </main>
