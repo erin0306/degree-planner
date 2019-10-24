@@ -34,11 +34,18 @@ h2 {
     font-weight: 100;
     color: #4e3199;
     font-size: 1.5em;
-    text-align: center;
+}
+
+.subSection h2 {
+  text-align: center;
 }
 
 header {
   background-color: white;
+}
+
+main {
+  padding-left: 1rem;
 }
 
 p {
@@ -91,8 +98,11 @@ p {
 .card {
   padding: 5px;
   margin-bottom: 10px;
-  text-align: center;
   border-top: .5px solid rgb(213, 213, 213);
+}
+
+.subSection .card {
+  text-align: center;
 }
 
 .card p {
