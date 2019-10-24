@@ -23,11 +23,22 @@ body {
 
 h1 {
     font-family: 'Encode Sans', sans-serif;
-    margin-left: 1rem;
-    padding-bottom: 0.5rem;
-    padding: .5rem;
+    /* padding-bottom: 0.5rem; */
+    padding: .8rem .8em;
     font-size: 2em;
     color: #4e3199;
+    display: flex;
+    justify-content: space-between;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.16);
+}
+button {
+    height: 2.5rem;
+    font-size: 1.5rem;
+    /* padding: .5rem; */
+    border: 0;
+}
+.fa-sign-out-alt {
+  color: #4e3199;
 }
 
 h2 {
@@ -38,7 +49,7 @@ h2 {
 }
 
 header {
-  background-color: white;
+  background-color: #ffffff;
 }
 
 p {
@@ -67,7 +78,9 @@ main {
 
 #element-1 {
   padding: 1rem;
-  background-color: #4e3199;
+  background-image: linear-gradient( #53369e, #4d3196, #2a1366);
+  /* #4e3199; */
+
   align-content: center;
   height: 100%;
 }
@@ -93,8 +106,8 @@ main {
 }
 
 .card {
-  padding: 5px;
-  margin-bottom: 10px;
+  padding-top: 10px;
+  margin-top: 10px;
   text-align: center;
   border-top: .5px solid rgb(213, 213, 213);
 }
@@ -135,13 +148,14 @@ nav li a {
 }
   
 nav li a:hover {
-    background-color: #472a8f;
-    color: white;
+    background-color: #422688;
+    border-radius: .3em;
+    border: .3px solid #000000;
 }
 
 .active {
-    background-color: #5f44a3;
-    color: white;
+    background-color: #6046a4;
+    border-radius: .3em;
 }
 
 
