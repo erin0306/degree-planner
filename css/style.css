@@ -39,9 +39,10 @@ button {
     border: 0;
     background-color: white;
 }
-.fa-sign-out-alt {
+.fa-sign-out-alt, .fa-bars  {
   color: #4e3199;
 }
+
 
 h2 {
     font-weight: 100;
@@ -88,6 +89,7 @@ form input[type=text] {
   float: left;
   width: 80%;
   background: #ffffff;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.16);
 }
 
 form button {
@@ -101,6 +103,7 @@ form button {
   border: 1px solid grey;
   border-left: none;
   cursor: pointer;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.16);
 }
 
 form button:hover {
@@ -130,10 +133,6 @@ form::after {
 
   align-content: center;
   height: 100%;
-  
-}
-
-#element-1 {
   display: none;
 }
 
@@ -254,64 +253,3 @@ nav li a:hover {
     font-size: 1.17em;
   }
 }
-
-/* 
-* {
-    box-sizing: border-box;
-  }
-  
-  body {
-    font-family: "Lato", "Helvetica Neue", "Helvetica", sans-serif;
-    margin: 0;
-  
-    display: flex;
-  
-    height: inherit;
-    flex-direction: column;
-  }
-  main {
-    flex: 1;
-  }
-  
-  .container {
-    display: flex; 
-    height: 100%;
-    /* flex */
-  /* }
-  .first-col {
-    flex-basis: 240px;
-  }
-  .sec-col {
-    flex: 1;
-    background-color: #eee;
-  }
-  .third-col {
-    flex-basis: 180px;
-    flex-grow: 0;
-    flex-shrink: 0;
-  }
-  .first-col, .sec-col, .third-col {
-    padding: 1em;
-  }
-  .sec-con {
-    display: flex; 
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-  .card {
-    flex: 0 0 250px;
-    background-color: white;
-    margin: .5rem;
-    border-radius: 10px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.16), 0 1px 3px rgba(0, 0, 0, 0.23)
-  }
-  .text {
-    padding: .5rem 1rem;
-  }
-  img {
-    border-radius: 10px 10px 0px 0px;
-  }
-  
-  html{
-    height: 100%;
-  } */ */
