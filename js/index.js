@@ -1,49 +1,47 @@
 'use-strict';
 
-const SEATTLE_START_INDEX = 0;
-const SEATTLE_END_INDEX = 1233;
+const SEATTLE_START_INDEX = 1237;
+const SEATTLE_END_INDEX = 15406;
+const QUERY = "./data/uwcourses.csv";
 
-// let searchButton = qs(".searchButton");
 
-// searchButton.addEventListener("click", searchData);
-
-// function searchData() {
-//     d3.csv("./data/uwcourses.csv")
-//     .then(function(data) {
-//     wrangleData(data);
-//     });
-// }
-
-d3.csv("./data/uwcourses.csv")
-.then(function(data) {
-    wrangleData(data);
+let searchButton = qs(".searchButton");
+searchButton.addEventListener('click', function(event) {
+    event.preventDefault(); //don't do normal behavior
+    event.stopPropagation(); //don't pass the event to parents
+    d3.csv("./data/uwcourses.csv")
+    .then(wrangleData);
+    return false; //don't do normal behavior OR propagate! (for IE)
 });
 
 function wrangleData(data) {
-    let newData = data.slice(SEATTLE_START_INDEX, SEATTLE_END_INDEX);
+    filterData(data.slice(SEATTLE_START_INDEX, SEATTLE_END_INDEX));
+}
 
-    let firstIndex = findFirst(newData, 0, newData.length - 1, "B BIO", "Department");
-    let endIndex = findLast(newData, 0, newData.length - 1, "B BIO", "Department");
+function filterData(data) {
+    console.log(data);
+    let firstIndex = findFirst(data, 0, data.length - 1, "INFO", "Department");
+    let endIndex = findLast(data, 0, data.length - 1, "INFO", "Department");
 
-   printData(newData, firstIndex, endIndex);
+    printData(data, firstIndex, endIndex);
 }
 
 function printData(data, first, end) {
-    console.log("lul");
     let recommendedSection = qs(".searchResult");
     recommendedSection.innerHTML = "<h2> Recommended Courses </h2>";
-
-    for (let i = first; i <= end; i++) {
-        let card = document.createElement("div");
-        card.classList.add("clickable");
-        card.classList.add("card");
-        let name = document.createElement("h3");
-        name.innerText = data[i]["Department"] + " " + data[i]["Code"] + " " + data[i]["Name"];
-        let reason = document.createElement("p");
-        reason.innerText = "Because you searched for 'CSS'";
-        card.appendChild(name);
-        card.appendChild(reason);
-        recommendedSection.appendChild(card);
+    if (first != -1 && end != -1) {
+        for (let i = first; i <= end; i++) {
+            let card = document.createElement("div");
+            card.classList.add("clickable");
+            card.classList.add("card");
+            let name = document.createElement("h3");
+            name.innerText = data[i]["Department"] + " " + data[i]["Code"] + " " + data[i]["Name"];
+            let reason = document.createElement("p");
+            reason.innerText = "Because you searched for 'CSS'";
+            card.appendChild(name);
+            card.appendChild(reason);
+            recommendedSection.appendChild(card);
+        }
     }
 }
 
