@@ -10,11 +10,6 @@
         <link href="https://fonts.googleapis.com/css?family=Encode+Sans|Open+Sans" rel="stylesheet">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
         <link rel="icon" type="image/png" href="img/favicon.png">
-        <!--Script-->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.3/fetch.min.js"></script>
-        <script src="https://d3js.org/d3-dsv.v1.min.js"></script>
-        <script src="https://d3js.org/d3-fetch.v1.min.js"></script>
-        <script src="js/index.js"></script>
     </head>
     <body>
         <div class="body-flex">
@@ -41,8 +36,8 @@
                     <section class="schedule">
                         <h2>Find Recommended Courses</h2>
                             <form class="searchBox" role="search">
-                                <input type="text" title="searchBox" placeholder="Search...">
-                                <button><i class="fa fa-search" aria-label="search"></i></button>
+                                <input type="text" title="searchBox" placeholder="Enter a course code or department code...(e.g INFO or INFO 200)">
+                                <button class="searchButton"><i class="fa fa-search" aria-label="search"></i></button>
                             </form>
                         </section>
                     <div class="flex-container">
@@ -70,8 +65,7 @@
                         </section>
                         
                     </div>
-                    
-                    <section class="schedule">
+                    <section class="schedule searchResult">
                         <h2>Recommended Courses</h2>
                         <div class="clickable card">
                             <h3>INFO 340 Client-Side Development</h3>
@@ -90,14 +84,17 @@
                             <h3>INFO 350 Information Ethics And Policy</h3>
                             <p>It is a graduation requirement <br> Because you need W credits</p>
                         </div>
-
                     </section>
                 </main>
                 <footer>
                     <p><small>&copy; Copyright 2019, <a href="mailto:erinchang0306@gmail.com">Erin Chang</a>, <a href="mailto:khoa.luong@yahoo.com.vn">Khoa Luong</a></small></p>
                 </footer>
             </div>
-            
         </div>
+        <!--Script-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.3/fetch.min.js"></script>
+        <script src="https://d3js.org/d3-dsv.v1.min.js"></script>
+        <script src="https://d3js.org/d3-fetch.v1.min.js"></script>
+        <script src="js/index.js"></script>
     </body>
 </html>
