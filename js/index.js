@@ -19,9 +19,10 @@ function wrangleData(data) {
 }
 
 function filterData(data) {
-    console.log(data);
-    let firstIndex = findFirst(data, 0, data.length - 1, "INFO", "Department");
-    let endIndex = findLast(data, 0, data.length - 1, "INFO", "Department");
+    let input = $("searchField");
+    console.log(input.innerText);
+    let firstIndex = findFirst(data, 0, data.length - 1, input.innerText, "Department");
+    let endIndex = findLast(data, 0, data.length - 1, input.innerText, "Department");
 
     printData(data, firstIndex, endIndex);
 }
