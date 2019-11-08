@@ -22,8 +22,8 @@ d3.csv("./data/uwcourses.csv")
 function wrangleData(data) {
     let newData = data.slice(SEATTLE_START_INDEX, SEATTLE_END_INDEX);
 
-    let firstIndex = findFirst(newData, 0, newData.length - 1, "CSS", "Department");
-    let endIndex = findLast(newData, 0, newData.length - 1, "CSS", "Department");
+    let firstIndex = findFirst(newData, 0, newData.length - 1, "B BIO", "Department");
+    let endIndex = findLast(newData, 0, newData.length - 1, "B BIO", "Department");
 
    printData(newData, firstIndex, endIndex);
 }
