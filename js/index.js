@@ -1,5 +1,12 @@
 'use-strict';
 
+let course = [{Campus: "Seattle", Department: "INFO", Code: "201", Name: "", Credits: "", Knowledge: "I&S", Offered: "AU18"},
+{Campus: "Seattle", Department: "INFO", Code: "200", Name: "", Credits: "", Knowledge: "I&S", Offered: "AU18"},
+{Campus: "Seattle", Department: "CSE", Code: "142", Name: "", Credits: "", Knowledge: "QSR", Offered: "AU17"},
+{Campus: "Seattle", Department: "CSE", Code: "143", Name: "", Credits: "", Knowledge: "QSR", Offered: "AU18"},
+{Campus: "Seattle", Department: "ECON", Code: "200", Name: "", Credits: "", Knowledge: "I&S", Offered: "AU17"},
+{Campus: "Seattle", Department: "ENGL", Code: "131", Name: "", Credits: "", Knowledge: "C", Offered: "AU17"}];
+
 const SEATTLE_START_INDEX = 1235;
 const SEATTLE_END_INDEX = 12406;
 
@@ -23,9 +30,24 @@ function wrangleData(data) {
     data = data.slice(SEATTLE_START_INDEX, SEATTLE_END_INDEX);
     let firstIndex = findFirst(data, 0, data.length - 1, input.value, "Department");
     let endIndex = findLast(data, 0, data.length - 1, input.value, "Department");
+    console.log(data);
 
     printData(data, firstIndex, endIndex);
 }
+
+// function filter(data, column, term) {
+//     let newData = {}
+//     if (term == "") {
+//         return data;
+//     } else {
+//         for (let i = 0; i < data.length; i++) {
+//             if (data[i][column].contains(term)) {
+//                 newData.push(data[i]);
+//             }
+//         }
+//     }
+//     return newData;
+// }
 
 function printData(data, first, end) {
     let recommendedSection = qs(".searchResult");
@@ -39,7 +61,7 @@ function printData(data, first, end) {
             let name = document.createElement("h3");
             name.innerText = data[i]["Department"] + " " + data[i]["Code"] + " " + data[i]["Name"];
             let reason = document.createElement("p");
-            reason.innerText = "Because you searched for 'CSS'";
+            reason.innerText = "Because you searched for " + data[i]["Department"];
             let panel = document.createElement("div");
             panel.classList.add("card");
             panel.classList.add("panel");
@@ -48,7 +70,10 @@ function printData(data, first, end) {
                                "<b>Credits: </b>" + data[i]["Credits"] + "<br>" + 
                                "<b>Areas of Knowledge: </b>" + data[i]["Areas of Knowledge"] + "<br>" + 
                                "<b>Prerequisites: </b>" + data[i]["Prerequisites"] + "<br>" + 
-                               "<b>Quarter(s) Offered: </b>" + data[i]["Offered"];
+                               "<b class=\"quarter\">Quarter(s) Offered: </b>" + data[i]["Offered"];
+            if (data[i]["Offered"] == "") {
+                panel.querySelector(".quarter").innerText = "Quarter(s) Offered: All"
+            }
             
             // <p><input class='star' type='checkbox' title='bookmark page'> Bookmark</p>
             card.appendChild(name);
@@ -67,6 +92,7 @@ function openPanel(card) {
     } else {
         panel.classList.add("hidden");
     }
+
 }
 
 function findFirst(data, start, end, prefix, column) {
