@@ -11,6 +11,10 @@ const SEATTLE_START_INDEX = 1235;
 const SEATTLE_END_INDEX = 12406;
 
 let searchButton = qs(".searchButton");
+let dashboard = qs("#dashboard");
+let courses = qs("courses");
+
+dashboard.addEventListener('click', popDashboard);
 
 searchButton.addEventListener('click', function(event) {
     event.preventDefault(); //don't do normal behavior
@@ -20,10 +24,12 @@ searchButton.addEventListener('click', function(event) {
     return false; //don't do normal behavior OR propagate! (for IE)
 });
 
-// d3.csv("./data/uwcourses.csv")
-//     .then(function (data) {
-//         wrangleData(data);
-//     });
+function popDashboard() {
+    qs("h1").innerHTML = 
+    "<div class=\"hamburger-menu\"><a href=\"#\"><i class=\"fa fa-bars\" aria-label=\"menu\"></i></a></div>Dashboard<button><i class=\"fas fa-sign-out-alt\" aria-label=\"Log out\"></i></button>";
+    qs(".active").classList.remove("active");
+    qs("#dashboard").classList.add("active");
+}
 
 function wrangleData(data) {
     let input = $("searchField");
@@ -164,40 +170,3 @@ function qs(query) {
 function qsa(query) {
     return document.querySelectorAll(query);
 }
-
-
-
-// var acc = document.getElementsByClassName('card');
-// var i;
-
-// for (i = 0; i < acc.length; i++) {
-//   acc[i].addEventListener("click", function() {
-//     this.classList.toggle("active");
-//     var panel = this.nextElementSibling;
-
-//     if (panel.style.display === "block") {
-//       panel.style.display = "none";
-//     } else {
-//       panel.style.display = "block";
-//     }
-//   });
-// }
-
-// $('.subSection2').on('test', '.card', function() {
-//     alert('Clicked');
-//     // Do something on an existent or future .dynamicElement
-// });
-
-// $(document).ready(function () {
-//     $("button").click(function () {
-//         alert('Clicked');
-//     });
-// });
-
-// var parent = document.getElementById('element-2');
-
-// if (parent.addEventListener) {
-//     parent.addEventListener('click', handler, false);
-// }else if (parent.attachEvent) {
-//     parent.attachEvent('onclick', handler);
-// }
