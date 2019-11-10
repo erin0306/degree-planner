@@ -125,7 +125,6 @@ form::after {
 }
 
 #element-1 {
-  
   padding: 1rem;
   background-image: linear-gradient( #5637a4, #190743);
 
@@ -174,7 +173,7 @@ form::after {
   border-top: .5px solid rgb(213, 213, 213);
 }
 
-.card:hover {
+.clickable:hover {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.16), 0 1px 3px rgba(0, 0, 0, 0.23);
 }
 
@@ -228,6 +227,32 @@ nav li a:hover {
 .active {
     background-color: #6046a4;
     border-radius: .3em;
+}
+
+.panel {
+  padding: 18px;
+  background-color: #faf8fe;
+  overflow: hidden;
+}
+
+.star {
+  visibility:hidden;
+  cursor:pointer;
+  color: #4e3199;
+}
+.star:checked:before {
+ content: "\2605";
+ position: absolute;
+ 
+}
+.star:before {
+ content: "\2606";
+ position: absolute;
+ visibility:visible;
+}
+
+.hidden {
+  display: none;
 }
 
 
