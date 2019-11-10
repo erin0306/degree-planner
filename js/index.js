@@ -1,8 +1,11 @@
 'use-strict';
 
 let searchButton = qs(".searchButton");
-let dashboard = qs("#dashboard");
-//let courses = qs("courses");
+let dashboard = $("dashboard");
+let courses = $("courses");
+
+const dashboardSection = ["Profile", "Current Courses", "Future Courses"];
+const profileSection = ["Student Profile", "Intended Major", "Graduation Process"];
 
 let state = {
     allCourses: [],
@@ -13,7 +16,9 @@ let state = {
     campus: "",
 };
 
-document.getElementById('course-page').style.display = 'none';
+$('dashboard-page').style.display = 'none';
+$('course-page').style.display = 'none';
+$('program-results').style.display = 'none';
 
 // Get all data
 d3.csv("./data/uwcourses.csv").then(function(data){
@@ -53,12 +58,46 @@ inputText.addEventListener('input', function(event){
 });
 
 dashboard.addEventListener('click', popDashboard);
+courses.addEventListener('click', popCourses);
 
 function popDashboard() {
+    $('dashboard-page').style.display = 'block';
+    $('course-page').style.display = 'none';
+    // $("dashboard-page").innerHTML = "";
     qs("h1").innerHTML = 
     "<div class=\"hamburger-menu\"><a href=\"#\"><i class=\"fa fa-bars\" aria-label=\"menu\"></i></a></div>Dashboard<button><i class=\"fas fa-sign-out-alt\" aria-label=\"Log out\"></i></button>";
     qs(".active").classList.remove("active");
-    qs("#dashboard").classList.add("active");
+    $("dashboard").classList.add("active");
+    // $("course-page").innerHTML = "";
+    $("program-results").style.display = 'block';
+    $("course-results").innerHTML = "<h2>Recommended Courses</h2>";
+    // let dashboard = $("dashboard-page");
+    // for (let i = 0; i < dashboardSection.length; i++) {
+    //     let subSection = document.createElement("section");
+    //     subSection.classList.add("subSection");
+    //     if (dashboardSection[i] != "Profile") {
+    //         let h2 = document.createElement("h2");
+    //         h2.innerText = dashboardSection[i];
+    //         subSection.appendChild(h2);
+    //     } else {
+    //         subSection.appendChild(renderProfile);
+    //     }
+    //     dashboard.appendChild(subSection);
+    // }
+}
+
+// function renderProfile() {
+
+// }
+
+function popCourses() {
+    $('dashboard-page').style.display = 'none';
+    $('course-page').style.display = 'block';
+    $("program-results").style.display = 'none';
+    qs("h1").innerHTML = 
+    "<div class=\"hamburger-menu\"><a href=\"#\"><i class=\"fa fa-bars\" aria-label=\"menu\"></i></a></div>Courses<button><i class=\"fas fa-sign-out-alt\" aria-label=\"Log out\"></i></button>";
+    qs(".active").classList.remove("active");
+    $("courses").classList.add("active");
 }
 
 searchButton.addEventListener('click', function(event) {
