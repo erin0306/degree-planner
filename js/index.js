@@ -54,7 +54,7 @@ form.addEventListener("submit", function(event) {
 // Get input value and update state
 let inputText = document.getElementById('searchField');
 inputText.addEventListener('input', function(event){
-    state.input = inputText.value;
+    state.input = inputText.value.toUpperCase();
 });
 
 dashboard.addEventListener('click', popDashboard);
