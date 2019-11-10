@@ -5,7 +5,9 @@ let dashboard = $("dashboard");
 let courses = $("courses");
 
 const dashboardSection = ["Profile", "Current Courses", "Future Courses"];
-const profileSection = ["Student Profile", "Intended Major", "Graduation Process"];
+const profileSection = [{H2: "Student Profile", Name: "Khoa Nguyen Luong", Content: ["Junior", " ID: 99999"]}, 
+                        {H2: "Intended Major", Name: "Informatics", Content: ["HCI Track"]},
+                        {H2: "Graduation Process", Name: "100 credits", Content: ["40 intended major credits"]}];
 
 let state = {
     allCourses: [],
@@ -16,7 +18,6 @@ let state = {
     campus: "",
 };
 
-$('dashboard-page').style.display = 'none';
 $('course-page').style.display = 'none';
 $('program-results').style.display = 'none';
 
@@ -61,43 +62,47 @@ dashboard.addEventListener('click', popDashboard);
 courses.addEventListener('click', popCourses);
 
 function popDashboard() {
-    $('dashboard-page').style.display = 'block';
-    $('course-page').style.display = 'none';
-    // $("dashboard-page").innerHTML = "";
+    $("dashboard-page").innerHTML = "";
     qs("h1").innerHTML = 
     "<div class=\"hamburger-menu\"><a href=\"#\"><i class=\"fa fa-bars\" aria-label=\"menu\"></i></a></div>Dashboard<button><i class=\"fas fa-sign-out-alt\" aria-label=\"Log out\"></i></button>";
     qs(".active").classList.remove("active");
     $("dashboard").classList.add("active");
-    // $("course-page").innerHTML = "";
+    $("course-page").innerHTML = "";
     $("program-results").style.display = 'block';
     $("course-results").innerHTML = "<h2>Recommended Courses</h2>";
-    // let dashboard = $("dashboard-page");
-    // for (let i = 0; i < dashboardSection.length; i++) {
-    //     let subSection = document.createElement("section");
-    //     subSection.classList.add("subSection");
-    //     if (dashboardSection[i] != "Profile") {
-    //         let h2 = document.createElement("h2");
-    //         h2.innerText = dashboardSection[i];
-    //         subSection.appendChild(h2);
-    //     } else {
-    //         subSection.appendChild(renderProfile);
-    //     }
-    //     dashboard.appendChild(subSection);
-    // }
+    let dashboard = $("dashboard-page");
+    for (let i = 0; i < dashboardSection.length; i++) {
+        let subSection = document.createElement("section");
+        subSection.classList.add("subSection");
+        if (dashboardSection[i] != "Profile") {
+            let h2 = document.createElement("h2");
+            h2.innerText = dashboardSection[i];
+            subSection.appendChild(h2);
+        } else {
+            renderProfile(subSection)
+        }
+        dashboard.appendChild(subSection);
+    }
 }
 
-// function renderProfile() {
-
-// }
+function renderProfile(subSection) {
+    for (let i = 0; i < profileSection.length; i++) {
+        let profile = document.createElement("div");
+        profile.classList.add("profile");
+        let h2 = document.createElement("h2");
+        h2.innerText = profileSection[i]["H2"];
+        profile.appendChild(h2);
+        let card = document.createElement("div");
+        card.classList.add("card");
+        card.innerHTML = "<h3></h3><p></p>"
+        card.querySelector("h3").innerText = profileSection[i]["Name"];
+        card.querySelector("p").innerText = profileSection[i]["Content"];
+        profile.appendChild(card);
+        subSection.appendChild(profile);
+    }
+}
 
 function popCourses() {
-    $('dashboard-page').style.display = 'none';
-    $('course-page').style.display = 'block';
-    $("program-results").style.display = 'none';
-    qs("h1").innerHTML = 
-    "<div class=\"hamburger-menu\"><a href=\"#\"><i class=\"fa fa-bars\" aria-label=\"menu\"></i></a></div>Courses<button><i class=\"fas fa-sign-out-alt\" aria-label=\"Log out\"></i></button>";
-    qs(".active").classList.remove("active");
-    $("courses").classList.add("active");
 }
 
 searchButton.addEventListener('click', function(event) {
