@@ -14,15 +14,56 @@ let searchButton = qs(".searchButton");
 let dashboard = qs("#dashboard");
 let courses = qs("courses");
 
-dashboard.addEventListener('click', popDashboard);
+let state = {
+    allCourses: [],
+    displayCourses: [],
+    input: "",
+    AofK: "",
+    quarter: "",
+    campus: "",
+};
 
-searchButton.addEventListener('click', function(event) {
-    event.preventDefault(); //don't do normal behavior
-    event.stopPropagation(); //don't pass the event to parents
-    d3.csv("./data/uwcourses.csv")
-    .then(wrangleData);
-    return false; //don't do normal behavior OR propagate! (for IE)
+document.getElementById('page').style.display = 'none';
+
+// Get all data
+d3.csv("./data/uwcourses.csv").then(function(data){
+    console.log(data);
+    state.allCourses = data;
+    return data;
+}).then(function(){
+    console.log(state);
+    document.getElementById('spinner').style.display = 'none';
+    document.getElementById('page').style.display = '';
+}).catch(console.log.bind(console));
+
+
+// Get filter values
+let form = document.querySelector("#filter");
+
+form.addEventListener("submit", function(event) {
+    event.preventDefault();
+    if ((document.querySelectorAll('input[name="AofK"]:checked')).length > 0) {
+        state.AofK = document.querySelector('input[name="AofK"]:checked').value;
+    }
+    if ((document.querySelectorAll('input[name="quarter"]:checked')).length > 0) {
+        state.quarter = document.querySelector('input[name="quarter"]:checked').value;
+    }
+    if ((document.querySelectorAll('input[name="campus"]:checked')).length > 0) {
+        state.campus = document.querySelector('input[name="campus"]:checked').value;
+    }
+    state.displayCourses = state.allCourses.filter(updateDisplay);
+    console.log(state.displayCourses);
+    renderCourses();
+
+  }, false);
+
+// Get input value and update state
+let inputText = document.getElementById('searchField');
+inputText.addEventListener('input', function(event){
+    state.input = inputText.value;
 });
+
+dashboard.addEventListener('click', popDashboard);
 
 function popDashboard() {
     qs("h1").innerHTML = 
@@ -31,53 +72,52 @@ function popDashboard() {
     qs("#dashboard").classList.add("active");
 }
 
-function wrangleData(data) {
-    let input = $("searchField");
-    data = data.slice(SEATTLE_START_INDEX, SEATTLE_END_INDEX);
-    let firstIndex = findFirst(data, 0, data.length - 1, input.value, "Department");
-    let endIndex = findLast(data, 0, data.length - 1, input.value, "Department");
-    console.log(data);
+searchButton.addEventListener('click', function(event) {
+    event.preventDefault(); //don't do normal behavior
+    state.displayCourses = state.allCourses.filter(updateDisplay);
+    renderCourses();
+    return false; //don't do normal behavior OR propagate! (for IE)
+});
 
-    printData(data, firstIndex, endIndex);
-}
+// Refilter everytime search button or submit filter pressed
+function updateDisplay(course) {
+    // console.log(course);
+    if (course['Areas of Knowledge'] === undefined || 
+        course.Campus === undefined ||
+        course.Offered === undefined ||
+        course.Department === undefined) {
+        return false;
+    } 
+    return course['Areas of Knowledge'].includes(state.AofK) &&
+    course.Campus.includes(state.campus) &&
+    course.Offered.includes(state.quarter) &&
+    course.Department.includes(state.input);
+};
 
-// function filter(data, column, term) {
-//     let newData = {}
-//     if (term == "") {
-//         return data;
-//     } else {
-//         for (let i = 0; i < data.length; i++) {
-//             if (data[i][column].contains(term)) {
-//                 newData.push(data[i]);
-//             }
-//         }
-//     }
-//     return newData;
-// }
 
-function printData(data, first, end) {
+function renderCourses() {
     let recommendedSection = qs(".searchResult");
     recommendedSection.innerHTML = "<h2> Recommended Courses </h2>";
-    if (first != -1 && end != -1) {
-        for (let i = first; i <= end; i++) {
+    
+        for (let i = 0; i < state.displayCourses.length; i++) {
             let card = document.createElement("div");
             card.classList.add("clickable");
             card.classList.add("card");
     
             let name = document.createElement("h3");
-            name.innerText = data[i]["Department"] + " " + data[i]["Code"] + " " + data[i]["Name"];
+            name.innerText = state.displayCourses[i]["Department"] + " " + state.displayCourses[i]["Code"] + " " + state.displayCourses[i]["Name"];
             let reason = document.createElement("p");
-            reason.innerText = "Because you searched for " + data[i]["Department"];
+            reason.innerText = "Because you searched for " + state.displayCourses[i]["Department"];
             let panel = document.createElement("div");
             panel.classList.add("card");
             panel.classList.add("panel");
             panel.classList.add("hidden");
-            panel.innerHTML = "<b>Campus: </b>" + data[i]["Campus"] + "<br> " + 
-                               "<b>Credits: </b>" + data[i]["Credits"] + "<br>" + 
-                               "<b>Areas of Knowledge: </b>" + data[i]["Areas of Knowledge"] + "<br>" + 
-                               "<b>Prerequisites: </b>" + data[i]["Prerequisites"] + "<br>" + 
-                               "<b class=\"quarter\">Quarter(s) Offered: </b>" + data[i]["Offered"];
-            if (data[i]["Offered"] == "") {
+            panel.innerHTML = "<b>Campus: </b>" + state.displayCourses[i]["Campus"] + "<br> " + 
+                               "<b>Credits: </b>" + state.displayCourses[i]["Credits"] + "<br>" + 
+                               "<b>Areas of Knowledge: </b>" + state.displayCourses[i]["Areas of Knowledge"] + "<br>" + 
+                               "<b>Prerequisites: </b>" + state.displayCourses[i]["Prerequisites"] + "<br>" + 
+                               "<b class=\"quarter\">Quarter(s) Offered: </b>" + state.displayCourses[i]["Offered"];
+            if (state.displayCourses[i]["Offered"] == "") {
                 panel.querySelector(".quarter").innerText = "Quarter(s) Offered: All"
             }
             
@@ -88,7 +128,7 @@ function printData(data, first, end) {
             card.addEventListener('click', function(){openPanel(card)});
             recommendedSection.appendChild(card);
         }
-    }
+    
 }
 
 function openPanel(card) {
@@ -101,46 +141,6 @@ function openPanel(card) {
 
 }
 
-function findFirst(data, start, end, prefix, column) {
-    if (start <= end) {
-        let mid = parseInt(start + (end - start) / 2);
-        let compare = data[mid][column].localeCompare(prefix);
-        if (compare < 0) {
-            return findFirst(data, mid + 1, end, prefix, column);
-        }
-        if (compare > 0) {
-            return findFirst(data, start, mid - 1, prefix, column);
-        }
-        if (compare == 0) {
-            if (mid == 0 || data[mid - 1][column].localeCompare(prefix) < 0) {
-                return mid;
-            }
-            return findFirst(data, start, mid - 1, prefix, column);
-        }
-    }
-    return -1;
-}
-
-function findLast(data, start, end, prefix, column) {
-    if (start <= end) {
-        let mid = parseInt(start + (end - start) / 2);
-        let compare = data[mid][column].localeCompare(prefix);
-
-        if (compare < 0) {
-            return findLast(data, mid + 1, end, prefix, column);
-        }
-        if (compare > 0) {
-            return findLast(data, 0, mid - 1, prefix, column);
-        }
-        if (compare == 0) {
-            if (mid == data.length - 1 || data[mid + 1][column].localeCompare(prefix) > 0) {
-                return mid;
-            }
-            return findLast(data, mid + 1, end, prefix, column);
-        }
-    }
-    return -1;
-}
 
 /* ------------------------------ Helper Functions  ------------------------------ */
 

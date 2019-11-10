@@ -1,64 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>Find your major</title>
-        <meta charset="UTF-8">
-        <meta name="author" content="Khoa Luong, Erin Chang">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css">
-        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="css/style.css">
-        <link href="https://fonts.googleapis.com/css?family=Encode+Sans|Open+Sans" rel="stylesheet">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
-        <link rel="icon" type="image/png" href="img/favicon.png">
-    </head>
-    <body>
-        <div class="body-flex">
-            <div id="element-1">
-                <nav>
-                    <div class="logo">
-                        <img src="img/logo.png" alt="logo">
-                    </div>
-                    <ul>
-                        <li id="dashboard"><a href="#dashboard" role="tab"><i class="fas fa-columns" aria-hidden="true"><span>&nbsp;&nbsp;</span></i>Dashboard</a></li>
-                        <li id="courses"><a href="#courses" role="tab" class="active"><i class="fas fa-book-reader" aria-hidden="true"></i><span>&nbsp;&nbsp;</span>Courses</a></li>
-                        <li><a href="#programs" role="tab"><i class="fas fa-graduation-cap" aria-hidden="true"></i><span>&nbsp;</span>Programs</a></li>
-                        <li><a href="#profile" role="tab"><i class="fas fa-user-alt" aria-hidden="true"></i><span>&nbsp;&nbsp;</span>Profile</a></li>
-                    </ul>
-                </nav>
-            </div>
-            <div id="element-2">
-                <header>
-                    <h1><div class="hamburger-menu"><a href="#"><i class="fa fa-bars" aria-label="menu"></i></a></div>Courses<button><i class="fas fa-sign-out-alt" aria-label="Log out"></i></button></h1>
-                </header>
-                <main>
-                    <section class="schedule">
-                        <h2>Find Recommended Courses</h2>
-                            <form class="searchBox" role="search">
-                                <input id="searchField" type="text" title="searchBox" placeholder="Enter department code (e.g INFO)">
-                                <button class="searchButton"><i class="fa fa-search" aria-label="search"></i></button>
-                            </form>
-                        </section>
-                    <div class="flex-container">
-                        <section class="subSection2">
-                            <h2>Filters</h2>
+
+<head>
+    <title>Plan Your Study</title>
+    <meta charset="UTF-8">
+    <meta name="author" content="Khoa Luong, Erin Chang">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Encode+Sans|Open+Sans" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+    <link rel="icon" type="image/png" href="img/favicon.png">
+</head>
+
+<body>
+    
+    <div class="body-flex">
+        <div id="element-1">
+            <nav>
+                <div class="logo">
+                    <img src="img/logo.png" alt="logo">
+                </div>
+                <ul>
+                    <li id="dashboard"><a href="#dashboard" role="tab"><i class="fas fa-columns"
+                                aria-hidden="true"><span>&nbsp;&nbsp;</span></i>Dashboard</a></li>
+                    <li id="courses"><a href="#courses" role="tab" class="active"><i class="fas fa-book-reader"
+                                aria-hidden="true"></i><span>&nbsp;&nbsp;</span>Courses</a></li>
+                    <li><a href="#programs" role="tab"><i class="fas fa-graduation-cap"
+                                aria-hidden="true"></i><span>&nbsp;</span>Programs</a></li>
+                    <li><a href="#profile" role="tab"><i class="fas fa-user-alt"
+                                aria-hidden="true"></i><span>&nbsp;&nbsp;</span>Profile</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div id="element-2">
+            <header>
+                <h1>
+                    <div class="hamburger-menu"><a href="#"><i class="fa fa-bars" aria-label="menu"></i></a></div>
+                    Courses<button><i class="fas fa-sign-out-alt" aria-label="Log out"></i></button>
+                </h1>
+            </header>
+            <main>
+                <i id="spinner" class="d-none fa fa-spinner fa-spin" aria-hidden="true"></i>
+                <div id="page">
+                <section class="schedule">
+                    <h2>Find Recommended Courses</h2>
+                    
+                    <form class="searchBox" role="search">
+                        <input id="searchField" type="text" title="searchBox"
+                            placeholder="Enter department code (e.g INFO)">
+                        <button class="searchButton"><i class="fa fa-search" aria-label="search"></i></button>
+                    </form>
+                    
+                </section>
+                <div class="flex-container">
+                    <section class="subSection2">
+                        <h2>Filters</h2>
+                        <form id="filter">
                             <div class="card">
-                                <p><input type="checkbox" name="prereq" value="prereq"> Include only courses you have prerequisites for<br></p>
+                                <p><input type="checkbox" name="prereq" value="prereq"> Include only courses you have
+                                    prerequisites for<br></p>
                             </div>
                             <div class="card">
-                                <p><input type="checkbox" name="AoK" value="AoK"> Fulfill your Areas of Knowledge credits<br></p>
+                                <p>Area of Knowledge:</p>
                             </div>
                             <div class="card">
-                                <p><input type="checkbox" name="offered" value="year"> Offered in the last two years<br></p>
+                                <p><input type="radio" name="AofK" value="NW"> NW<br></p>
+                                <p><input type="radio" name="AofK" value="I&S"> I&S<br></p>
+                                <p><input type="radio" name="AofK" value="VLPA"> VLPA<br></p>
+                                <p><input type="radio" name="AofK" value="QSR"> QSR<br></p>
                             </div>
                             <div class="card">
                                 <p>Offered in:</p>
                             </div>
                             <div class="card">
-                                <p><input type="checkbox" name="quarter" value="A"> Autumn<br></p>
-                                <p><input type="checkbox" name="quarter" value="W"> Winter<br></p>
-                                <p><input type="checkbox" name="quarter" value="Sp"> Spring<br></p>
-                                <p><input type="checkbox" name="quarter" value="S"> Summer<br></p>
+                                <p><input type="radio" name="quarter" value="A"> Autumn<br></p>
+                                <p><input type="radio" name="quarter" value="W"> Winter<br></p>
+                                <p><input type="radio" name="quarter" value="Sp"> Spring<br></p>
+                                <p><input type="radio" name="quarter" value="S"> Summer<br></p>
                             </div>
                             <div class="card">
                                 <p>Campus:</p>
@@ -68,22 +88,29 @@
                                 <p><input type="radio" name="campus" value="Bothell"> Bothell<br></p>
                                 <p><input type="radio" name="campus" value="Tacoma"> Tacoma<br></p>
                             </div>
-                        </section>
-                        
-                    </div>
-                    <section class="schedule searchResult" id="results">
-                        <h2>Recommended Courses</h2>
+                            <div class="card">
+                                <button type="submit">Update Filter</button>
+                            </div>
+                        </form>
                     </section>
-                </main>
-                <footer>
-                    <p><small>&copy; Copyright 2019, <a href="mailto:erinchang0306@gmail.com">Erin Chang</a>, <a href="mailto:khoa.luong@yahoo.com.vn">Khoa Luong</a></small></p>
-                </footer>
-            </div>
+
+                </div>
+                <section class="schedule searchResult" id="results">
+                    <h2>Recommended Courses</h2>
+                </section>
+                </div>
+            </main>
+            <footer>
+                <p><small>&copy; Copyright 2019, <a href="mailto:erinchang0306@gmail.com">Erin Chang</a>, <a
+                            href="mailto:khoa.luong@yahoo.com.vn">Khoa Luong</a></small></p>
+            </footer>
         </div>
-    </body>
-    <!--Script-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.3/fetch.min.js"></script>
-    <script src="https://d3js.org/d3-dsv.v1.min.js"></script>
-    <script src="https://d3js.org/d3-fetch.v1.min.js"></script>
-    <script src="js/index.js"></script>
+    </div>
+</body>
+<!--Script-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.3/fetch.min.js"></script>
+<script src="https://d3js.org/d3-dsv.v1.min.js"></script>
+<script src="https://d3js.org/d3-fetch.v1.min.js"></script>
+<script src="js/index.js"></script>
+
 </html>
