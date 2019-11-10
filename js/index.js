@@ -1,18 +1,8 @@
 'use-strict';
 
-let course = [{Campus: "Seattle", Department: "INFO", Code: "201", Name: "", Credits: "", Knowledge: "I&S", Offered: "AU18"},
-{Campus: "Seattle", Department: "INFO", Code: "200", Name: "", Credits: "", Knowledge: "I&S", Offered: "AU18"},
-{Campus: "Seattle", Department: "CSE", Code: "142", Name: "", Credits: "", Knowledge: "QSR", Offered: "AU17"},
-{Campus: "Seattle", Department: "CSE", Code: "143", Name: "", Credits: "", Knowledge: "QSR", Offered: "AU18"},
-{Campus: "Seattle", Department: "ECON", Code: "200", Name: "", Credits: "", Knowledge: "I&S", Offered: "AU17"},
-{Campus: "Seattle", Department: "ENGL", Code: "131", Name: "", Credits: "", Knowledge: "C", Offered: "AU17"}];
-
-const SEATTLE_START_INDEX = 1235;
-const SEATTLE_END_INDEX = 12406;
-
 let searchButton = qs(".searchButton");
 let dashboard = qs("#dashboard");
-let courses = qs("courses");
+//let courses = qs("courses");
 
 let state = {
     allCourses: [],
@@ -23,7 +13,7 @@ let state = {
     campus: "",
 };
 
-document.getElementById('page').style.display = 'none';
+document.getElementById('course-page').style.display = 'none';
 
 // Get all data
 d3.csv("./data/uwcourses.csv").then(function(data){
@@ -33,7 +23,7 @@ d3.csv("./data/uwcourses.csv").then(function(data){
 }).then(function(){
     console.log(state);
     document.getElementById('spinner').style.display = 'none';
-    document.getElementById('page').style.display = '';
+    document.getElementById('course-page').style.display = '';
 }).catch(console.log.bind(console));
 
 
@@ -54,7 +44,6 @@ form.addEventListener("submit", function(event) {
     state.displayCourses = state.allCourses.filter(updateDisplay);
     console.log(state.displayCourses);
     renderCourses();
-
   }, false);
 
 // Get input value and update state
@@ -98,37 +87,33 @@ function updateDisplay(course) {
 function renderCourses() {
     let recommendedSection = qs(".searchResult");
     recommendedSection.innerHTML = "<h2> Recommended Courses </h2>";
-    
-        for (let i = 0; i < state.displayCourses.length; i++) {
-            let card = document.createElement("div");
-            card.classList.add("clickable");
-            card.classList.add("card");
-    
-            let name = document.createElement("h3");
-            name.innerText = state.displayCourses[i]["Department"] + " " + state.displayCourses[i]["Code"] + " " + state.displayCourses[i]["Name"];
-            let reason = document.createElement("p");
-            reason.innerText = "Because you searched for " + state.displayCourses[i]["Department"];
-            let panel = document.createElement("div");
-            panel.classList.add("card");
-            panel.classList.add("panel");
-            panel.classList.add("hidden");
-            panel.innerHTML = "<b>Campus: </b>" + state.displayCourses[i]["Campus"] + "<br> " + 
-                               "<b>Credits: </b>" + state.displayCourses[i]["Credits"] + "<br>" + 
-                               "<b>Areas of Knowledge: </b>" + state.displayCourses[i]["Areas of Knowledge"] + "<br>" + 
-                               "<b>Prerequisites: </b>" + state.displayCourses[i]["Prerequisites"] + "<br>" + 
-                               "<b class=\"quarter\">Quarter(s) Offered: </b>" + state.displayCourses[i]["Offered"];
-            if (state.displayCourses[i]["Offered"] == "") {
-                panel.querySelector(".quarter").innerText = "Quarter(s) Offered: All"
-            }
-            
-            // <p><input class='star' type='checkbox' title='bookmark page'> Bookmark</p>
-            card.appendChild(name);
-            card.appendChild(reason);
-            card.appendChild(panel);
-            card.addEventListener('click', function(){openPanel(card)});
-            recommendedSection.appendChild(card);
+    for (let i = 0; i < state.displayCourses.length; i++) {
+        let card = document.createElement("div");
+        card.classList.add("clickable");
+        card.classList.add("card");
+        let name = document.createElement("h3");
+        name.innerText = state.displayCourses[i]["Department"] + " " + state.displayCourses[i]["Code"] + " " + state.displayCourses[i]["Name"];
+        let reason = document.createElement("p");
+        reason.innerText = "Because you searched for " + state.displayCourses[i]["Department"];
+        let panel = document.createElement("div");
+        panel.classList.add("card");
+        panel.classList.add("panel");
+        panel.classList.add("hidden");
+        panel.innerHTML = "<b>Campus: </b>" + state.displayCourses[i]["Campus"] + "<br> " + 
+                            "<b>Credits: </b>" + state.displayCourses[i]["Credits"] + "<br>" + 
+                            "<b>Areas of Knowledge: </b>" + state.displayCourses[i]["Areas of Knowledge"] + "<br>" + 
+                            "<b>Prerequisites: </b>" + state.displayCourses[i]["Prerequisites"] + "<br>" + 
+                            "<b class=\"quarter\">Quarter(s) Offered: </b>" + state.displayCourses[i]["Offered"];
+        if (state.displayCourses[i]["Offered"] == "") {
+            panel.querySelector(".quarter").innerText = "Quarter(s) Offered: All"
         }
-    
+        // <p><input class='star' type='checkbox' title='bookmark page'> Bookmark</p>
+        card.appendChild(name);
+        card.appendChild(reason);
+        card.appendChild(panel);
+        card.addEventListener('click', function(){openPanel(card)});
+        recommendedSection.appendChild(card);
+    }
 }
 
 function openPanel(card) {

@@ -42,18 +42,19 @@
             </header>
             <main>
                 <i id="spinner" class="d-none fa fa-spinner fa-spin" aria-hidden="true"></i>
-                <div id="page">
-                <section class="schedule">
-                    <h2>Find Recommended Courses</h2>
-                    
-                    <form class="searchBox" role="search">
-                        <input id="searchField" type="text" title="searchBox"
-                            placeholder="Enter department code (e.g INFO)">
-                        <button class="searchButton"><i class="fa fa-search" aria-label="search"></i></button>
-                    </form>
-                    
-                </section>
-                <div class="flex-container">
+                <div id="dashboard-page" class="flex-container">
+                </div>
+                <div id="course-page">
+                    <section class="schedule">
+                        <h2>Find Recommended Courses</h2>
+                        
+                        <form class="searchBox" role="search">
+                            <input id="searchField" type="text" title="searchBox"
+                                placeholder="Enter department code (e.g INFO)">
+                            <button class="searchButton"><i class="fa fa-search" aria-label="search"></i></button>
+                        </form>
+                        
+                    </section>
                     <section class="subSection2">
                         <h2>Filters</h2>
                         <form id="filter">
@@ -92,12 +93,10 @@
                             </div>
                         </form>
                     </section>
-
                 </div>
                 <section class="schedule searchResult" id="results">
                     <h2>Recommended Courses</h2>
                 </section>
-                </div>
             </main>
             <footer>
                 <p><small>&copy; Copyright 2019, <a href="mailto:erinchang0306@gmail.com">Erin Chang</a>, <a
