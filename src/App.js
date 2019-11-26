@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import FILTERS from './filter.json';
 import 'bootstrap/dist/css/bootstrap.css';
 import './index.css';
 import logo from './img/logo.png';
@@ -13,9 +15,8 @@ class App extends Component {
                     </div>
                     <Main/>
                 </div>
-                <footer></footer>
             </div>
-        )
+        );
     }
 }
 
@@ -47,14 +48,55 @@ class Main extends Component {
             <div id="element-2">
                 <header>
                     <h1>
-                        <div class="hamburger-menu"><a href="#"><i class="fa fa-bars" aria-label="menu"></i></a></div>
-                        Courses<button><i class="fas fa-sign-out-alt" aria-label="Log out"></i></button>
+                        <div className="hamburger-menu"><a href="#"></a></div>
+                        Courses<button><i className="fas fa-sign-out-alt" aria-label="Log out"></i></button>
                     </h1>
                 </header>
                 <main>
-
+                    <CoursePage/>
                 </main>
+                <footer>
+                    <p><small>&copy; Copyright 2019, <a href="mailto:erinchang0306@gmail.com">Erin Chang</a>, <a
+                                href="mailto:khoa.luong@yahoo.com.vn">Khoa Luong</a></small></p>
+                </footer>
             </div>
+        );
+    }
+}
+
+class CoursePage extends Component {
+    render() {
+        return (
+        <div id="course-page">
+            <SearchField/>
+            
+        </div>
+        );
+    }
+}
+
+class SearchField extends Component {
+    render() {
+        return(
+            <section className="schedule">
+                <h2>Find Recommended Courses</h2>      
+                <form className="searchBox" role="search">
+                    <input id="searchField" type="text" title="searchBox"
+                        placeholder="Enter department code (e.g INFO)"></input>
+                    <button className="searchButton"><i className="fa fa-search" aria-label="search"></i></button>
+                </form>
+            </section>
+        );
+    }
+}
+
+class Filter extends Component {
+    render() {
+        let filterList = this.props.
+        return(
+            <section className="subSection2">
+
+            </section>
         )
     }
 }

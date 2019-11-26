@@ -1,0 +1,34 @@
+[
+    {"header" : "", "type" : "checkbox", "name" : "prereq", "element" : [{"value" : "prereq", "content" : "Include only courses you have prerequisites for"}]},
+    {
+        "header" : "Area of Knowledge:", 
+        "type" : "radio", 
+        "name" : "AofK", 
+        "element" : [
+            {"value" : "NW", "content" : "NW"},
+            {"value" : "I&S", "content" : "I&S"},
+            {"value" : "VLPA", "content" : "VLPA"},
+            {"value" : "QSR", "content" : "QSR"}
+        ]},
+    {
+        "header" : "Offered in:", 
+        "type" : "radio",
+        "name" : "quarter",
+        "element" : [
+            {"value" : "A", "content" : "Autumn"},
+            {"value" : "W", "content" : "Winter"},
+            {"value" : "Sp", "content" : "Spring"},
+            {"value" : "S", "content" : "Summer"}
+        ]
+    },
+    {
+        "header" : "Campus:", 
+        "type" : "radio",
+        "name" : "campus",
+        "element" : [
+            {"value" : "Seattle", "content" : "Seattle"},
+            {"value" : "Bothell", "content" : "Bothell"},
+            {"value" : "Tacoma", "content" : "Tacoma"}
+        ]
+    }
+]
