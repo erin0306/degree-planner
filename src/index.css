@@ -7,7 +7,7 @@ html {
     margin: 0;
   }
   
-  body {
+  #mainBody {
    font-size: 16px;   
    height: inherit;
    display: flex;
@@ -117,7 +117,7 @@ html {
   #element-2 {
     flex: 1;
     background-color: #f2eefa;
-    background-image: url("../img/husky-background.png");
+    background-image: url("./img/husky-background.png");
     background-position: center;
     background-repeat: no-repeat;
     background-size: 50rem;
