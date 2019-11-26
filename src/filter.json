@@ -1,5 +1,11 @@
 [
-    {"header" : "", "type" : "checkbox", "name" : "prereq", "element" : [{"value" : "prereq", "content" : "Include only courses you have prerequisites for"}]},
+    {
+        "header" : "", 
+        "type" : "checkbox", 
+        "name" : "prereq", 
+        "element" : [
+            {"value" : "prereq", "content" : "Include only courses you have prerequisites for"}
+        ]},
     {
         "header" : "Area of Knowledge:", 
         "type" : "radio", 

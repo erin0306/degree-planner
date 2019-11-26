@@ -1,15 +1,41 @@
 import React, {Component} from 'react';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import { faGripLines, faHome, faBookOpen, faGraduationCap, faUserAlt, faSignOutAlt, faSearch } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import FILTERS from './filter.json';
 import logo from './img/logo.png';
+import * as d3 from 'd3';
+import data from './data/uwcourses.csv';
 
 class App extends Component {
+    constructor(props) {
+        super(props)
+    
+        this.state = {
+          isLoading: true, // for spinner
+          allCourses: []
+        }
+        
+      }
+
+    componentDidMount() {    
+        d3.csv(data)
+        .then((data) => {
+            console.log(data);
+            this.setState({allCourses: data})
+        }).then(() => {
+            console.log(this.state);
+            // document.getElementById('spinner').style.display = 'none';
+            // document.getElementById('course-page').style.display = '';
+        }).catch(console.log.bind(console));
+    }
+
     render() {
         return (
             <div className="body-flex">
                 <div id="element-1">
                     <Nav/>
                 </div>
+                
                 <Main/>
             </div>
         );
@@ -24,14 +50,10 @@ class Nav extends Component {
                     <img src={logo} alt="logo"></img>
                 </div>
                 <ul>
-                    <li id="dashboard"><a href="#dashboard" role="tab"><i className="fas fa-columns"
-                                aria-hidden="true"><span>&nbsp;&nbsp;</span></i>Dashboard</a></li>
-                    <li id="courses"><a href="#courses" role="tab" className="active"><i className="fas fa-book-reader"
-                                aria-hidden="true"></i><span>&nbsp;&nbsp;</span>Courses</a></li>
-                    <li><a href="#programs" role="tab"><i className="fas fa-graduation-cap"
-                                aria-hidden="true"></i><span>&nbsp;</span>Programs</a></li>
-                    <li><a href="#profile" role="tab"><i className="fas fa-user-alt"
-                                aria-hidden="true"></i><span>&nbsp;&nbsp;</span>Profile</a></li>
+                    <li id="dashboard"><a href="#dashboard" role="tab"><FontAwesomeIcon icon={faHome} aria-hidden="true"/><span>&nbsp;&nbsp;</span>Dashboard</a></li>
+                    <li id="courses"><a href="#courses" role="tab" className="active"><FontAwesomeIcon icon={faBookOpen} aria-hidden="true"/><span>&nbsp;&nbsp;</span>Courses</a></li>
+                    <li><a href="#programs" role="tab"><FontAwesomeIcon icon={faGraduationCap} aria-hidden="true"/><span>&nbsp;</span>Programs</a></li>
+                    <li><a href="#profile" role="tab"><FontAwesomeIcon icon={faUserAlt} aria-hidden="true"/><span>&nbsp;&nbsp;</span>Profile</a></li>
                 </ul>
             </nav>
         );
@@ -44,8 +66,8 @@ class Main extends Component {
             <div id="element-2">
                 <header>
                     <h1>
-                        <div className="hamburger-menu"><a href="#"></a></div>
-                        Courses<button><i className="fas fa-sign-out-alt" aria-label="Log out"></i></button>
+                        <div className="hamburger-menu"><FontAwesomeIcon icon={faGripLines} aria-label="Menu"/></div>
+                        Courses<button><FontAwesomeIcon icon={faSignOutAlt} aria-label="Sign out"/></button>
                     </h1>
                 </header>
                 <main>
@@ -79,7 +101,7 @@ class SearchField extends Component {
                 <form className="searchBox" role="search">
                     <input id="searchField" type="text" title="searchBox"
                         placeholder="Enter department code (e.g INFO)"></input>
-                    <button className="searchButton"><i className="fa fa-search" aria-label="search"></i></button>
+                    <button className="searchButton"><FontAwesomeIcon icon={faSearch} aria-label="search"/></button>
                 </form>
                 <Filter filters={FILTERS}/>
             </section>
@@ -89,14 +111,17 @@ class SearchField extends Component {
 
 class Filter extends Component {
     render() {
-        let filterList = this.props.filters.map(element => {
+        let filterList = this.props.filters.map((element, i)=> {
             return (
-                <FilterCard filter={element}/>
+                <FilterCard key={i} filter={element}/>
             );
         });
         return(
             <section className="subSection2">
                 {filterList}
+                <div className="customCard">
+                    <button type="submit">Update Filter</button>
+                </div>
             </section>
         );
     }
@@ -105,11 +130,11 @@ class Filter extends Component {
 class FilterCard extends Component {
     render() {
         let filter = this.props.filter;
-        let choices = this.props.filter.element.map(choice => {
+        let choices = this.props.filter.element.map((choice, i) => {
             console.log(choice);
             console.log(filter.type + " " + filter.name + " " + choice.value + " " + choice.content);
             return (
-               <p><input type={filter.type} name={filter.name} value={choice.value}></input>{choice.content}<br></br></p>
+               <p key={i}><input type={filter.type} name={filter.name} value={choice.value}></input>{choice.content}<br></br></p>
             );
         });
         console.log(" ");
