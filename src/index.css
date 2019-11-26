@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+@import url('https://fonts.googleapis.com/css?family=Encode+Sans');
+
 html {
     height: 100%;
   }
@@ -7,7 +10,11 @@ html {
     margin: 0;
   }
   
-  #mainBody {
+  body {
+    height: inherit;
+  }
+
+  #root {
    font-size: 16px;   
    height: inherit;
    display: flex;
@@ -167,23 +174,24 @@ html {
     border-radius: 5px;
   }
   
-  .card {
+  .customCard {
     padding-top: 10px;
     margin-top: 10px;
     border-top: .5px solid rgb(213, 213, 213);
+    background-color: transparent;
   }
   
   .clickable:hover {
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.16), 0 1px 3px rgba(0, 0, 0, 0.23);
   }
   
-  .subSection .card {
+  .subSection .customCard {
     text-align: center;
   }
   
   
   
-  .card p {
+  .customCard p {
       color: gray;
   }
   
