@@ -145,7 +145,7 @@ class FilterCard extends Component {
 class ResultField extends Component {
     render() {
         return (
-            <section className="subSection">
+            <section id="course-results" className="schedule searchResult">
                 <h2>Recommended Courses</h2>
             </section>
         )
