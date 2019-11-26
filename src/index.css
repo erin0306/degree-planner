@@ -1,0 +1,279 @@
+html {
+    height: 100%;
+  }
+  
+  * {
+    box-sizing: border-box;
+    margin: 0;
+  }
+  
+  body {
+   font-size: 16px;   
+   height: inherit;
+   display: flex;
+   flex-direction: column;
+   font-family: 'Open Sans', sans-serif;
+  }
+  
+  .body-flex {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+  }
+  
+  h1 {
+      margin: 0;
+      font-family: 'Encode Sans', sans-serif;
+      padding: .8rem .8em;
+      font-size: 3em;
+      color: #4e3199;
+      display: flex;
+      justify-content: space-between;
+      box-shadow: 0 2px 3px rgba(0, 0, 0, 0.16);
+  }
+  button {
+      height: 2.5rem;
+      font-size: 1.5rem;
+      border: 0;
+      background-color: white;
+  }
+  .fa-sign-out-alt, .fa-bars  {
+    color: #4e3199;
+  }
+  
+  
+  h2 {
+      font-weight: 100;
+      color: #4e3199;
+      font-size: 2.3em;
+  }
+  
+  h3 {
+    font-size: 1.7em;
+  }
+  
+  .subSection h2 {
+    text-align: center;
+  }
+  
+  header {
+    background-color: #ffffff;
+  }
+  
+  .hamburger-menu {
+    display: inline;
+  }
+  
+  main {
+    padding-left: 1rem;
+  }
+  
+  p {
+      line-height: 1.5;
+  }
+  
+  .flex-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  form input[type=text] {
+    padding: 10px;
+    margin-top: 1em;
+    font-size: 17px;
+    border-radius: 0.4em;
+    border: none;
+    float: left;
+    width: 80%;
+    background: #ffffff;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.16);
+  }
+  
+  form button {
+    float: left;
+    width: 20%;
+    padding: 10px;
+    margin-top: 1em;
+    background: #6040b1;
+    color: white;
+    font-size: 17px;
+    border: 1px solid grey;
+    border-left: none;
+    cursor: pointer;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.16);
+  }
+  
+  form button:hover {
+    background: #4e3199;
+  }
+  
+  form::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+  
+  #element-2 {
+    flex: 1;
+    background-color: #f2eefa;
+    background-image: url("../img/husky-background.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 50rem;
+    background-blend-mode: overlay;
+  }
+  
+  #element-1 {
+    padding: 1rem;
+    background-image: linear-gradient( #5637a4, #190743);
+  
+    align-content: center;
+    height: 100%;
+    display: none;
+  }
+  
+  
+  .flex-section {
+    display: flex;
+  }
+  
+  .subSection {
+    margin: 1em;
+    padding: 1em;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.16), 0 1px 3px rgba(0, 0, 0, 0.23);
+    background-color: #f7f4fc;
+    border-radius: 5px;
+    flex-basis: 100%;
+  }
+  
+  .subSection2 {
+    margin: 1em;
+    padding: 1em;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.16), 0 1px 3px rgba(0, 0, 0, 0.23);
+    background-color: #f7f4fc;
+    border-radius: 5px;
+    flex-basis: 100%;
+  }
+  
+  .schedule {
+    margin: 2em;
+  }
+  
+  .profile {
+    margin: 0.8em;
+    padding: 0.8em;
+    background-color: #e8e3d3;
+    border-radius: 5px;
+  }
+  
+  .card {
+    padding-top: 10px;
+    margin-top: 10px;
+    border-top: .5px solid rgb(213, 213, 213);
+  }
+  
+  .clickable:hover {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.16), 0 1px 3px rgba(0, 0, 0, 0.23);
+  }
+  
+  .subSection .card {
+    text-align: center;
+  }
+  
+  
+  
+  .card p {
+      color: gray;
+  }
+  
+  .logo {
+    color: white;
+    font-weight: 500;
+    font-size: 1em;
+    text-align: center;
+    margin-top: .5em;
+    margin-bottom: 1.5em;
+    border-bottom-color: 10px solid white;
+  
+  }
+  
+  img {
+    height: 2rem;
+  }
+  
+  nav ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      font-family: Helvetica, Arial, sans-serif;
+      font-weight: 100;
+      font-size: 1em;
+  }
+  
+  nav li a {
+      display: block;
+      color: white;
+      padding: .8em 1.5em;
+      text-decoration: none;
+  }
+    
+  nav li a:hover {
+      background-color: #422688;
+      border-radius: .3em;
+      border: .3px solid #000000;
+  }
+  
+  .active {
+      background-color: #6046a4;
+      border-radius: .3em;
+  }
+  
+  .panel {
+    padding: 18px;
+    background-color: #faf8fe;
+    overflow: hidden;
+  }
+  
+  .star {
+    visibility:hidden;
+    cursor:pointer;
+    color: #4e3199;
+  }
+  .star:checked:before {
+   content: "\2605";
+   position: absolute;
+   
+  }
+  .star:before {
+   content: "\2606";
+   position: absolute;
+   visibility:visible;
+  }
+  
+  .hidden {
+    display: none;
+  }
+  
+  
+  @media (min-width: 700px) {
+    .subSection {
+      flex-basis: auto;
+    }
+    #element-1 {
+      display: block;
+    }
+    .hamburger-menu {
+      display: none;
+    }
+    h1 {
+      font-size: 2em;
+    }
+    h2 {
+      font-size: 1.5em;
+    }
+    h3 {
+      font-size: 1.17em;
+    }
+  }
+  
