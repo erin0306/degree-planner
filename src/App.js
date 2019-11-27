@@ -2,14 +2,39 @@
 import React, {Component} from 'react';
 import { faGripLines, faHome, faBookOpen, faGraduationCap, faUserAlt, faSignOutAlt, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import * as d3 from 'd3';
 
 //Import Local Files and Components
 import {ResultField} from './Event'
 import FILTERS from './filter.json';
 import logo from './img/logo.png';
+import data from './data/uwcourses.csv';
 
 //App Render
 class App extends Component {
+    constructor(props) {
+        super(props)
+    
+        this.state = {
+          isLoading: "hidden", // for spinner
+          allCourses: []
+        }
+    }
+
+    componentDidMount() {
+        this.setState({isLoading : ""});
+        this.render();
+        d3.csv(data)
+        .then((data) => {
+            console.log(data);
+            this.setState({allCourses: data})
+        }).then(() => {
+            console.log(this.state);
+            this.setState({isLoading : "hidden"});
+            
+        }).catch(console.log.bind(console));
+    }
+
     render() {
         return (
             <div className="body-flex">
@@ -17,7 +42,7 @@ class App extends Component {
                     <RenderNav/>
                 </div>
                 
-                <RenderMain/>
+                <RenderMain isLoading={this.state.isLoading} allCourses={this.state.allCourses}/>
             </div>
         );
     }
@@ -52,7 +77,7 @@ class RenderMain extends Component {
                     </h1>
                 </header>
                 <main>
-                    <CoursePage/>
+                    <CoursePage isLoading={this.props.isLoading} allCourses={this.props.allCourses}/>
                 </main>
                 <footer>
                     <p><small>&copy; Copyright 2019, <a href="mailto:erinchang0306@gmail.com">Erin Chang</a>, <a
@@ -68,7 +93,7 @@ class CoursePage extends Component {
         return (
         <div id="course-page">
             <SearchField/>
-            <ResultField/>
+            <ResultField isLoading={this.props.isLoading} allCourses={this.props.allCourses}/>
         </div>
         );
     }
