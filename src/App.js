@@ -17,8 +17,20 @@ class App extends Component {
     
         this.state = {
           isLoading: "hidden", // for spinner
-          allCourses: []
+          allCourses: [],
+          displayCourses: [],
+          input: "",
+          prereq: "",
+          AofK: "",
+          quarter: "",
+          campus: "",
         }
+    }
+
+    form = (nameValueObj) => {
+        this.setState(nameValueObj);
+        console.log(this.state);
+        
     }
 
     componentDidMount() {
@@ -42,7 +54,7 @@ class App extends Component {
                     <RenderNav/>
                 </div>
                 
-                <RenderMain isLoading={this.state.isLoading} allCourses={this.state.allCourses}/>
+                <RenderMain isLoading={this.state.isLoading} allCourses={this.state.allCourses} formCallback={this.form}/>
             </div>
         );
     }
@@ -77,7 +89,7 @@ class RenderMain extends Component {
                     </h1>
                 </header>
                 <main>
-                    <CoursePage isLoading={this.props.isLoading} allCourses={this.props.allCourses}/>
+                    <CoursePage isLoading={this.props.isLoading} allCourses={this.props.allCourses} formCallback={this.props.formCallback}/>
                 </main>
                 <footer>
                     <p><small>&copy; Copyright 2019, <a href="mailto:erinchang0306@gmail.com">Erin Chang</a>, <a
@@ -92,7 +104,7 @@ class CoursePage extends Component {
     render() {
         return (
         <div id="course-page">
-            <SearchField/>
+            <SearchField formCallback={this.props.formCallback}/>
             <ResultField isLoading={this.props.isLoading} allCourses={this.props.allCourses}/>
         </div>
         );
@@ -109,7 +121,7 @@ class SearchField extends Component {
                         placeholder="Enter department code (e.g INFO)"></input>
                     <button onClick={this.handleClick} className="searchButton"><FontAwesomeIcon icon={faSearch} aria-label="search"/></button>
                 </form>
-                <Filter filters={FILTERS}/>
+                <Filter filters={FILTERS} formCallback={this.props.formCallback}/>
             </section>
         );
     }
@@ -119,16 +131,17 @@ class Filter extends Component {
     render() {
         let filterList = this.props.filters.map((element, i)=> {
             return (
-                <FilterCard key={i} filter={element}/>
+                <FilterCard key={i} filter={element} formCallback={this.props.formCallback}/>
             );
         });
-        return(
+        // this.handleClick = () => this.props.updateFilterCallback(); // param
+        return (
             <section className="subSection2">
                 <h2>Filters</h2>
                 <form>
                     {filterList}
                     <div className="card">
-                        <button className="clickable" type="submit">Update Filter</button>
+                        <button className="clickable" onClick={this.handleClick} type="submit">Update Filter</button>
                     </div>
                 </form>
             </section>
@@ -138,13 +151,22 @@ class Filter extends Component {
 
 class FilterCard extends Component {
     render() {
+        
+        this.handleChange = (evt) => {
+            console.log(evt.target.name, evt.target.value);
+            this.Obj = { [evt.target.name]: evt.target.value };
+            this.props.formCallback(this.Obj);
+        }
         let filter = this.props.filter;
         let choices = this.props.filter.element.map((choice, i) => {
             return (
-               <p key={i}><input type={filter.type} name={filter.name} value={choice.value}></input>{choice.content}<br></br></p>
+               <p key={i}><input type={filter.type} name={filter.name} value={choice.value} onChange={this.handleChange}></input>{choice.content}<br></br></p>
             );
         });
-    return <div className="card"><h3>{filter.header}</h3>{choices}</div>
+        
+    return (
+        <div className="card"><h3>{filter.header}</h3>{choices}</div>
+    );
     }
 }
 
