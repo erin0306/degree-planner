@@ -1,48 +1,29 @@
+//Import Packages
 import React, {Component} from 'react';
 import { faGripLines, faHome, faBookOpen, faGraduationCap, faUserAlt, faSignOutAlt, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+//Import Local Files and Components
+import {ResultField} from './Event'
 import FILTERS from './filter.json';
 import logo from './img/logo.png';
-import * as d3 from 'd3';
-import data from './data/uwcourses.csv';
 
+//App Render
 class App extends Component {
-    constructor(props) {
-        super(props)
-    
-        this.state = {
-          isLoading: true, // for spinner
-          allCourses: []
-        }
-        
-      }
-
-    componentDidMount() {    
-        d3.csv(data)
-        .then((data) => {
-            console.log(data);
-            this.setState({allCourses: data})
-        }).then(() => {
-            console.log(this.state);
-            // document.getElementById('spinner').style.display = 'none';
-            // document.getElementById('course-page').style.display = '';
-        }).catch(console.log.bind(console));
-    }
-
     render() {
         return (
             <div className="body-flex">
                 <div id="element-1">
-                    <Nav/>
+                    <RenderNav/>
                 </div>
                 
-                <Main/>
+                <RenderMain/>
             </div>
         );
     }
 }
 
-class Nav extends Component {
+class RenderNav extends Component {
     render() {
         return (
             <nav>
@@ -60,7 +41,7 @@ class Nav extends Component {
     }
 }
 
-class Main extends Component {
+class RenderMain extends Component {
     render() {
         return (
             <div id="element-2">
@@ -101,7 +82,7 @@ class SearchField extends Component {
                 <form className="searchBox" role="search">
                     <input id="searchField" type="text" title="searchBox"
                         placeholder="Enter department code (e.g INFO)"></input>
-                    <button className="searchButton"><FontAwesomeIcon icon={faSearch} aria-label="search"/></button>
+                    <button onClick={this.handleClick} className="searchButton"><FontAwesomeIcon icon={faSearch} aria-label="search"/></button>
                 </form>
                 <Filter filters={FILTERS}/>
             </section>
@@ -118,10 +99,13 @@ class Filter extends Component {
         });
         return(
             <section className="subSection2">
-                {filterList}
-                <div className="customCard">
-                    <button type="submit">Update Filter</button>
-                </div>
+                <h2>Filters</h2>
+                <form>
+                    {filterList}
+                    <div className="card">
+                        <button className="clickable" type="submit">Update Filter</button>
+                    </div>
+                </form>
             </section>
         );
     }
@@ -131,24 +115,13 @@ class FilterCard extends Component {
     render() {
         let filter = this.props.filter;
         let choices = this.props.filter.element.map((choice, i) => {
-            console.log(choice);
-            console.log(filter.type + " " + filter.name + " " + choice.value + " " + choice.content);
             return (
                <p key={i}><input type={filter.type} name={filter.name} value={choice.value}></input>{choice.content}<br></br></p>
             );
         });
-        console.log(" ");
-    return <div className="customCard"><h3>{filter.header}</h3>{choices}</div>
+    return <div className="card"><h3>{filter.header}</h3>{choices}</div>
     }
 }
 
-class ResultField extends Component {
-    render() {
-        return (
-            <section id="course-results" className="schedule searchResult">
-                <h2>Recommended Courses</h2>
-            </section>
-        )
-    }
-}
+
 export default App;

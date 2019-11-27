@@ -40,7 +40,7 @@ html {
   }
   button {
       height: 2.5rem;
-      font-size: 1.5rem;
+      font-size: 1rem;
       border: 0;
       background-color: white;
   }
@@ -56,6 +56,7 @@ html {
   }
   
   h3 {
+    padding-bottom: 0.5em;
     font-size: 1.7em;
   }
   
@@ -174,8 +175,9 @@ html {
     border-radius: 5px;
   }
   
-  .customCard {
+  .card {
     padding-top: 10px;
+    padding-bottom: 0.5em;
     margin-top: 10px;
     border-top: .5px solid rgb(213, 213, 213);
     background-color: transparent;
@@ -185,13 +187,13 @@ html {
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.16), 0 1px 3px rgba(0, 0, 0, 0.23);
   }
   
-  .subSection .customCard {
+  .subSection .card {
     text-align: center;
   }
   
   
   
-  .customCard p {
+  .card p {
       color: gray;
   }
   
