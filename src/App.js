@@ -9,6 +9,7 @@ import {ResultField} from './Event'
 import FILTERS from './filter.json';
 import logo from './img/logo.png';
 import data from './data/uwcourses.csv';
+import {searchCourse} from './Search.js';
 
 //App Render
 class App extends Component {
@@ -18,19 +19,7 @@ class App extends Component {
         this.state = {
           isLoading: "hidden", // for spinner
           allCourses: [],
-          displayCourses: [],
-          input: "",
-          prereq: "",
-          AofK: "",
-          quarter: "",
-          campus: "",
         }
-    }
-
-    form = (nameValueObj) => {
-        this.setState(nameValueObj);
-        console.log(this.state);
-        
     }
 
     componentDidMount() {
@@ -38,10 +27,10 @@ class App extends Component {
         this.render();
         d3.csv(data)
         .then((data) => {
-            console.log(data);
+            //console.log(data);
             this.setState({allCourses: data})
         }).then(() => {
-            console.log(this.state);
+            //console.log(this.state);
             this.setState({isLoading : "hidden"});
             
         }).catch(console.log.bind(console));
@@ -53,8 +42,7 @@ class App extends Component {
                 <div id="element-1">
                     <RenderNav/>
                 </div>
-                
-                <RenderMain isLoading={this.state.isLoading} allCourses={this.state.allCourses} formCallback={this.form}/>
+                <RenderMain isLoading={this.state.isLoading} allCourses={this.state.allCourses}/>
             </div>
         );
     }
@@ -89,7 +77,7 @@ class RenderMain extends Component {
                     </h1>
                 </header>
                 <main>
-                    <CoursePage isLoading={this.props.isLoading} allCourses={this.props.allCourses} formCallback={this.props.formCallback}/>
+                    <CoursePage isLoading={this.props.isLoading} allCourses={this.props.allCourses}/>
                 </main>
                 <footer>
                     <p><small>&copy; Copyright 2019, <a href="mailto:erinchang0306@gmail.com">Erin Chang</a>, <a
@@ -101,24 +89,62 @@ class RenderMain extends Component {
 }
 
 class CoursePage extends Component {
+    constructor(props) {
+        super(props)
+    
+        this.state = {
+          displayCourses: [],
+          input: "",
+          prereq: "",
+          AofK: "",
+          quarter: "",
+          campus: "",
+        }
+    }
+
+    form = (nameValueObj) => {
+        this.setState(nameValueObj);
+        console.log(this.state);
+        
+    }
+
+    input = (newInput) => {
+        this.setState(newInput);
+    }
+
+    data = (dataObj) => {
+        this.setState(dataObj);
+    }
+
     render() {
         return (
         <div id="course-page">
-            <SearchField formCallback={this.props.formCallback}/>
-            <ResultField isLoading={this.props.isLoading} allCourses={this.props.allCourses}/>
+            <SearchField allCourses={this.props.allCourses} formCallback={this.form} dataCallback={this.data} inputCallback={this.input}
+            input={this.state.input} prereq={this.state.prereq} AofK={this.state.AofK} quarter={this.state.quarter} campus={this.state.campus}/>
+            <ResultField isLoading={this.props.isLoading} displayCourses={this.state.displayCourses}/>
         </div>
         );
     }
 }
 
 class SearchField extends Component {
+    handleClick = (event) => {
+        let filteredData = searchCourse(this.props.allCourses, this.props.input, this.props.AofK, this.props.quarter, this.props.campus);
+        this.props.dataCallback({displayCourses : filteredData});
+        event.preventDefault();
+    }
+
+    handleChange = (event) => {
+        this.props.inputCallback({input : event.target.value});
+    }
+
     render() {
         return(
             <section className="schedule">
                 <h2>Find Recommended Courses</h2>      
                 <form className="searchBox" role="search">
                     <input id="searchField" type="text" title="searchBox"
-                        placeholder="Enter department code (e.g INFO)"></input>
+                        placeholder="Enter department code (e.g INFO)" onChange={this.handleChange} ></input>
                     <button onClick={this.handleClick} className="searchButton"><FontAwesomeIcon icon={faSearch} aria-label="search"/></button>
                 </form>
                 <Filter filters={FILTERS} formCallback={this.props.formCallback}/>
@@ -140,9 +166,6 @@ class Filter extends Component {
                 <h2>Filters</h2>
                 <form>
                     {filterList}
-                    <div className="card">
-                        <button className="clickable" onClick={this.handleClick} type="submit">Update Filter</button>
-                    </div>
                 </form>
             </section>
         );
@@ -150,13 +173,13 @@ class Filter extends Component {
 }
 
 class FilterCard extends Component {
+    handleChange = (evt) => {
+        console.log(evt.target.name, evt.target.value);
+        this.Obj = { [evt.target.name]: evt.target.value };
+        this.props.formCallback(this.Obj);
+    }
+
     render() {
-        
-        this.handleChange = (evt) => {
-            console.log(evt.target.name, evt.target.value);
-            this.Obj = { [evt.target.name]: evt.target.value };
-            this.props.formCallback(this.Obj);
-        }
         let filter = this.props.filter;
         let choices = this.props.filter.element.map((choice, i) => {
             return (

@@ -1,15 +1,13 @@
 import React, {Component} from 'react';
 
 export class ResultField extends Component {
-    
-
     render() {
         // console.log(this.props.isLoading);
         return (
             <section id="course-results" className="schedule searchResult">
                 <h2>Recommended Courses</h2>
                 <p className={this.props.isLoading}>Loading data...</p>
-                <RenderData courses={this.props.allCourses}/>
+                <RenderData courses={this.props.displayCourses}/>
             </section>
         );
     }
