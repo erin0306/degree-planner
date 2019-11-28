@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as d3 from 'd3';
 
 //Import Local Files and Components
-import {ResultField} from './Event'
+import {ResultField} from './Data.js'
 import FILTERS from './filter.json';
 import logo from './img/logo.png';
 import data from './data/uwcourses.csv';

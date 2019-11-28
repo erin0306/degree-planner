@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 
 export class ResultField extends Component {
     render() {
-        // console.log(this.props.isLoading);
         return (
             <section id="course-results" className="schedule searchResult">
                 <h2>Recommended Courses</h2>
@@ -14,6 +13,14 @@ export class ResultField extends Component {
 }
 
 class RenderData extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            
+        }
+    }
+
     render() {
         let data = this.props.courses.map(course => {
             let uniqueKey = course.Department + course.Code;
