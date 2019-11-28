@@ -9,7 +9,7 @@ import {ResultField} from './Data.js'
 import FILTERS from './filter.json';
 import logo from './img/logo.png';
 import data from './data/uwcourses.csv';
-import {searchCourse} from './Search.js';
+// import {searchCourse} from './Search.js';
 
 //App Render
 class App extends Component {
@@ -94,6 +94,37 @@ class CoursePage extends Component {
     
         this.state = {
           displayCourses: [],
+        //   input: "",
+        //   prereq: "",
+        //   AofK: "",
+        //   quarter: "",
+        //   campus: "",
+        }
+    }
+
+    updateDisplay = (dataObj) => {
+        this.setState(dataObj);
+    }
+
+    
+    render() {
+        console.log(this.state);
+        return (
+        <div id="course-page">
+            <SearchField allCourses={this.props.allCourses} formCallback={this.updateForm} updateDisplayCallback={this.updateDisplay} inputCallback={this.updateInput}
+            // input={this.state.input} prereq={this.state.prereq} AofK={this.state.AofK} quarter={this.state.quarter} campus={this.state.campus}
+            />
+            <ResultField isLoading={this.props.isLoading} displayCourses={this.state.displayCourses}/>
+        </div>
+        );
+    }
+}
+
+class SearchField extends Component {
+    constructor(props) {
+        super(props)
+    
+        this.state = {
           input: "",
           prereq: "",
           AofK: "",
@@ -102,43 +133,53 @@ class CoursePage extends Component {
         }
     }
 
-    form = (nameValueObj) => {
-        this.setState(nameValueObj);
-        console.log(this.state);
-        
+    searchCourse = () => {
+        let result = this.props.allCourses.filter(course => course["Department"].includes(this.state.input));
+        result = result.filter(course => course["Areas of Knowledge"].includes(this.state.AofK));
+        result = result.filter(course => course["Offered"].includes(this.state.quarter));
+        result = result.filter(course => course["Campus"].includes(this.state.campus));
+        return result;
     }
 
-    input = (newInput) => {
+    updateForm = (nameValueObj) => {
+        this.setState(nameValueObj, () => { 
+            let filteredData = this.searchCourse();
+            console.log(filteredData);
+            this.props.updateDisplayCallback({displayCourses : filteredData});
+        });
+    }
+
+    updateInput = (newInput) => {
         this.setState(newInput);
     }
 
-    data = (dataObj) => {
-        this.setState(dataObj);
-    }
+    resetFilter  = (event) => {
+        let currentInput = this.state.input;
+        this.setState({
+            input: currentInput,
+            prereq: "",
+            AofK: "",
+            quarter: "",
+            campus: "",
+          });
+        event.preventDefault();
+    }    
 
-    render() {
-        return (
-        <div id="course-page">
-            <SearchField allCourses={this.props.allCourses} formCallback={this.form} dataCallback={this.data} inputCallback={this.input}
-            input={this.state.input} prereq={this.state.prereq} AofK={this.state.AofK} quarter={this.state.quarter} campus={this.state.campus}/>
-            <ResultField isLoading={this.props.isLoading} displayCourses={this.state.displayCourses}/>
-        </div>
-        );
-    }
-}
-
-class SearchField extends Component {
     handleClick = (event) => {
-        let filteredData = searchCourse(this.props.allCourses, this.props.input, this.props.AofK, this.props.quarter, this.props.campus);
-        this.props.dataCallback({displayCourses : filteredData});
+        // console.log(this.props.allCourses);
+        // let filteredData = searchCourse(this.props.allCourses, this.state.input, this.state.AofK, this.state.quarter, this.state.campus);
+        let filteredData = this.searchCourse();
+        console.log(filteredData);
+        this.props.updateDisplayCallback({displayCourses : filteredData});
         event.preventDefault();
     }
 
     handleChange = (event) => {
-        this.props.inputCallback({input : event.target.value});
+        this.updateInput({input : event.target.value});
     }
 
     render() {
+        console.log("search field!!!!!!!!!!", this.state);
         return(
             <section className="schedule">
                 <h2>Find Recommended Courses</h2>      
@@ -147,7 +188,8 @@ class SearchField extends Component {
                         placeholder="Enter department code (e.g INFO)" onChange={this.handleChange} ></input>
                     <button onClick={this.handleClick} className="searchButton"><FontAwesomeIcon icon={faSearch} aria-label="search"/></button>
                 </form>
-                <Filter filters={FILTERS} formCallback={this.props.formCallback}/>
+                <Filter filters={FILTERS} formCallback={this.updateForm} resetFilterCallback={this.resetFilter}/>
+                
             </section>
         );
     }
@@ -166,6 +208,9 @@ class Filter extends Component {
                 <h2>Filters</h2>
                 <form>
                     {filterList}
+                    <div className="card">
+                        <button onClick={this.props.resetFilterCallback}>Reset</button>
+                    </div>
                 </form>
             </section>
         );
@@ -174,7 +219,7 @@ class Filter extends Component {
 
 class FilterCard extends Component {
     handleChange = (evt) => {
-        console.log(evt.target.name, evt.target.value);
+        // console.log(evt.target.name, evt.target.value);
         this.Obj = { [evt.target.name]: evt.target.value };
         this.props.formCallback(this.Obj);
     }
