@@ -9,7 +9,6 @@ import {ResultField} from './Data.js'
 import FILTERS from './filter.json';
 import logo from './img/logo.png';
 import data from './data/uwcourses.csv';
-// import {searchCourse} from './Search.js';
 
 //App Render
 class App extends Component {
@@ -19,6 +18,7 @@ class App extends Component {
         this.state = {
           isLoading: "hidden", // for spinner
           allCourses: [],
+          page: "Courses"
         }
     }
 
@@ -36,19 +36,28 @@ class App extends Component {
         }).catch(console.log.bind(console));
     }
 
+    changePage = (newPage) => {
+        this.setState({page : newPage});
+    }
+
     render() {
         return (
             <div className="body-flex">
                 <div id="element-1">
-                    <RenderNav/>
+                    <RenderNav pageCallback={this.changePage}/>
                 </div>
-                <RenderMain isLoading={this.state.isLoading} allCourses={this.state.allCourses}/>
+                <RenderMain page={this.state.page} isLoading={this.state.isLoading} allCourses={this.state.allCourses}/>
             </div>
         );
     }
 }
 
 class RenderNav extends Component {
+    handleClick = (evt) => {
+        console.log(evt.target.id);
+        return this.props.pageCallback(evt.target.id);
+    }
+
     render() {
         return (
             <nav>
@@ -56,8 +65,8 @@ class RenderNav extends Component {
                     <img src={logo} alt="logo"></img>
                 </div>
                 <ul>
-                    <li id="dashboard"><a href="#dashboard" role="tab"><FontAwesomeIcon icon={faHome} aria-hidden="true"/><span>&nbsp;&nbsp;</span>Dashboard</a></li>
-                    <li id="courses"><a href="#courses" role="tab" className="active"><FontAwesomeIcon icon={faBookOpen} aria-hidden="true"/><span>&nbsp;&nbsp;</span>Courses</a></li>
+                    <li onClick={this.handleClick}><a href="#dashboard" id="Dashboard" role="tab"><FontAwesomeIcon icon={faHome} aria-hidden="true"/><span>&nbsp;&nbsp;</span>Dashboard</a></li>
+                    <li onClick={this.handleClick}><a id="Courses" href="#courses" role="tab"><FontAwesomeIcon icon={faBookOpen} aria-hidden="true"/><span>&nbsp;&nbsp;</span>Courses</a></li>
                     <li><a href="#programs" role="tab"><FontAwesomeIcon icon={faGraduationCap} aria-hidden="true"/><span>&nbsp;</span>Programs</a></li>
                     <li><a href="#profile" role="tab"><FontAwesomeIcon icon={faUserAlt} aria-hidden="true"/><span>&nbsp;&nbsp;</span>Profile</a></li>
                 </ul>
@@ -67,17 +76,24 @@ class RenderNav extends Component {
 }
 
 class RenderMain extends Component {
+    choosePage() {
+        if (this.props.page === "Courses") {
+            return <CoursePage isLoading={this.props.isLoading} allCourses={this.props.allCourses}/>
+        }
+        return <DashboardPage/>
+    }
+
     render() {
         return (
             <div id="element-2">
                 <header>
                     <h1>
                         <div className="hamburger-menu"><FontAwesomeIcon icon={faGripLines} aria-label="Menu"/></div>
-                        Courses<button><FontAwesomeIcon icon={faSignOutAlt} aria-label="Sign out"/></button>
+                        {this.props.page}<button><FontAwesomeIcon icon={faSignOutAlt} aria-label="Sign out"/></button>
                     </h1>
                 </header>
                 <main>
-                    <CoursePage isLoading={this.props.isLoading} allCourses={this.props.allCourses}/>
+                    {this.choosePage()}
                 </main>
                 <footer>
                     <p><small>&copy; Copyright 2019, <a href="mailto:erinchang0306@gmail.com">Erin Chang</a>, <a
@@ -88,17 +104,127 @@ class RenderMain extends Component {
     }
 }
 
+class DashboardPage extends Component {
+    render() {
+        return (
+            <div id="dashboard-page">
+                <div className="flex-container">
+                    <section className="subSection">
+                        <div className="profile">
+                            <h2>Student Profile</h2>
+                            <div className="card">
+                                <h3>Khoa Nguyen Luong</h3>
+                                <p>Junior</p>
+                                <p>ID: 9999999</p>
+                            </div>
+                        </div>
+                        <div className="profile">
+                            <h2>Intended Major</h2>
+                            <div className="card">
+                                <h3>Informatics</h3>
+                                <p>HCI Track</p>
+                            </div>
+                        </div>
+                        <div className="profile">
+                            <h2>Graduation Progress</h2>
+                            <div className="card">
+                                <h3>100 credits</h3>
+                                <p>40 intended major credits</p>
+                            </div>
+                        </div>
+                    </section>
+                    <section className="subSection">
+                        <h2>Current Courses</h2>
+                        <div className="card">
+                            <h3>INFO 201</h3>
+                            <p>AU18 &vert; IS</p>
+                        </div>
+                        <div className="card">
+                                <h3>INFO 200</h3>
+                                <p>AU18 &vert; IS</p>
+                        </div>
+                        <div className="card">
+                                <h3>CSE 142</h3>
+                                <p>AU17 &vert; NW</p>
+                        </div>
+                        <div className="card">
+                                <h3>CSE 143</h3>
+                                <p>AU18 &vert; NW</p>
+                        </div>
+                        <div className="card">
+                            <h3>ECON 200</h3>
+                            <p>AU17 &vert; NW</p>
+                        </div>
+                        <div className="card">
+                                <h3>ENGL 131</h3>
+                                <p>AU17 &vert; C</p>
+                        </div>
+                        <div className="card">
+                            <p>Click to reveal more</p>
+                        </div>
+                    </section>
+                    <section className="subSection">
+                        <h2>Future Courses</h2>
+                        <div className="card">
+                            <h3>MATH 126</h3>
+                            <p>WIN19 &vert; NW</p>
+                        </div>
+                        <div className="card">
+                                <h3>PSYCH 210</h3>
+                                <p>WIN19 &vert; IS</p>
+                        </div>
+                        <div className="card">
+                                <h3>INFO 340</h3>
+                                <p>SPR19 &vert; NW</p>
+                        </div>
+                        <div className="card">
+                                <h3>CSE 373</h3>
+                                <p>WIN19 &vert; NW</p>
+                        </div>
+                        <div className="card">
+                            <h3>INFO 360</h3>
+                            <p>SPR19 &vert; VLPA</p>
+                        </div>
+                        <div className="card">
+                            <h3>INFO 350</h3>
+                            <p>SPR19 &vert; I&amp;S W</p>
+                        </div>
+                        <div className="card">
+                            <p>Click to reveal more</p>
+                        </div>
+                    </section>
+                </div>
+                <section className="schedule">
+                    <h2>Recommended Courses</h2>
+                    <div className="clickable card">
+                        <h3>INFO 340 Client-Side Development</h3>
+                        <p>You have prereqs for this class: CSE 142 or CSE 143; and INFO 201</p>
+                    </div>
+                    <div className="clickable card">
+                        <h3>EDUC 251 Seeking Educational Equity and Diversity</h3>
+                        <p>Because you need DIV credits</p>
+                    </div>
+                    <div className="clickable card">
+                        <h3>MKTG 301 Marketing Concepts</h3>
+                        <p>You have prereqs for this class: ECON 200 <br></br>>
+                            It is an eligible elective for your program</p>
+                    </div>
+                    <div className="clickable card">
+                        <h3>INFO 350 Information Ethics And Policy</h3>
+                        <p>It is a graduation requirement <br></br> Because you need W credits</p>
+                    </div>
+                </section>
+            </div>
+        );
+    }
+}
+
 class CoursePage extends Component {
     constructor(props) {
         super(props)
     
         this.state = {
-          displayCourses: [],
-        //   input: "",
-        //   prereq: "",
-        //   AofK: "",
-        //   quarter: "",
-        //   campus: "",
+          displayCourses: []
         }
     }
 
@@ -111,9 +237,7 @@ class CoursePage extends Component {
         console.log(this.state);
         return (
         <div id="course-page">
-            <SearchField allCourses={this.props.allCourses} formCallback={this.updateForm} updateDisplayCallback={this.updateDisplay} inputCallback={this.updateInput}
-            // input={this.state.input} prereq={this.state.prereq} AofK={this.state.AofK} quarter={this.state.quarter} campus={this.state.campus}
-            />
+            <SearchField allCourses={this.props.allCourses} updateDisplayCallback={this.updateDisplay} inputCallback={this.updateInput}/>
             <ResultField isLoading={this.props.isLoading} displayCourses={this.state.displayCourses}/>
         </div>
         );
@@ -142,11 +266,7 @@ class SearchField extends Component {
     }
 
     updateForm = (nameValueObj) => {
-        this.setState(nameValueObj, () => { 
-            let filteredData = this.searchCourse();
-            console.log(filteredData);
-            this.props.updateDisplayCallback({displayCourses : filteredData});
-        });
+        this.setState(nameValueObj);
     }
 
     updateInput = (newInput) => {
@@ -166,8 +286,6 @@ class SearchField extends Component {
     }    
 
     handleClick = (event) => {
-        // console.log(this.props.allCourses);
-        // let filteredData = searchCourse(this.props.allCourses, this.state.input, this.state.AofK, this.state.quarter, this.state.campus);
         let filteredData = this.searchCourse();
         console.log(filteredData);
         this.props.updateDisplayCallback({displayCourses : filteredData});
@@ -202,7 +320,6 @@ class Filter extends Component {
                 <FilterCard key={i} filter={element} formCallback={this.props.formCallback}/>
             );
         });
-        // this.handleClick = () => this.props.updateFilterCallback(); // param
         return (
             <section className="subSection2">
                 <h2>Filters</h2>
@@ -219,7 +336,7 @@ class Filter extends Component {
 
 class FilterCard extends Component {
     handleChange = (evt) => {
-        // console.log(evt.target.name, evt.target.value);
+        console.log(evt);
         this.Obj = { [evt.target.name]: evt.target.value };
         this.props.formCallback(this.Obj);
     }

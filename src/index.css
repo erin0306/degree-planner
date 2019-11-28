@@ -98,7 +98,7 @@ html {
     box-shadow: 0 2px 3px rgba(0, 0, 0, 0.16);
   }
   
-  form button {
+  form button, .card button {
     float: left;
     width: 20%;
     padding: 10px;
@@ -112,7 +112,7 @@ html {
     box-shadow: 0 2px 3px rgba(0, 0, 0, 0.16);
   }
   
-  form button:hover {
+  form button:hover, .card button:hover {
     background: #4e3199;
   }
   
