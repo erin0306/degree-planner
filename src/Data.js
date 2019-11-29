@@ -33,17 +33,17 @@ class RenderData extends Component {
         if (this.state.output !== "") {
             return "";
         }
-        let offered = this.props.Offered;
-        if (this.props.course.Offered === "A,W,Sp,S" || this.props.Offered === undefined) {
-            offered = "All";
-        }
+        let offered = this.props.course.Offered;
+        // if (this.props.course.Offered === "A,W,Sp,S" || this.props.Offered === undefined) {
+        //     offered = "All";
+        // }
         return <div className="card panel">
                 <b>Campus: </b>{this.props.course["Campus"]}<br></br> 
                 <b>Credits: </b>{this.props.course["Credits"]}<br></br>
                 <b>Areas of Knowledge: </b>{this.props.course["Areas of Knowledge"]}<br></br>
                 <b>Prerequisites: </b>{this.props.course["Prerequisites"]}<br></br>
                 <b>Quarter(s) Offered: </b>{offered}<br></br>
-                <button class="clickable">Add to Plan</button>
+                <button className="clickable">Add to Plan</button>
             </div>
     }
 
