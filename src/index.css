@@ -31,20 +31,26 @@ html {
   h1 {
       margin: 0;
       font-family: 'Encode Sans', sans-serif;
-      padding: .8rem .8em;
+      padding: .8rem .3em;
       font-size: 3em;
       color: #4e3199;
       display: flex;
       justify-content: space-between;
       box-shadow: 0 2px 3px rgba(0, 0, 0, 0.16);
   }
+  
   button {
       height: 2.5rem;
       font-size: 1rem;
       border: 0;
       background-color: white;
   }
-  .fa-sign-out-alt, .fa-bars  {
+
+  .nav-buttons {
+    font-size: 0.8em;
+  }
+
+  .fa-sign-out-alt, .fa-grip-lines  {
     color: #4e3199;
   }
   
@@ -68,7 +74,7 @@ html {
     background-color: #ffffff;
   }
   
-  .hamburger-menu {
+  #hamburger-menu {
     display: inline;
   }
   
@@ -78,6 +84,10 @@ html {
   
   p {
       line-height: 1.5;
+  }
+
+  span {
+    font-weight: 900;
   }
   
   .flex-container {
@@ -112,6 +122,10 @@ html {
     box-shadow: 0 2px 3px rgba(0, 0, 0, 0.16);
   }
   
+  #reset-btn {
+    width: 5em;
+  }
+
   form button:hover, .card button:hover {
     background: #4e3199;
   }
@@ -125,7 +139,7 @@ html {
   #element-2 {
     flex: 1;
     background-color: #f2eefa;
-    background-image: url("./img/husky-background.png");
+    background-image: url("./img/husky-background-small.png");
     background-position: center;
     background-repeat: no-repeat;
     background-size: 50rem;
@@ -265,7 +279,6 @@ html {
     display: none;
   }
   
-  
   @media (min-width: 700px) {
     .subSection {
       flex-basis: auto;
@@ -273,11 +286,15 @@ html {
     #element-1 {
       display: block;
     }
-    .hamburger-menu {
+    #element-2 {
+      background-image: url("./img/husky-background-medium.png");
+    }
+    #hamburger-menu {
       display: none;
     }
     h1 {
       font-size: 2em;
+      padding: .8rem .8em;
     }
     h2 {
       font-size: 1.5em;
@@ -287,3 +304,9 @@ html {
     }
   }
   
+  @media (min-width: 1200px) {
+    #element-2 {
+      background-image: url("./img/husky-background-large.png");
+
+    }
+  }

@@ -10,13 +10,14 @@ import FILTERS from './filter.json';
 import logo from './img/logo.png';
 import data from './data/uwcourses.csv';
 
+
 //App Render
 class App extends Component {
     constructor(props) {
         super(props)
     
         this.state = {
-          isLoading: "hidden", // for spinner
+          isLoading: "hidden",
           allCourses: [],
           page: "Courses"
         }
@@ -27,13 +28,11 @@ class App extends Component {
         this.render();
         d3.csv(data)
         .then((data) => {
-            //console.log(data);
             this.setState({allCourses: data})
         }).then(() => {
-            //console.log(this.state);
             this.setState({isLoading : "hidden"});
             
-        }).catch(console.log.bind(console));
+        }).catch((error) => {alert(error)});
     }
 
     changePage = (newPage) => {
@@ -54,7 +53,6 @@ class App extends Component {
 
 class RenderNav extends Component {
     handleClick = (evt) => {
-        console.log(evt.target.id);
         return this.props.pageCallback(evt.target.id);
     }
 
@@ -88,8 +86,8 @@ class RenderMain extends Component {
             <div id="element-2">
                 <header>
                     <h1>
-                        <div className="hamburger-menu"><FontAwesomeIcon icon={faGripLines} aria-label="Menu"/></div>
-                        {this.props.page}<button><FontAwesomeIcon icon={faSignOutAlt} aria-label="Sign out"/></button>
+                        <div><button id="hamburger-menu" className="nav-buttons"><FontAwesomeIcon icon={faGripLines} aria-label="Menu"/></button></div>
+                        {this.props.page}<div ><button className="nav-buttons"><FontAwesomeIcon icon={faSignOutAlt} aria-label="Sign out"/></button></div>
                     </h1>
                 </header>
                 <main>
@@ -234,7 +232,6 @@ class CoursePage extends Component {
 
     
     render() {
-        console.log(this.state);
         return (
         <div id="course-page">
             <SearchField allCourses={this.props.allCourses} updateDisplayCallback={this.updateDisplay} inputCallback={this.updateInput}/>
@@ -266,7 +263,10 @@ class SearchField extends Component {
     }
 
     updateForm = (nameValueObj) => {
-        this.setState(nameValueObj);
+        this.setState(nameValueObj, () => { 
+            let filteredData = this.searchCourse();
+            this.props.updateDisplayCallback({displayCourses : filteredData});
+        });
     }
 
     updateInput = (newInput) => {
@@ -275,19 +275,15 @@ class SearchField extends Component {
 
     resetFilter  = (event) => {
         let currentInput = this.state.input;
-        this.setState({
-            input: currentInput,
-            prereq: "",
-            AofK: "",
-            quarter: "",
-            campus: "",
-          });
+        this.setState({input: currentInput, prereq: "", AofK: "", quarter: "",  campus: "" }, () => { 
+            let filteredData = this.searchCourse();
+            this.props.updateDisplayCallback({displayCourses : filteredData});
+        });
         event.preventDefault();
     }    
 
     handleClick = (event) => {
         let filteredData = this.searchCourse();
-        console.log(filteredData);
         this.props.updateDisplayCallback({displayCourses : filteredData});
         event.preventDefault();
     }
@@ -297,7 +293,6 @@ class SearchField extends Component {
     }
 
     render() {
-        console.log("search field!!!!!!!!!!", this.state);
         return(
             <section className="schedule">
                 <h2>Find Recommended Courses</h2>      
@@ -326,7 +321,7 @@ class Filter extends Component {
                 <form>
                     {filterList}
                     <div className="card">
-                        <button onClick={this.props.resetFilterCallback}>Reset</button>
+                        <button id="reset-btn" onClick={this.props.resetFilterCallback}>Reset</button>
                     </div>
                 </form>
             </section>
@@ -336,7 +331,6 @@ class Filter extends Component {
 
 class FilterCard extends Component {
     handleChange = (evt) => {
-        console.log(evt);
         this.Obj = { [evt.target.name]: evt.target.value };
         this.props.formCallback(this.Obj);
     }
