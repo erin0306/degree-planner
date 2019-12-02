@@ -263,10 +263,7 @@ class SearchField extends Component {
     }
 
     updateForm = (nameValueObj) => {
-        this.setState(nameValueObj, () => { 
-            let filteredData = this.searchCourse();
-            this.props.updateDisplayCallback({displayCourses : filteredData});
-        });
+        this.setState(nameValueObj);
     }
 
     updateInput = (newInput) => {
@@ -275,11 +272,7 @@ class SearchField extends Component {
 
     resetFilter  = (event) => {
         let currentInput = this.state.input;
-        this.setState({input: currentInput, prereq: "", AofK: "", quarter: "",  campus: "" }, () => { 
-            let filteredData = this.searchCourse();
-            this.props.updateDisplayCallback({displayCourses : filteredData});
-        });
-        event.preventDefault();
+        this.setState({input: currentInput, prereq: "", AofK: "", quarter: "",  campus: "" });
     }    
 
     handleClick = (event) => {
