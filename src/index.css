@@ -259,22 +259,6 @@ html {
     overflow: hidden;
   }
   
-  .star {
-    visibility:hidden;
-    cursor:pointer;
-    color: #4e3199;
-  }
-  .star:checked:before {
-   content: "\2605";
-   position: absolute;
-   
-  }
-  .star:before {
-   content: "\2606";
-   position: absolute;
-   visibility:visible;
-  }
-  
   .hidden {
     display: none;
   }
