@@ -12,12 +12,25 @@ export class CoursePage extends Component {
         super(props)
     
         this.state = {
-          displayCourses: []
+          displayCourses: [],
+          loading: 'hidden',
         }
     }
 
-    updateDisplay = (dataObj) => {
-        this.setState(dataObj);
+    updateLoading = () => {
+        this.setState({loading: 'hidden'});
+        console.log('updateLoading');
+    }
+
+    updateDisplay = (input, AofK, quarter, campus) => {
+        this.setState({loading: ''});
+        console.log("loading: ''");
+        let result = this.props.allCourses.filter(course => course["Department"].includes(input));
+        result = result.filter(course => course["Areas of Knowledge"].includes(AofK));
+        result = result.filter(course => course["Offered"].includes(quarter));
+        result = result.filter(course => course["Campus"].includes(campus));
+        
+        this.setState({displayCourses: result});
     }
 
     
@@ -25,7 +38,7 @@ export class CoursePage extends Component {
         return (
         <div id="course-page">
             <SearchField allCourses={this.props.allCourses} updateDisplayCallback={this.updateDisplay} inputCallback={this.updateInput}/>
-            <ResultField isLoading={this.props.isLoading} displayCourses={this.state.displayCourses}/>
+            <ResultField loading={this.state.loading} loadingCallback={this.updateLoading} displayCourses={this.state.displayCourses}/>
         </div>
         );
     }
@@ -44,16 +57,11 @@ class SearchField extends Component {
         }
     }
 
-    searchCourse = () => {
-        let result = this.props.allCourses.filter(course => course["Department"].includes(this.state.input));
-        result = result.filter(course => course["Areas of Knowledge"].includes(this.state.AofK));
-        result = result.filter(course => course["Offered"].includes(this.state.quarter));
-        result = result.filter(course => course["Campus"].includes(this.state.campus));
-        return result;
-    }
-
     updateForm = (nameValueObj) => {
-        this.setState(nameValueObj);
+        this.setState(nameValueObj, () => {
+            // plz don't delete this callback Tim wants filters applied directly
+            this.props.updateDisplayCallback(this.state.input, this.state.AofK, this.state.quarter, this.state.campus);
+        });
     }
 
     updateInput = (newInput) => {
@@ -66,8 +74,9 @@ class SearchField extends Component {
     }    
 
     handleClick = (event) => {
-        let filteredData = this.searchCourse();
-        this.props.updateDisplayCallback({displayCourses : filteredData});
+        // let filteredData = this.searchCourse();
+        // this.props.updateDisplayCallback({displayCourses : filteredData});
+        this.props.updateDisplayCallback(this.state.input, this.state.AofK, this.state.quarter, this.state.campus);
         event.preventDefault();
     }
 
@@ -120,9 +129,9 @@ class FilterCard extends Component {
 
     render() {
         let filter = this.props.filter;
-        let choices = this.props.filter.element.map((choice, i) => {
+        let choices = this.props.filter.element.map((choice) => {
             return (
-               <p key={i}><input type={filter.type} name={filter.name} value={choice.value} onChange={this.handleChange}></input>{choice.content}<br></br></p>
+               <p key={choice.value}><input type={filter.type} name={filter.name} value={choice.value} onChange={this.handleChange}></input>{choice.content}<br></br></p>
             );
         });
         
