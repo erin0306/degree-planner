@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import { BrowserRouter as Router, Route, Link, Switch, NavLink } from 'react-router-dom';
+
 
 export class DashboardPage extends Component {
     render() {
@@ -33,60 +35,60 @@ export class DashboardPage extends Component {
                         <h2>Current Courses</h2>
                         <div className="card">
                             <h3>INFO 201</h3>
-                            <p>AU18 &vert; IS</p>
+                            <p>AU18 | IS</p>
                         </div>
                         <div className="card">
                                 <h3>INFO 200</h3>
-                                <p>AU18 &vert; IS</p>
+                                <p>AU18 | IS</p>
                         </div>
                         <div className="card">
                                 <h3>CSE 142</h3>
-                                <p>AU17 &vert; NW</p>
+                                <p>AU17 | NW</p>
                         </div>
                         <div className="card">
                                 <h3>CSE 143</h3>
-                                <p>AU18 &vert; NW</p>
+                                <p>AU18 | NW</p>
                         </div>
                         <div className="card">
                             <h3>ECON 200</h3>
-                            <p>AU17 &vert; NW</p>
+                            <p>AU17 | NW</p>
                         </div>
                         <div className="card">
                                 <h3>ENGL 131</h3>
-                                <p>AU17 &vert; C</p>
+                                <p>AU17 | C</p>
                         </div>
                         <div className="card">
                             <p>Click to reveal more</p>
                         </div>
                     </section>
                     <section className="subSection">
-                        <h2>Future Courses</h2>
+                        <h2>Planned Courses</h2>
                         <div className="card">
                             <h3>MATH 126</h3>
-                            <p>WIN19 &vert; NW</p>
+                            <p>WIN19 | NW</p>
                         </div>
                         <div className="card">
                                 <h3>PSYCH 210</h3>
-                                <p>WIN19 &vert; IS</p>
+                                <p>WIN19 | IS</p>
                         </div>
                         <div className="card">
                                 <h3>INFO 340</h3>
-                                <p>SPR19 &vert; NW</p>
+                                <p>SPR19 | NW</p>
                         </div>
                         <div className="card">
                                 <h3>CSE 373</h3>
-                                <p>WIN19 &vert; NW</p>
+                                <p>WIN19 | NW</p>
                         </div>
                         <div className="card">
                             <h3>INFO 360</h3>
-                            <p>SPR19 &vert; VLPA</p>
+                            <p>SPR19 | VLPA</p>
                         </div>
                         <div className="card">
                             <h3>INFO 350</h3>
-                            <p>SPR19 &vert; I&amp;S W</p>
+                            <p>SPR19  | I&amp;S W</p>
                         </div>
                         <div className="card">
-                            <p>Click to reveal more</p>
+                            <p><Link to='/yourplan'>View All Planned Courses</Link></p>
                         </div>
                     </section>
                 </div>
