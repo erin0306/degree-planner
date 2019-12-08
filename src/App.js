@@ -8,13 +8,12 @@ import * as d3 from 'd3';
 import { DashboardPage } from './Dashboard.js';
 import { CoursePage } from './Courses.js'
 import { Plan } from './Plan.js'
+import {SignIn} from './SignIn.js'
 import logo from './img/logo.png';
 import data from './data/uwcourses.csv';
 
 // Router
-import { BrowserRouter as Router, Route, Link, Switch, NavLink } from 'react-router-dom';
-import { Redirect } from 'react-router-dom';
-
+import { BrowserRouter as Router, Route, Link, Switch, NavLink, Redirect } from 'react-router-dom';
 //App Render
 class App extends Component {
     constructor(props) {
@@ -22,8 +21,8 @@ class App extends Component {
 
         this.state = {
             allCourses: [],
-            page: "Courses"
-        }
+            page: "Dashboard"
+        };
     }
 
     componentDidMount() {
@@ -52,10 +51,6 @@ class App extends Component {
 }
 
 class RenderNav extends Component {
-    // handleClick = (evt) => {
-    //     return this.props.pageCallback(evt.target.id);
-    // }
-
     render() {
         return (
             <nav>
@@ -99,8 +94,8 @@ class RenderMain extends Component {
                                 </nav>
                             </div>
                         </div>
-
-                        {this.props.page}<div ><button className="nav-buttons"><FontAwesomeIcon icon={faSignOutAlt} aria-label="Sign out" /></button></div>
+                        {this.props.page}
+                        <div ><button className="nav-buttons"><FontAwesomeIcon icon={faSignOutAlt} aria-label="Sign out" /></button></div>
                     </h1>
                 </header>
 
@@ -114,6 +109,7 @@ class RenderMain extends Component {
                         <Route path='/yourplan' render={(routerProps) => (
                             <Plan {...routerProps} allCourses={this.props.allCourses} />
                         )} />
+                        <Redirect to='/dashboard'/>
                     </Switch>
                 </main>
                 <footer>

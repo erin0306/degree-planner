@@ -33,7 +33,7 @@ html {
       font-family: 'Encode Sans', sans-serif;
       padding-top: .7rem;
       height: 5rem;
-      font-size: 3em;
+      font-size: 2.5em;
       color: #4e3199;
       display: flex;
       justify-content: space-between;
@@ -62,12 +62,12 @@ html {
   h2 {
       font-weight: 100;
       color: #4e3199;
-      font-size: 2.3em;
+      font-size: 1.5em;
   }
   
   h3 {
     padding-bottom: 0.5em;
-    font-size: 1.7em;
+    font-size: 1.3em;
   }
   
   .subSection h2 {
@@ -146,16 +146,23 @@ html {
   
   form button, .card button {
     float: left;
-    width: 20%;
     padding: 10px;
     margin-top: 1em;
     background: #6040b1;
     color: white;
-    font-size: 17px;
+    font-size: 1rem;
     border: 1px solid grey;
     border-left: none;
     cursor: pointer;
     box-shadow: 0 2px 3px rgba(0, 0, 0, 0.16);
+  }
+
+  form button {
+    width: 20%;
+  }
+
+  .card button {
+    width: 50%;
   }
   
   #reset-btn {
@@ -332,6 +339,9 @@ html {
     }
     .dropdown {
       display: none;
+    }
+    .card button {
+      width: 10%;
     }
   }
   
