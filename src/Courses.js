@@ -94,7 +94,6 @@ class SearchField extends Component {
                     <button onClick={this.handleClick} className="searchButton"><FontAwesomeIcon icon={faSearch} aria-label="search"/></button>
                 </form>
                 <Filter filters={FILTERS} formCallback={this.updateForm} resetFilterCallback={this.resetFilter}/>
-                
             </section>
         );
     }
