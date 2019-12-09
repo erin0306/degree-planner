@@ -31,6 +31,7 @@ class App extends Component {
             .then((data) => {
                 this.setState({ allCourses: data })
             }).catch((error) => { alert(error) });
+            
     }
 
     changePage = (newPage) => {
