@@ -1,6 +1,6 @@
 //Import Packages
 import React, { Component } from 'react';
-import { faGripLines, faHome, faBookOpen, faGraduationCap, faUserAlt, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
+import { faSpinner, faGripLines, faHome, faBookOpen, faGraduationCap, faUserAlt, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as d3 from 'd3';
 
@@ -8,9 +8,10 @@ import * as d3 from 'd3';
 import { DashboardPage } from './Dashboard.js';
 import { CoursePage } from './Courses.js'
 import { Plan } from './Plan.js'
-import {SignIn} from './SignIn.js'
+import { SignIn } from './SignIn.js'
 import logo from './img/logo.png';
 import data from './data/uwcourses.csv';
+import firebase from 'firebase/app';
 
 // Router
 import { BrowserRouter as Router, Route, Link, Switch, NavLink, Redirect } from 'react-router-dom';
@@ -21,7 +22,8 @@ class App extends Component {
 
         this.state = {
             allCourses: [],
-            page: "Dashboard"
+            page: "Dashboard",
+            loading: true,
         };
     }
 
@@ -31,20 +33,110 @@ class App extends Component {
             .then((data) => {
                 this.setState({ allCourses: data })
             }).catch((error) => { alert(error) });
-            
+
+        this.authUnregFunc = firebase.auth().onAuthStateChanged((firebaseUser) => {
+            if (firebaseUser) { //firebaseUser defined: is logged in
+                console.log('logged in');
+                this.setState({ user: firebaseUser })
+
+                //do something with firebaseUser (e.g. assign with this.setState())
+            }
+            else { //firebaseUser undefined: is not logged in
+                console.log('logged out');
+
+                this.setState({ user: null });
+            }
+            this.setState({ loading: false });
+        });
+
     }
+
+    // componentDidMount() {
+
+    //   }
+
+    componentWillUnmount() {
+        this.authUnregFunc();
+    }
+    //A callback function for registering new users
+    handleSignUp = (email, password, handle, avatar) => {
+        this.setState({ errorMessage: null }); //clear any old errors
+
+        firebase.auth().createUserWithEmailAndPassword(email, password)
+            .then((credentials) => {
+                return credentials.user.updateProfile({
+                    displayName: handle,
+                    photoURL: avatar
+                })
+            }).catch((error) => {
+                // console.log(error.message);
+
+                // console.log("hi");
+                this.setState({ errorMessage: error.message });
+                console.log(this.state.errorMessage);
+            })
+
+    }
+
+    //A callback function for logging in existing users
+    handleSignIn = (email, password) => {
+        this.setState({ errorMessage: null }); //clear any old errors
+        firebase.auth().signInWithEmailAndPassword(email, password)
+            .catch((error) => {
+                this.setState({ errorMessage: error.message });
+            }); //log any errors for debugging
+
+        //sign out a user
+
+    }
+
+    //A callback function for logging out the current user
+    handleSignOut = () => {
+        this.setState({ errorMessage: null }); //clear any old errors
+        firebase.auth().signOut()
+            .catch((error) => {
+                this.setState({ errorMessage: error.message });
+            }); //log any errors for debugging
+    }
+
 
     changePage = (newPage) => {
         this.setState({ page: newPage });
     }
 
+
     render() {
+        let content = null; //content to render
+
+        if (!this.state.user) { //if logged out, show signup form
+            if (this.state.loading === true) {
+                content = (<div className="text-center">
+                    <h2>Loading...</h2>
+                </div>)
+            } else {
+                content = (
+
+                    <SignIn signUpCallback={this.handleSignUp}
+                        signInCallback={this.handleSignIn} errorMessage={this.state.errorMessage}/>
+                );
+            }
+        } else { //if logged in, show welcome message
+            content = (
+                <RenderMain user={this.state.user} signoutCallback={this.handleSignOut} page={this.state.page} allCourses={this.state.allCourses} />
+
+            );
+        }
+
         return (
             <div className="body-flex">
                 <div id="nav-element">
                     <RenderNav pageCallback={this.changePage} />
                 </div>
-                <RenderMain page={this.state.page} allCourses={this.state.allCourses} />
+                
+                {content}
+                {/* <SignIn signUpCallback={this.handleSignUp}
+                    signInCallback={this.handleSignIn} /> */}
+                {/* <RenderMain page={this.state.page} allCourses={this.state.allCourses} /> */}
             </div>
         );
     }
@@ -63,7 +155,7 @@ class RenderNav extends Component {
                     <li ><NavLink to="/dashboard" activeClassName="activeLink"><FontAwesomeIcon icon={faHome} aria-hidden="true" /><span>&nbsp;&nbsp;</span>Dashboard</NavLink></li>
                     <li><NavLink to="/findcourses" activeClassName="activeLink"><FontAwesomeIcon icon={faBookOpen} aria-hidden="true" /><span>&nbsp;&nbsp;</span>Courses</NavLink></li>
                     <li><a href="#programs" role="tab"><FontAwesomeIcon icon={faGraduationCap} aria-hidden="true" /><span>&nbsp;</span>Programs</a></li>
-                    <li><NavLink to="/yourplan" activeClassName="activeLink"><FontAwesomeIcon icon={faUserAlt} aria-hidden="true" /><span>&nbsp;&nbsp;</span>Your Plan</NavLink></li>                
+                    <li><NavLink to="/yourplan" activeClassName="activeLink"><FontAwesomeIcon icon={faUserAlt} aria-hidden="true" /><span>&nbsp;&nbsp;</span>Your Plan</NavLink></li>
                 </ul>
             </nav>
         );
@@ -97,7 +189,7 @@ class RenderMain extends Component {
                             </div>
                         </div>
                         {this.props.page}
-                        <div ><button className="nav-buttons"><FontAwesomeIcon icon={faSignOutAlt} aria-label="Sign out" /></button></div>
+                        <div ><button className="nav-buttons"><FontAwesomeIcon icon={faSignOutAlt} aria-label="Sign out" onClick={this.props.signoutCallback} /></button></div>
                     </h1>
                 </header>
 
@@ -109,9 +201,9 @@ class RenderMain extends Component {
                             <CoursePage {...routerProps} allCourses={this.props.allCourses} />
                         )} />
                         <Route path='/yourplan' render={(routerProps) => (
-                            <Plan {...routerProps} allCourses={this.props.allCourses} />
+                            <Plan {...routerProps} allCourses={this.props.allCourses} user={this.props.user}/>
                         )} />
-                        <Redirect to='/dashboard'/>
+                        <Redirect to='/dashboard' />
                     </Switch>
                 </main>
                 <footer>

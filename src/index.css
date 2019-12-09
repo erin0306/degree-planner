@@ -162,7 +162,7 @@ html {
   }
 
   .card button {
-    width: 50%;
+    width: 8rem;
   }
   
   #reset-btn {
@@ -313,6 +313,11 @@ html {
   .hidden {
     display: none;
   }
+
+  .loginBox {
+    flex-direction: column;
+    display: flex;
+  }
   
   @media (min-width: 700px) {
     .subSection {
@@ -340,9 +345,7 @@ html {
     .dropdown {
       display: none;
     }
-    .card button {
-      width: 10%;
-    }
+
   }
   
   @media (min-width: 1200px) {
