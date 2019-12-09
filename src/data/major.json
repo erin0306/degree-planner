@@ -1,0 +1,18 @@
+[
+    {"major" : "Informatics", "Abrev" : "INFO", "credits" : 80, "type" : "Capacity-Constrained",
+    "required-courses" : [
+        {"Department" : "INFO", "Code" : 200},
+        {"Department" : "STAT", "Code" : [221, 220]},
+        {"Department" : "CSE", "Code" : 142},
+        {"Department" : "ENGL", "Code" : [111, 121, 131]}
+    ]
+    },
+    {"major" : "Geography", "Abrev" : "GEOG", "credits" : 60, "type" : "Open",
+        "required-courses" : []
+    },
+    {"major" : "Art", "Abrev" : "ART", "credits" : 60, "type" : "Minimum",
+        "required-courses" : [
+            {"Department" : "ART", "Code" : 190}
+        ]
+    }
+]
