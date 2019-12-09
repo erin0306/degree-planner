@@ -7,6 +7,7 @@ import * as d3 from 'd3';
 //Import Local Files and Components
 import { DashboardPage } from './Dashboard.js';
 import { CoursePage } from './Courses.js'
+import {ProgramPage} from './Programs.js'
 import { Plan } from './Plan.js'
 import { SignIn } from './SignIn.js'
 import logo from './img/logo.png';
@@ -38,7 +39,7 @@ class App extends Component {
             if (firebaseUser) { //firebaseUser defined: is logged in
                 console.log('logged in');
                 this.setState({ user: firebaseUser })
-
+                console.log(this.state.user);
                 //do something with firebaseUser (e.g. assign with this.setState())
             }
             else { //firebaseUser undefined: is not logged in
@@ -122,23 +123,26 @@ class App extends Component {
             }
         } else { //if logged in, show welcome message
             content = (
-                <RenderMain user={this.state.user} signoutCallback={this.handleSignOut} page={this.state.page} allCourses={this.state.allCourses} />
-
+                <div className="body-flex">
+                    <div id="nav-element">
+                        <RenderNav pageCallback={this.changePage} />
+                    </div>
+                    <RenderMain user={this.state.user} signoutCallback={this.handleSignOut} page={this.state.page} allCourses={this.state.allCourses} />
+            </div>
             );
         }
 
-        return (
-            <div className="body-flex">
-                <div id="nav-element">
-                    <RenderNav pageCallback={this.changePage} />
-                </div>
+        return content;
+            // <div className="body-flex">
+            //     <div id="nav-element">
+            //         <RenderNav pageCallback={this.changePage} />
+            //     </div>
                 
-                {content}
-                {/* <SignIn signUpCallback={this.handleSignUp}
-                    signInCallback={this.handleSignIn} /> */}
-                {/* <RenderMain page={this.state.page} allCourses={this.state.allCourses} /> */}
-            </div>
-        );
+            //     {content}
+            //     {/* <SignIn signUpCallback={this.handleSignUp}
+            //         signInCallback={this.handleSignIn} /> */}
+            //     {/* <RenderMain page={this.state.page} allCourses={this.state.allCourses} /> */}
+            // </div>
     }
 }
 
@@ -154,7 +158,7 @@ class RenderNav extends Component {
                 <ul>
                     <li ><NavLink to="/dashboard" activeClassName="activeLink"><FontAwesomeIcon icon={faHome} aria-hidden="true" /><span>&nbsp;&nbsp;</span>Dashboard</NavLink></li>
                     <li><NavLink to="/findcourses" activeClassName="activeLink"><FontAwesomeIcon icon={faBookOpen} aria-hidden="true" /><span>&nbsp;&nbsp;</span>Courses</NavLink></li>
-                    <li><a href="#programs" role="tab"><FontAwesomeIcon icon={faGraduationCap} aria-hidden="true" /><span>&nbsp;</span>Programs</a></li>
+                    <li><NavLink to="/findprograms" activeClassName="activeLink"><FontAwesomeIcon icon={faGraduationCap} aria-hidden="true" /><span>&nbsp;</span>Programs</NavLink></li>
                     <li><NavLink to="/yourplan" activeClassName="activeLink"><FontAwesomeIcon icon={faUserAlt} aria-hidden="true" /><span>&nbsp;&nbsp;</span>Your Plan</NavLink></li>
                 </ul>
             </nav>
@@ -182,7 +186,7 @@ class RenderMain extends Component {
                                     <ul>
                                         <li><NavLink to="/dashboard" activeClassName="activeLink"><FontAwesomeIcon icon={faHome} aria-hidden="true" /><span>&nbsp;&nbsp;</span>Dashboard</NavLink></li>
                                         <li><NavLink to="/findcourses" activeClassName="activeLink"><FontAwesomeIcon icon={faBookOpen} aria-hidden="true" /><span>&nbsp;&nbsp;</span>Courses</NavLink></li>
-                                        <li><a href="#programs" role="tab"><FontAwesomeIcon icon={faGraduationCap} aria-hidden="true" /><span>&nbsp;</span>Programs</a></li>
+                                        <li><NavLink to="/findprograms" activeClassName="activeLink"><FontAwesomeIcon icon={faGraduationCap} aria-hidden="true" /><span>&nbsp;</span>Programs</NavLink></li>
                                         <li><NavLink to="/yourplan" activeClassName="activeLink"><FontAwesomeIcon icon={faUserAlt} aria-hidden="true" /><span>&nbsp;&nbsp;</span>Your Plan</NavLink></li>
                                     </ul>
                                 </nav>
@@ -200,6 +204,7 @@ class RenderMain extends Component {
                         <Route path='/findcourses' render={(routerProps) => (
                             <CoursePage {...routerProps} allCourses={this.props.allCourses} />
                         )} />
+                        <Route path='/findprograms' component={ProgramPage}/>
                         <Route path='/yourplan' render={(routerProps) => (
                             <Plan {...routerProps} allCourses={this.props.allCourses} user={this.props.user}/>
                         )} />
