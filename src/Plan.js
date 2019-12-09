@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import firebase from 'firebase/app';
 
 export class Plan extends Component {
 
@@ -8,25 +9,14 @@ export class Plan extends Component {
         let plannedCourses = this.props.allCourses.slice(0, 5);
         console.log(plannedCourses);
         let data = plannedCourses.map((course) => {
-            return <RenderData course={course} key={course.Department + course.Code} />
+            return <RenderData user={this.props.user} course={course} key={course.Department + course.Code} />
         });
-        let spinner = null;
-        // if (this.props.loading === 'hidden') {
-        //     spinner = (
-        //         null
-        //     );
-        // } else {
-            // spinner = (
-            //     <p>Loading data...</p>   
-            // );
-        // }
-        console.log(spinner);
+
         return (
             <section id="course-results" className="schedule searchResult">
                 <h2>Planned Courses</h2>
 
                 {/* <p className={this.state.loading}>Loading data...</p> */}
-                {spinner}
                 {data}
             </section>
         );
@@ -56,6 +46,22 @@ class RenderData extends Component {
             this.setState({ added: true });
         }
     }
+    
+    // Using planned courses to test firebase add/remove because the button is always there
+    addRemove = (event) => {
+        event.preventDefault(); //don't submit
+        let course = this.props.course;
+        let newPlan = {
+            // Department:  this.props.course.Department,
+            // Code: this.props.course.Code,
+            // Name: this.props.Name,
+            test: 'test',
+        }
+        let planRef = firebase.database().ref('plannedCourses').child(course.Department+course.Code);
+        // console.log(chirpRef);
+        planRef.set(newPlan)
+        // this.setState({post:''}); //empty out post for next time
+      }
 
     render() {
         console.log(this.state.added);
@@ -68,7 +74,12 @@ class RenderData extends Component {
                     <span>Areas of Knowledge: </span>{this.props.course["Areas of Knowledge"]}<br></br>
                     <span>Prerequisites: </span>{this.props.course["Prerequisites"]}<br></br>
                     <span>Quarter(s) Offered: </span>{this.props.course.Offered}<br></br>
-                    <span><button className={"clickable " + (this.state.added ? 'added' : '')} onClick={this.removePlan}>{(this.state.added ? 'Remove from Plan' : 'Add to Plan')}</button> </span> <br></br>
+                    
+                    {/* delete later, use for testing firebase adding */}
+                    <span><button className={"clickable " + (this.state.added ? 'added' : '')} onClick={this.addRemove}>{(this.state.added ? 'Remove from Plan' : 'Add to Plan')}</button> </span> <br></br>
+
+                    {/* actual line commented out for testing*/}
+                    {/* <span><button className={"clickable " + (this.state.added ? 'added' : '')} onClick={this.removePlan}>{(this.state.added ? 'Remove from Plan' : 'Add to Plan')}</button> </span> <br></br> */}
                 </div>
             </div>
         );

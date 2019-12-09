@@ -32,7 +32,7 @@ export class DashboardPage extends Component {
                         </div>
                     </section>
                     <section className="subSection">
-                        <h2>Current Courses</h2>
+                        <h2>Completed Courses</h2>
                         <div className="card">
                             <h3>INFO 201</h3>
                             <p>AU18 | IS</p>
