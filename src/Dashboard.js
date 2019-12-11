@@ -25,7 +25,7 @@ export class DashboardPage extends Component {
     render() {
         return (
             <div id="main-element">
-                <Header page={"Dashboard"} />
+                <Header page={"Dashboard"} signoutCallback={this.props.signoutCallback}/>
                 <main>
             <div id="dashboard-page">
                 <div className="flex-container">

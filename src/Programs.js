@@ -15,7 +15,7 @@ export class ProgramPage extends Component {
         return (
             
             <div id="main-element">
-                <Header page={"Programs"} />
+                <Header page={"Programs"}  signoutCallback={this.props.signoutCallback}/>
                 <main>
                     {data}
                 </main>

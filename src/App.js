@@ -113,14 +113,17 @@ class App extends Component {
                     {/* <RenderMain user={this.state.user} signoutCallback={this.handleSignOut} page={this.state.page} allCourses={this.state.allCourses} /> */}
                     <Switch>
                         <Route path='/dashboard' render={(routerProps) => (
-                            <DashboardPage {...routerProps} user={this.state.user}/>
+                            <DashboardPage {...routerProps} user={this.state.user} signoutCallback={this.handleSignOut}/>
                         )} />
                         <Route path='/findcourses' render={(routerProps) => (
-                            <CoursePage {...routerProps} allCourses={this.state.allCourses} />
+                            <CoursePage {...routerProps} allCourses={this.state.allCourses} signoutCallback={this.handleSignOut}/>
                         )} />
-                        <Route path='/findprograms' component={ProgramPage} />
+                        
+                        <Route path='/findprograms' render={(routerProps) => (
+                            <Plan {...routerProps} signoutCallback={this.handleSignOut}/>
+                        )} />
                         <Route path='/yourplan' render={(routerProps) => (
-                            <Plan {...routerProps} allCourses={this.state.allCourses} user={this.state.user} />
+                            <Plan {...routerProps} allCourses={this.state.allCourses} user={this.state.user} signoutCallback={this.handleSignOut}/>
                         )} />
                         <Redirect to='/dashboard' />
                     </Switch>

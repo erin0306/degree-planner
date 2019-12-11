@@ -45,7 +45,7 @@ export class Plan extends Component {
 
         return (
             <div id="main-element">
-                <Header page={"Your Plan"} />
+                <Header page={"Your Plan"}  signoutCallback={this.props.signoutCallback}/>
                 <main>
                     <section id="course-results" className="schedule searchResult">
                         <h2>Planned Courses</h2>
