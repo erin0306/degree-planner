@@ -1,22 +1,35 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
+import firebase from 'firebase/app';
 
 export class ResultField extends Component {
     constructor(props) {
         super(props)
-    
+
         this.state = {
-          displayCourses: [],
-        //   loading: '',
+            displayCourses: [],
+            //   loading: '',
         }
+    }
+
+    componentDidMount() {
+        this.plansRef = firebase.database().ref('plannedCourses');
+        this.plansRef.on('value', (snapshot) => {
+            let obj = snapshot.val();
+            this.setState({ plans: obj });
+        })
+    }
+    componentWillUnmount() {
+        this.plansRef.off();
     }
 
     render() {
         // let data = this.props.displayCourses.map((course) => {
         //     return <RenderData course={course} key={course.Department + course.Code}/>
         // });
-        console.log(this.props.loading);
+        // console.log(this.props.loading);
+
         let data = this.props.displayCourses.map((course) => {
-            return <RenderData course={course} loadingCallback={this.props.loadingCallback} key={course.Department + course.Code}/>
+            return <RenderData course={course} plans={this.state.plans} loadingCallback={this.props.loadingCallback} key={course.Department + course.Code} />
         });
         let spinner = null;
         if (this.props.loading === 'hidden') {
@@ -25,14 +38,14 @@ export class ResultField extends Component {
             );
         } else {
             spinner = (
-                <p>Loading data...</p>   
+                <p>Loading data...</p>
             );
         }
-        console.log(spinner);
+        // console.log(spinner);
         return (
             <section id="course-results" className="schedule searchResult">
                 <h2>Recommended Courses</h2>
-                
+
                 {/* <p className={this.state.loading}>Loading data...</p> */}
                 {spinner}
                 {data}
@@ -47,56 +60,111 @@ class RenderData extends Component {
         super(props);
 
         this.state = {
-            output : "",
-            added: false
+            output: "",
+            planned: false,
+            clicked: false,
         }
     }
     componentDidMount() {
-        console.log('componentDidMount');
+        // console.log('componentDidMount');
         // this.setState({loading: 'hidden'});
         this.props.loadingCallback();
     }
 
     handleClick = () => {
         let panel = this.popPanel();
-        this.setState({output : panel});
+        // this.setState({ output: panel });
+        if (this.state.clicked == false) {
+            this.setState({ clicked: true });
+        } else {
+            this.setState({ clicked: false });
+        }
+        
     }
 
-    addToPlan = () => {
-        if(this.state.added) {
-            this.setState({added: false});
-        } else {
-            this.setState({added: true});
+    addRemove = (event) => {
+        let course = this.props.course;
+        let newPlan = {
+            Department: this.props.course.Department,
+            Code: this.props.course.Code,
+            Name: this.props.course.Name,
+            Campus: this.props.course["Campus"],
+            AofK: this.props.course['Areas of Knowledge'],
+            Prereqs: this.props.course["Prerequisites"],
+            Quarters: this.props.course.Offered,
+            Credits: this.props.course.Credits,
+
         }
+        let planRef = firebase.database().ref('plannedCourses').child(course.Department + course.Code);
+        planRef.set(newPlan)
+
+        let plannedRef = firebase.database().ref('plannedCourses').child(course.Department + course.Code).child('planned');
+        
+        planRef.on('value', (snapshot) => {
+            let obj = snapshot.val();
+            this.setState({ firebasePlan: obj });
+        })
+        
+        if(this.props.plans) {
+            if (this.props.plans[course.Department + course.Code]) {
+            console.log('planned');
+            planRef.set(null)
+                .catch((error) => {
+                    console.log(error.message);
+                });
+            } 
+        }
+        
+       
     }
 
     popPanel() {
-        if (this.state.output !== "") {
-            return "";
-        }
-        let offered = this.props.course.Offered;
+        
         // if (this.props.course.Offered === "A,W,Sp,S" || this.props.Offered === undefined) {
         //     offered = "All";
         // }
-        return <div className="card panel">
-                <span>Campus: </span>{this.props.course["Campus"]}<br></br> 
-                <span>Credits: </span>{this.props.course["Credits"]}<br></br>
-                <span>Areas of Knowledge: </span>{this.props.course["Areas of Knowledge"]}<br></br>
-                <span>Prerequisites: </span>{this.props.course["Prerequisites"]}<br></br>
-                <span>Quarter(s) Offered: </span>{offered}<br></br>
-                <span><button className={"clickable " + (this.state.added ? 'added':'')} onClick={this.addToPlan}>{(this.state.added ? 'Remove from Plan' : 'Add to Plan')}</button> </span> <br></br>                
-            </div>
+        console.log(this.props.course.Department + this.props.course.Code);
+        // let planned = false;
+        // console.log(this.props.plans)
+        if (this.props.plans) { // if there's any planned course
+            let planKeys = Object.keys(this.props.plans);
+            this.setState({ planned: false })
+            console.log(planKeys);
+            if (planKeys.includes(this.props.course.Department + this.props.course.Code)) {
+                console.log('includes planKeys true');
+                this.setState({ planned: true })
+            }
+
+        }
+
     }
 
     render() {
-        console.log(this.state.added);
+        let popPanel = null;
+
+        if (this.state.clicked) {
+            popPanel = (
+                <div className="card panel">
+                    <span>Campus: </span>{this.props.course["Campus"]}<br></br>
+                    <span>Credits: </span>{this.props.course["Credits"]}<br></br>
+                    <span>Areas of Knowledge: </span>{this.props.course["Areas of Knowledge"]}<br></br>
+                    <span>Prerequisites: </span>{this.props.course["Prerequisites"]}<br></br>
+                    <span>Quarter(s) Offered: </span>{this.props.course.Offered}<br></br>
+                    <span><button className={"clickable " + (this.state.planned ? 'added' : '')} onClick={this.addRemove}>{(this.state.planned ? 'Remove from Plan' : 'Add to Plan')}</button> </span> <br></br>
+                </div>
+            );
+        } 
+
+        console.log('this.state.planned:', this.state.planned);
 
         // TODO: Need to somehow move panel outside of clickable card div so it wont shrink when adding
         return (
+            <div>
             <div className="clickable card" onClick={this.handleClick}>
                 <h3>{this.props.course.Department} {this.props.course.Code} {this.props.course.Name}</h3>
                 <p>Because you searched for {this.props.course.Department}</p>
-                {this.state.output} 
+            </div>
+                {popPanel}
             </div>
         );
     }

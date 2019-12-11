@@ -39,7 +39,6 @@ class App extends Component {
             if (firebaseUser) { //firebaseUser defined: is logged in
                 console.log('logged in');
                 this.setState({ user: firebaseUser })
-                console.log(this.state.user);
                 //do something with firebaseUser (e.g. assign with this.setState())
             }
             else { //firebaseUser undefined: is not logged in

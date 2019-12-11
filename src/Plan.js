@@ -2,14 +2,42 @@ import React, { Component } from 'react';
 import firebase from 'firebase/app';
 
 export class Plan extends Component {
+    constructor(props) {
+        super(props);
+        this.state = { plans: [] };
+    }
+
+    componentDidMount() {
+        this.plansRef = firebase.database().ref('plannedCourses');
+        this.plansRef.on('value', (snapshot) => {
+            let obj = snapshot.val();
+            this.setState({ plans: obj });
+        })
+    }
+    componentWillUnmount() {
+        this.plansRef.off();
+    }
 
     render() {
+        // TODO: test no plans 
+        if (!this.state.plans) return (
+            
+            <div className="card panel">
+                <p> No planned courses. Go to Courses to add new plans!</p>
+            </div>
+        );
 
-        // use allcourses as mock bookmark data
-        let plannedCourses = this.props.allCourses.slice(0, 5);
-        console.log(plannedCourses);
-        let data = plannedCourses.map((course) => {
-            return <RenderData user={this.props.user} course={course} key={course.Department + course.Code} />
+        let planKeys = Object.keys(this.state.plans);
+        console.log(planKeys);
+        let planArr = planKeys.map((key) => {
+            let planObj = this.state.plans[key];
+            planObj.id = key;
+            return planObj;
+        })
+        console.log(planArr);
+
+        let data = planArr.map((course) => {
+            return <RenderData key={course.id} course={course} />
         });
 
         return (
@@ -29,13 +57,12 @@ class RenderData extends Component {
 
         this.state = {
             output: "",
-            added: false,
         }
     }
 
     componentDidMount() {
         console.log('componentDidMount');
-        this.setState({loading: 'hidden'});
+        this.setState({ loading: 'hidden' });
 
     }
 
@@ -46,37 +73,50 @@ class RenderData extends Component {
             this.setState({ added: true });
         }
     }
-    
+
     // Using planned courses to test firebase add/remove because the button is always there
     addRemove = (event) => {
-        event.preventDefault(); //don't submit
         let course = this.props.course;
         let newPlan = {
-            // Department:  this.props.course.Department,
-            // Code: this.props.course.Code,
-            // Name: this.props.Name,
-            test: 'test',
+            Department: this.props.course.Department,
+            Code: this.props.course.Code,
+            Name: this.props.course.Name,
+            Campus: this.props.course["Campus"],
+            AofK: this.props.course.AofK,
+            Prereqs: this.props.course.Prereqs,
+            Quarters: this.props.course.Quarters,
+            Credits: this.props.course.Credits,
+            planned: true,
         }
-        let planRef = firebase.database().ref('plannedCourses').child(course.Department+course.Code);
-        // console.log(chirpRef);
+        let planRef = firebase.database().ref('plannedCourses').child(course.Department + course.Code);
         planRef.set(newPlan)
-        // this.setState({post:''}); //empty out post for next time
-      }
+        
+        console.log(this.props.course);
+        if (course) {
+            console.log('planned');
+            planRef.set(null)
+                .catch((error) => {
+                    console.log(error.message);
+                });
+        } 
+    }
 
     render() {
-        console.log(this.state.added);
+        
+        let course = this.props.course;
+        console.log(course);
+        // console.log();
         return (
             <div className="card">
                 <div className="card panel">
-                    <h3>{this.props.course.Department} {this.props.course.Code} {this.props.course.Name}</h3>
-                    <span>Campus: </span>{this.props.course["Campus"]}<br></br>
-                    <span>Credits: </span>{this.props.course["Credits"]}<br></br>
-                    <span>Areas of Knowledge: </span>{this.props.course["Areas of Knowledge"]}<br></br>
-                    <span>Prerequisites: </span>{this.props.course["Prerequisites"]}<br></br>
-                    <span>Quarter(s) Offered: </span>{this.props.course.Offered}<br></br>
-                    
-                    {/* delete later, use for testing firebase adding */}
-                    <span><button className={"clickable " + (this.state.added ? 'added' : '')} onClick={this.addRemove}>{(this.state.added ? 'Remove from Plan' : 'Add to Plan')}</button> </span> <br></br>
+                    <h3>{course.Department} {course.Code} {course.Name}</h3>
+                    <span>Campus: </span>{course.Campus}<br></br>
+                    <span>Credits: </span>{course.Credits}<br></br>
+                    <span>Areas of Knowledge: </span>{course.AofK}<br></br>
+                    <span>Prerequisites: </span>{course.Prereqs}<br></br>
+                    <span>Quarter(s) Offered: </span>{course.Quarters}<br></br>
+
+                    <span><button className="clickable added" onClick={this.addRemove}>Remove from Plan</button> </span> <br></br>
 
                     {/* actual line commented out for testing*/}
                     {/* <span><button className={"clickable " + (this.state.added ? 'added' : '')} onClick={this.removePlan}>{(this.state.added ? 'Remove from Plan' : 'Add to Plan')}</button> </span> <br></br> */}
