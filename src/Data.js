@@ -66,7 +66,6 @@ class RenderData extends Component {
         }
     }
     componentDidMount() {
-        // console.log('componentDidMount');
         // this.setState({loading: 'hidden'});
         this.props.loadingCallback();
     }
@@ -107,7 +106,6 @@ class RenderData extends Component {
 
         if (this.props.plans) {
             if (this.props.plans[course.Department + course.Code]) {
-                console.log('planned');
                 planRef.set(null)
                     .catch((error) => {
                         console.log(error.message);
@@ -123,7 +121,6 @@ class RenderData extends Component {
         if (this.props.plans) { // if there's any planned course
             let planKeys = Object.keys(this.props.plans);
             if (planKeys.includes(this.props.course.Department + this.props.course.Code)) {
-                // console.log('includes planKeys true');
                 this.planned = true;
             }
 
@@ -140,8 +137,6 @@ class RenderData extends Component {
             </div>
         );
         } 
-
-        console.log('this.state.planned:', this.state.planned);
 
         return (
             <div>

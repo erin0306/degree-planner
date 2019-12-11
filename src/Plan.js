@@ -101,7 +101,6 @@ class RenderData extends Component {
     }
 
     render() {
-        
         let course = this.props.course;
         return (
             <div className="card">
