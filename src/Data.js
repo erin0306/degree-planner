@@ -61,7 +61,7 @@ class RenderData extends Component {
 
         this.state = {
             output: "",
-            planned: false,
+            // planned: false,
             clicked: false,
         }
     }
@@ -72,14 +72,14 @@ class RenderData extends Component {
     }
 
     handleClick = () => {
-        let panel = this.popPanel();
+        // let panel = this.popPanel();
         // this.setState({ output: panel });
         if (this.state.clicked == false) {
             this.setState({ clicked: true });
         } else {
             this.setState({ clicked: false });
         }
-        
+
     }
 
     addRemove = (event) => {
@@ -99,70 +99,57 @@ class RenderData extends Component {
         planRef.set(newPlan)
 
         let plannedRef = firebase.database().ref('plannedCourses').child(course.Department + course.Code).child('planned');
-        
+
         planRef.on('value', (snapshot) => {
             let obj = snapshot.val();
             this.setState({ firebasePlan: obj });
         })
-        
-        if(this.props.plans) {
+
+        if (this.props.plans) {
             if (this.props.plans[course.Department + course.Code]) {
-            console.log('planned');
-            planRef.set(null)
-                .catch((error) => {
-                    console.log(error.message);
-                });
-            } 
-        }
-        
-       
-    }
-
-    popPanel() {
-        
-        // if (this.props.course.Offered === "A,W,Sp,S" || this.props.Offered === undefined) {
-        //     offered = "All";
-        // }
-        console.log(this.props.course.Department + this.props.course.Code);
-        // let planned = false;
-        // console.log(this.props.plans)
-        if (this.props.plans) { // if there's any planned course
-            let planKeys = Object.keys(this.props.plans);
-            this.setState({ planned: false })
-            console.log(planKeys);
-            if (planKeys.includes(this.props.course.Department + this.props.course.Code)) {
-                console.log('includes planKeys true');
-                this.setState({ planned: true })
+                console.log('planned');
+                planRef.set(null)
+                    .catch((error) => {
+                        console.log(error.message);
+                    });
             }
-
         }
+
 
     }
 
     render() {
         let popPanel = null;
+        this.planned = false;
+        if (this.props.plans) { // if there's any planned course
+            let planKeys = Object.keys(this.props.plans);
+            if (planKeys.includes(this.props.course.Department + this.props.course.Code)) {
+                // console.log('includes planKeys true');
+                this.planned = true;
+            }
 
+        }
         if (this.state.clicked) {
-            popPanel = (
-                <div className="card panel">
-                    <span>Campus: </span>{this.props.course["Campus"]}<br></br>
-                    <span>Credits: </span>{this.props.course["Credits"]}<br></br>
-                    <span>Areas of Knowledge: </span>{this.props.course["Areas of Knowledge"]}<br></br>
-                    <span>Prerequisites: </span>{this.props.course["Prerequisites"]}<br></br>
-                    <span>Quarter(s) Offered: </span>{this.props.course.Offered}<br></br>
-                    <span><button className={"clickable " + (this.state.planned ? 'added' : '')} onClick={this.addRemove}>{(this.state.planned ? 'Remove from Plan' : 'Add to Plan')}</button> </span> <br></br>
-                </div>
-            );
+        popPanel = (
+            <div className="card panel">
+                <span>Campus: </span>{this.props.course["Campus"]}<br></br>
+                <span>Credits: </span>{this.props.course["Credits"]}<br></br>
+                <span>Areas of Knowledge: </span>{this.props.course["Areas of Knowledge"]}<br></br>
+                <span>Prerequisites: </span>{this.props.course["Prerequisites"]}<br></br>
+                <span>Quarter(s) Offered: </span>{this.props.course.Offered}<br></br>
+                <span><button className={"clickable " + (this.planned ? 'added' : '')} onClick={this.addRemove}>{(this.planned ? 'Remove from Plan' : 'Add to Plan')}</button> </span> <br></br>
+            </div>
+        );
         } 
 
         console.log('this.state.planned:', this.state.planned);
 
-        // TODO: Need to somehow move panel outside of clickable card div so it wont shrink when adding
         return (
             <div>
             <div className="clickable card" onClick={this.handleClick}>
                 <h3>{this.props.course.Department} {this.props.course.Code} {this.props.course.Name}</h3>
                 <p>Because you searched for {this.props.course.Department}</p>
+                
             </div>
                 {popPanel}
             </div>
