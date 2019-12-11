@@ -12,10 +12,11 @@ export class ResultField extends Component {
     }
 
     componentDidMount() {
+        //get planned courses from firebase as objects
         this.plansRef = firebase.database().ref('plannedCourses');
         this.plansRef.on('value', (snapshot) => {
             let obj = snapshot.val();
-            this.setState({ plans: obj });
+            this.setState({ plans: obj }); 
         })
     }
     componentWillUnmount() {
@@ -61,7 +62,6 @@ class RenderData extends Component {
 
         this.state = {
             output: "",
-            // planned: false,
             clicked: false,
         }
     }
@@ -71,8 +71,6 @@ class RenderData extends Component {
     }
 
     handleClick = () => {
-        // let panel = this.popPanel();
-        // this.setState({ output: panel });
         if (this.state.clicked == false) {
             this.setState({ clicked: true });
         } else {
@@ -82,7 +80,7 @@ class RenderData extends Component {
     }
 
     addRemove = (event) => {
-        let course = this.props.course;
+        let course = this.props.course; 
         let newPlan = {
             Department: this.props.course.Department,
             Code: this.props.course.Code,
@@ -94,19 +92,19 @@ class RenderData extends Component {
             Credits: this.props.course.Credits,
 
         }
+
+        // Insert new planned courses
         let planRef = firebase.database().ref('plannedCourses').child(course.Department + course.Code);
         planRef.set(newPlan)
 
-        let plannedRef = firebase.database().ref('plannedCourses').child(course.Department + course.Code).child('planned');
+        // planRef.on('value', (snapshot) => {
+        //     let obj = snapshot.val();
+        //     this.setState({ firebasePlan: obj });
+        // })
 
-        planRef.on('value', (snapshot) => {
-            let obj = snapshot.val();
-            this.setState({ firebasePlan: obj });
-        })
-
-        if (this.props.plans) {
-            if (this.props.plans[course.Department + course.Code]) {
-                planRef.set(null)
+        if (this.props.plans) { // if plans object retrieved from firebase is not empty
+            if (this.props.plans[course.Department + course.Code]) { // if the course is in plannedCourses
+                planRef.set(null) // Delete from database
                     .catch((error) => {
                         console.log(error.message);
                     });
@@ -118,10 +116,10 @@ class RenderData extends Component {
     render() {
         let popPanel = null;
         this.planned = false;
-        if (this.props.plans) { // if there's any planned course
-            let planKeys = Object.keys(this.props.plans);
-            if (planKeys.includes(this.props.course.Department + this.props.course.Code)) {
-                this.planned = true;
+        if (this.props.plans) { // if there's anything in plannedCourses
+            let planKeys = Object.keys(this.props.plans); // get list of course id
+            if (planKeys.includes(this.props.course.Department + this.props.course.Code)) { // if this course matches any in plannedCourses
+                this.planned = true; 
             }
 
         }

@@ -25,7 +25,6 @@ class App extends Component {
 
         this.state = {
             allCourses: [],
-            page: "Dashboard",
             loading: true,
         };
     }
@@ -90,11 +89,6 @@ class App extends Component {
     }
 
 
-    changePage = (newPage) => {
-        this.setState({ page: newPage });
-    }
-
-
     render() {
         let content = null; //content to render
 
@@ -114,7 +108,7 @@ class App extends Component {
             content = (
                 <div className="body-flex">
                     <div id="nav-element">
-                        <RenderNav pageCallback={this.changePage} />
+                        <RenderNav />
                     </div>
                     {/* <RenderMain user={this.state.user} signoutCallback={this.handleSignOut} page={this.state.page} allCourses={this.state.allCourses} /> */}
                     <Switch>
@@ -122,11 +116,11 @@ class App extends Component {
                             <DashboardPage {...routerProps} user={this.state.user}/>
                         )} />
                         <Route path='/findcourses' render={(routerProps) => (
-                            <CoursePage {...routerProps} allCourses={this.props.allCourses} />
+                            <CoursePage {...routerProps} allCourses={this.state.allCourses} />
                         )} />
                         <Route path='/findprograms' component={ProgramPage} />
                         <Route path='/yourplan' render={(routerProps) => (
-                            <Plan {...routerProps} allCourses={this.props.allCourses} user={this.props.user} />
+                            <Plan {...routerProps} allCourses={this.state.allCourses} user={this.state.user} />
                         )} />
                         <Redirect to='/dashboard' />
                     </Switch>
