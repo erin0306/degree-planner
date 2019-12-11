@@ -1,8 +1,25 @@
 import React, {Component} from 'react';
 import { BrowserRouter as Router, Route, Link, Switch, NavLink } from 'react-router-dom';
+import firebase from 'firebase/app';
 
 
 export class DashboardPage extends Component {
+    constructor(props) {
+        super(props);
+        this.state = { plans: [] };
+    }
+
+    componentDidMount() {
+        this.plansRef = firebase.database().ref('plannedCourses');
+        this.plansRef.on('value', (snapshot) => {
+            let obj = snapshot.val();
+            this.setState({ plans: obj });
+        })
+    }
+    componentWillUnmount() {
+        this.plansRef.off();
+    }
+
     render() {
         return (
             <div id="dashboard-page">
