@@ -4,7 +4,7 @@
 
 by Erin Chang, Khoa Luong
 
-Access the web app [here](uw-course-and-degree-planner.firebaseapp.com).
+Access the web app [here](https://uw-course-and-degree-planner.firebaseapp.com/).
 
 ### Purpose
 
