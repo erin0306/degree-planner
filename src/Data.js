@@ -159,9 +159,11 @@ class RenderData extends Component {
 
         // TODO: Need to somehow move panel outside of clickable card div so it wont shrink when adding
         return (
+            <div>
             <div className="clickable card" onClick={this.handleClick}>
                 <h3>{this.props.course.Department} {this.props.course.Code} {this.props.course.Name}</h3>
                 <p>Because you searched for {this.props.course.Department}</p>
+            </div>
                 {popPanel}
             </div>
         );
