@@ -48,66 +48,7 @@ export class DashboardPage extends Component {
                             </div>
                         </div>
                     </section>
-                    <section className="subSection">
-                        <h2>Completed Courses</h2>
-                        <div className="card">
-                            <h3>INFO 201</h3>
-                            <p>AU18 | IS</p>
-                        </div>
-                        <div className="card">
-                                <h3>INFO 200</h3>
-                                <p>AU18 | IS</p>
-                        </div>
-                        <div className="card">
-                                <h3>CSE 142</h3>
-                                <p>AU17 | NW</p>
-                        </div>
-                        <div className="card">
-                                <h3>CSE 143</h3>
-                                <p>AU18 | NW</p>
-                        </div>
-                        <div className="card">
-                            <h3>ECON 200</h3>
-                            <p>AU17 | NW</p>
-                        </div>
-                        <div className="card">
-                                <h3>ENGL 131</h3>
-                                <p>AU17 | C</p>
-                        </div>
-                        <div className="card">
-                            <p>Click to reveal more</p>
-                        </div>
-                    </section>
-                    <section className="subSection">
-                        <h2>Planned Courses</h2>
-                        <div className="card">
-                            <h3>MATH 126</h3>
-                            <p>WIN19 | NW</p>
-                        </div>
-                        <div className="card">
-                                <h3>PSYCH 210</h3>
-                                <p>WIN19 | IS</p>
-                        </div>
-                        <div className="card">
-                                <h3>INFO 340</h3>
-                                <p>SPR19 | NW</p>
-                        </div>
-                        <div className="card">
-                                <h3>CSE 373</h3>
-                                <p>WIN19 | NW</p>
-                        </div>
-                        <div className="card">
-                            <h3>INFO 360</h3>
-                            <p>SPR19 | VLPA</p>
-                        </div>
-                        <div className="card">
-                            <h3>INFO 350</h3>
-                            <p>SPR19  | I&amp;S W</p>
-                        </div>
-                        <div className="card">
-                            <p><Link to='/yourplan'>View All Planned Courses</Link></p>
-                        </div>
-                    </section>
+                    <RenderData plans={this.state.plans}/>
                 </div>
                 <section className="schedule">
                     <h2>Recommended Courses</h2>
@@ -131,5 +72,43 @@ export class DashboardPage extends Component {
                 </section>
             </div>
         );
+    }
+}
+
+class RenderData extends Component {
+    render() {
+        if (this.props.plans === null) {
+            return <section className="subSection">
+                    <h2>Planned Courses</h2>
+                    <div className="card">
+                        <p><Link to='/findcourses'>Click here to add courses</Link></p>
+                    </div>
+                </section>
+        }
+        let planKeys = Object.keys(this.props.plans);
+        console.log(planKeys);
+        let planArr = planKeys.map((key) => {
+            let planObj = this.props.plans[key];
+            planObj.id = key;
+            return planObj;
+        })
+        console.log(planArr);
+
+        let data = planArr.map((course) => {
+            return <div key={course.Department + course.Code} className="card">
+                    <h3>{course['Department'] + ' ' + course['Code']}</h3>
+                    <p>{course['Credits'] +  ' credits | ' + course['AofK']}</p>
+                </div>
+        });
+        if (data.length > 5) {
+            data = data.slice(0, 6);
+        }
+        return <section className="subSection">
+                    <h2>Planned Courses</h2>
+                    {data}
+                    <div className="card">
+                        <p><Link to='/yourplan'>View All Planned Courses</Link></p>
+                    </div>
+                </section>
     }
 }
