@@ -37,13 +37,10 @@ class App extends Component {
 
         this.authUnregFunc = firebase.auth().onAuthStateChanged((firebaseUser) => {
             if (firebaseUser) { //firebaseUser defined: is logged in
-                console.log('logged in');
                 this.setState({ user: firebaseUser })
                 //do something with firebaseUser (e.g. assign with this.setState())
             }
             else { //firebaseUser undefined: is not logged in
-                console.log('logged out');
-
                 this.setState({ user: null });
             }
             this.setState({ loading: false });
@@ -68,9 +65,6 @@ class App extends Component {
                     displayName: name
                 })
             }).catch((error) => {
-                // console.log(error.message);
-
-                // console.log("hi");
                 this.setState({ errorMessage: error.message });
                 console.log(this.state.errorMessage);
             })

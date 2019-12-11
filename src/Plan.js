@@ -91,7 +91,6 @@ class RenderData extends Component {
         let planRef = firebase.database().ref('plannedCourses').child(course.Department + course.Code);
         planRef.set(newPlan)
         
-        console.log(this.props.course);
         if (course) {
             console.log('planned');
             planRef.set(null)
@@ -104,8 +103,6 @@ class RenderData extends Component {
     render() {
         
         let course = this.props.course;
-        console.log(course);
-        // console.log();
         return (
             <div className="card">
                 <div className="card panel">
@@ -117,9 +114,6 @@ class RenderData extends Component {
                     <span>Quarter(s) Offered: </span>{course.Quarters}<br></br>
 
                     <span><button className="clickable added" onClick={this.addRemove}>Remove from Plan</button> </span> <br></br>
-
-                    {/* actual line commented out for testing*/}
-                    {/* <span><button className={"clickable " + (this.state.added ? 'added' : '')} onClick={this.removePlan}>{(this.state.added ? 'Remove from Plan' : 'Add to Plan')}</button> </span> <br></br> */}
                 </div>
             </div>
         );
