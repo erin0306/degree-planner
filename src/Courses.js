@@ -38,7 +38,7 @@ export class CoursePage extends Component {
     render() {
         return (
             <div id="main-element">
-                <Header page={"Courses"} />
+                <Header page={"Courses"}  signoutCallback={this.props.signoutCallback}/>
                 <main>
                     <div id="course-page">
                         <SearchField allCourses={this.props.allCourses} updateDisplayCallback={this.updateDisplay} inputCallback={this.updateInput} />
@@ -78,6 +78,7 @@ class SearchField extends Component {
     resetFilter = (event) => {
         let currentInput = this.state.input;
         this.setState({ input: currentInput, prereq: "", AofK: "", quarter: "", campus: "" });
+        // event.preventDefault();
     }
 
     handleClick = (event) => {

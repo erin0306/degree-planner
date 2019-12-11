@@ -24,10 +24,16 @@ export class Plan extends Component {
     render() {
         // TODO: test no plans 
         if (!this.state.plans) return (
-
-            <div className="card panel">
-                <p> No planned courses. Go to Courses to add new plans!</p>
+            <div id="main-element">
+                <Header page={"Your Plan"} signoutCallback={this.props.signoutCallback} />
+                <main>
+                    <div className="card panel">
+                        <p> No planned courses. Go to Courses to add new plans!</p>
+                    </div>
+                </main>
+                <Footer />
             </div>
+
         );
 
         let planKeys = Object.keys(this.state.plans);
@@ -45,7 +51,7 @@ export class Plan extends Component {
 
         return (
             <div id="main-element">
-                <Header page={"Your Plan"} />
+                <Header page={"Your Plan"} signoutCallback={this.props.signoutCallback} />
                 <main>
                     <section id="course-results" className="schedule searchResult">
                         <h2>Planned Courses</h2>
