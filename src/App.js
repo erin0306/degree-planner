@@ -120,7 +120,7 @@ class App extends Component {
                         )} />
                         
                         <Route path='/findprograms' render={(routerProps) => (
-                            <Plan {...routerProps} signoutCallback={this.handleSignOut}/>
+                            <ProgramPage {...routerProps} signoutCallback={this.handleSignOut}/>
                         )} />
                         <Route path='/yourplan' render={(routerProps) => (
                             <Plan {...routerProps} allCourses={this.state.allCourses} user={this.state.user} signoutCallback={this.handleSignOut}/>
