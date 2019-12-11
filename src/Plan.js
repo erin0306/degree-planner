@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import firebase from 'firebase/app';
 
+import { Header } from './Header.js'
+import { Footer } from './Footer.js'
+
 export class Plan extends Component {
     constructor(props) {
         super(props);
@@ -21,7 +24,7 @@ export class Plan extends Component {
     render() {
         // TODO: test no plans 
         if (!this.state.plans) return (
-            
+
             <div className="card panel">
                 <p> No planned courses. Go to Courses to add new plans!</p>
             </div>
@@ -41,12 +44,16 @@ export class Plan extends Component {
         });
 
         return (
-            <section id="course-results" className="schedule searchResult">
-                <h2>Planned Courses</h2>
-
-                {/* <p className={this.state.loading}>Loading data...</p> */}
-                {data}
-            </section>
+            <div id="main-element">
+                <Header page={"Your Plan"} />
+                <main>
+                    <section id="course-results" className="schedule searchResult">
+                        <h2>Planned Courses</h2>
+                        {data}
+                    </section>
+                </main>
+                <Footer />
+            </div>
         );
     }
 }
@@ -90,14 +97,14 @@ class RenderData extends Component {
         }
         let planRef = firebase.database().ref('plannedCourses').child(course.Department + course.Code);
         planRef.set(newPlan)
-        
+
         if (course) {
             console.log('planned');
             planRef.set(null)
                 .catch((error) => {
                     console.log(error.message);
                 });
-        } 
+        }
     }
 
     render() {

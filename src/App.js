@@ -7,8 +7,10 @@ import * as d3 from 'd3';
 //Import Local Files and Components
 import { DashboardPage } from './Dashboard.js';
 import { CoursePage } from './Courses.js'
-import {ProgramPage} from './Programs.js'
+import { ProgramPage } from './Programs.js'
 import { Plan } from './Plan.js'
+import { Header } from './Header.js'
+import { Footer } from './Footer.js'
 import { SignIn } from './SignIn.js'
 import logo from './img/logo.png';
 import data from './data/uwcourses.csv';
@@ -76,7 +78,6 @@ class App extends Component {
             }); //log any errors for debugging
 
         //sign out a user
-
     }
 
     //A callback function for logging out the current user
@@ -106,7 +107,7 @@ class App extends Component {
                 content = (
 
                     <SignIn signUpCallback={this.handleSignUp}
-                        signInCallback={this.handleSignIn} errorMessage={this.state.errorMessage}/>
+                        signInCallback={this.handleSignIn} errorMessage={this.state.errorMessage} />
                 );
             }
         } else { //if logged in, show welcome message
@@ -115,27 +116,31 @@ class App extends Component {
                     <div id="nav-element">
                         <RenderNav pageCallback={this.changePage} />
                     </div>
-                    <RenderMain user={this.state.user} signoutCallback={this.handleSignOut} page={this.state.page} allCourses={this.state.allCourses} />
-            </div>
+                    {/* <RenderMain user={this.state.user} signoutCallback={this.handleSignOut} page={this.state.page} allCourses={this.state.allCourses} /> */}
+                    <Switch>
+                        <Route path='/dashboard' render={(routerProps) => (
+                            <DashboardPage {...routerProps} user={this.state.user}/>
+                        )} />
+                        <Route path='/findcourses' render={(routerProps) => (
+                            <CoursePage {...routerProps} allCourses={this.props.allCourses} />
+                        )} />
+                        <Route path='/findprograms' component={ProgramPage} />
+                        <Route path='/yourplan' render={(routerProps) => (
+                            <Plan {...routerProps} allCourses={this.props.allCourses} user={this.props.user} />
+                        )} />
+                        <Redirect to='/dashboard' />
+                    </Switch>
+                </div>
             );
         }
 
         return content;
-            // <div className="body-flex">
-            //     <div id="nav-element">
-            //         <RenderNav pageCallback={this.changePage} />
-            //     </div>
-                
-            //     {content}
-            //     {/* <SignIn signUpCallback={this.handleSignUp}
-            //         signInCallback={this.handleSignIn} /> */}
-            //     {/* <RenderMain page={this.state.page} allCourses={this.state.allCourses} /> */}
-            // </div>
+
     }
 }
 
 class RenderNav extends Component {
-    
+
 
     render() {
         return (
@@ -154,60 +159,32 @@ class RenderNav extends Component {
     }
 }
 
-class RenderMain extends Component {
-    // choosePage() {
-    //     if (this.props.page === "Courses") {
-    //         return <CoursePage isLoading={this.props.isLoading} allCourses={this.props.allCourses} />
-    //     }
-    //     return <DashboardPage />
-    // }
+// class RenderMain extends Component {
 
-    render() {
-        return (
-            <div id="main-element">
-                <header>
-                    <h1>
-                        <div className="dropdown">
-                            <div><button id="hamburger-menu" className="nav-buttons"><FontAwesomeIcon icon={faGripLines} aria-label="Menu" /></button></div>
-                            <div className="dropdown-content">
-                                <nav>
-                                    <ul>
-                                        <li><NavLink to="/dashboard" activeClassName="activeLink"><FontAwesomeIcon icon={faHome} aria-hidden="true" /><span>&nbsp;&nbsp;</span>Dashboard</NavLink></li>
-                                        <li><NavLink to="/findcourses" activeClassName="activeLink"><FontAwesomeIcon icon={faBookOpen} aria-hidden="true" /><span>&nbsp;&nbsp;</span>Courses</NavLink></li>
-                                        <li><NavLink to="/findprograms" activeClassName="activeLink"><FontAwesomeIcon icon={faGraduationCap} aria-hidden="true" /><span>&nbsp;</span>Programs</NavLink></li>
-                                        <li><NavLink to="/yourplan" activeClassName="activeLink"><FontAwesomeIcon icon={faUserAlt} aria-hidden="true" /><span>&nbsp;&nbsp;</span>Your Plan</NavLink></li>
-                                    </ul>
-                                </nav>
-                            </div>
-                        </div>
-                        {this.props.page}
-                        <div ><button className="nav-buttons"><FontAwesomeIcon icon={faSignOutAlt} aria-label="Sign out" onClick={this.props.signoutCallback} /></button></div>
-                    </h1>
-                </header>
+//     render() {
+//         return (
+//             <div id="main-element">
 
-                <main>
-                    {/* {this.choosePage()} */}
-                    <Switch>
-                        <Route path='/dashboard' render={(routerProps) => (
-                            <DashboardPage {...routerProps} user={this.props.user} />
-                        )} />
-                        <Route path='/findcourses' render={(routerProps) => (
-                            <CoursePage {...routerProps} allCourses={this.props.allCourses} />
-                        )} />
-                        <Route path='/findprograms' component={ProgramPage}/>
-                        <Route path='/yourplan' render={(routerProps) => (
-                            <Plan {...routerProps} allCourses={this.props.allCourses} user={this.props.user}/>
-                        )} />
-                        <Redirect to='/dashboard' />
-                    </Switch>
-                </main>
-                <footer>
-                    <p><small>&copy; Copyright 2019, <a href="mailto:erinchang0306@gmail.com">Erin Chang</a>, <a
-                        href="mailto:khoa.luong@yahoo.com.vn">Khoa Luong</a></small></p>
-                </footer>
-            </div>
-        );
-    }
-}
+//                 <Header page={this.props.page} />
+//                 <main>
+//                     <Switch>
+//                         <Route path='/dashboard' render={(routerProps) => (
+//                             <DashboardPage {...routerProps} user={this.props.user} />
+//                         )} />
+//                         <Route path='/findcourses' render={(routerProps) => (
+//                             <CoursePage {...routerProps} allCourses={this.props.allCourses} />
+//                         )} />
+//                         <Route path='/findprograms' component={ProgramPage} />
+//                         <Route path='/yourplan' render={(routerProps) => (
+//                             <Plan {...routerProps} allCourses={this.props.allCourses} user={this.props.user} />
+//                         )} />
+//                         <Redirect to='/dashboard' />
+//                     </Switch>
+//                 </main>
+//                 {/* <Footer /> */}
+//             </div>
+//         );
+//     }
+// }
 
 export default App;

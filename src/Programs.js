@@ -1,6 +1,9 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
+
+import { Header } from './Header.js'
+import { Footer } from './Footer.js'
 
 import MAJORS from './data/major.json'
 
@@ -9,7 +12,17 @@ export class ProgramPage extends Component {
         let data = MAJORS.map((major) => {
             return <RenderData major={major} />
         })
-        return data;
+        return (
+            
+            <div id="main-element">
+                <Header page={"Programs"} />
+                <main>
+                    {data}
+                </main>
+                <Footer />
+            </div>
+        )
+            ;
     }
 }
 
@@ -36,15 +49,15 @@ class RenderData extends Component {
             return "";
         }
         return <div className="card panel">
-                <span>Credits Required for Graduation: </span>{this.props.major.credits}<br></br> 
-                <span>Required Courses</span>Will add later <br></br>
-                <span><button className={"clickable " + (this.state.added ? 'added':'')} onClick={this.removePlan}>{(this.state.added ? 'Remove from Plan' : 'Add to Plan')}</button> </span> <br></br>                
-            </div>
+            <span>Credits Required for Graduation: </span>{this.props.major.credits}<br></br>
+            <span>Required Courses</span>Will add later <br></br>
+            <span><button className={"clickable " + (this.state.added ? 'added' : '')} onClick={this.removePlan}>{(this.state.added ? 'Remove from Plan' : 'Add to Plan')}</button> </span> <br></br>
+        </div>
     }
 
     handleClick = (event) => {
         let panel = this.popPanel();
-        this.setState({output : panel});
+        this.setState({ output: panel });
         event.preventDefault();
     }
 

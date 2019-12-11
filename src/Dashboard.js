@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import { BrowserRouter as Router, Route, Link, Switch, NavLink } from 'react-router-dom';
 import firebase from 'firebase/app';
 
+import { Header } from './Header.js'
+import { Footer } from './Footer.js'
 
 export class DashboardPage extends Component {
     constructor(props) {
@@ -22,6 +24,9 @@ export class DashboardPage extends Component {
 
     render() {
         return (
+            <div id="main-element">
+                <Header page={"Dashboard"} />
+                <main>
             <div id="dashboard-page">
                 <div className="flex-container">
                     <section className="subSection">
@@ -70,6 +75,9 @@ export class DashboardPage extends Component {
                         <p>It is a graduation requirement <br></br> Because you need W credits</p>
                     </div>
                 </section>
+            </div>
+            </main>
+                <Footer />
             </div>
         );
     }
