@@ -11,20 +11,20 @@
         "type" : "radio", 
         "name" : "AofK", 
         "element" : [
-            {"value" : "NW", "content" : "NW"},
-            {"value" : "I&S", "content" : "I&S"},
-            {"value" : "VLPA", "content" : "VLPA"},
-            {"value" : "QSR", "content" : "QSR"}
+            {"value" : "NW", "content" : " Natural World (NW)"},
+            {"value" : "I&S", "content" : " Individual & Society (I&S)"},
+            {"value" : "VLPA", "content" : " Visual Language & Performance Arts (VLPA)"},
+            {"value" : "QSR", "content" : " Qualitative and Symbolic Resoning (QSR)"}
         ]},
     {
         "header" : "Offered in:", 
         "type" : "radio",
         "name" : "quarter",
         "element" : [
-            {"value" : "A", "content" : "Autumn"},
-            {"value" : "W", "content" : "Winter"},
-            {"value" : "Sp", "content" : "Spring"},
-            {"value" : "S", "content" : "Summer"}
+            {"value" : "A", "content" : " Autumn"},
+            {"value" : "W", "content" : " Winter"},
+            {"value" : "Sp", "content" : " Spring"},
+            {"value" : "S", "content" : " Summer"}
         ]
     },
     {
@@ -32,9 +32,9 @@
         "type" : "radio",
         "name" : "campus",
         "element" : [
-            {"value" : "Seattle", "content" : "Seattle"},
-            {"value" : "Bothell", "content" : "Bothell"},
-            {"value" : "Tacoma", "content" : "Tacoma"}
+            {"value" : "Seattle", "content" : " Seattle"},
+            {"value" : "Bothell", "content" : " Bothell"},
+            {"value" : "Tacoma", "content" : " Tacoma"}
         ]
     }
 ]
