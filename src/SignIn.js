@@ -10,8 +10,8 @@ export class SignIn extends Component {
         this.state = {
             'email': undefined,
             'password': undefined,
-            'handle': undefined,
-            'avatar': '' //default to blank value
+            'name': '',
+            'student-id': '' //default to blank value
         };
     }
 
@@ -28,8 +28,7 @@ export class SignIn extends Component {
     //handle signUp button
     handleSignUp = (event) => {
         event.preventDefault(); //don't submit
-        let avatar = this.state.avatar || 'img/no-user-pic.png'; //default to local pic
-        this.props.signUpCallback(this.state.email, this.state.password, this.state.handle, avatar);
+        this.props.signUpCallback(this.state.email, this.state.password, this.state.name);
     }
 
     //handle signIn button
@@ -41,7 +40,7 @@ export class SignIn extends Component {
 
     render() {
         return (
-            <div className="subSection">
+            <div className="subSection login">
                 <h2>Log In</h2>
                 <form className="searchBox" role="search">
                     <div className="loginBox">
@@ -51,19 +50,33 @@ export class SignIn extends Component {
 
                             {/* <input id="password" type="text" title="searchBox" placeholder="Password"></input> */}
 
-                            <input id="password" type="text" name="password" placeholder="Password" onChange={this.handleChange} />
+                            <input id="password" type="password" name="password" placeholder="Password" onChange={this.handleChange} />
+                        </div>
+
+                        <div>
+                            <button className="btn btn-primary" onClick={this.handleSignIn}>Log-in</button>
+                        </div>
+                    </div>
+                </form>
+                <h2>Sign Up</h2>
+                <form className="searchBox" role="search">
+                    <div className="loginBox">
+                        {/* <input id="email" type="email" name="email" onChange={this.handleChange} /> */}
+                        <div>
+                            <input id="email" type="text" name="email" placeholder="Username" onChange={this.handleChange} />
+                            {/* <input id="password" type="text" title="searchBox" placeholder="Password"></input> */}
+                            <input id="password" type="password" name="password" placeholder="Password" onChange={this.handleChange} />
+                            <input id="name" type="text" name="name" placeholder="Full Name (e.g Joseph Joestar)" onChange={this.handleChange} />
                         </div>
 
                         <div>
                             <button className="btn btn-primary mr-2" onClick={this.handleSignUp}>Sign-up</button>
-                            <button className="btn btn-primary" onClick={this.handleSignIn}>Log-in</button>
                         </div>
+                        
                         <div>
                             {this.props.errorMessage && <p className="alert alert-danger">{this.props.errorMessage}</p>}
                         </div>
                     </div>
-
-
                 </form>
             </div>
         )

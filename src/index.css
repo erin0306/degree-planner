@@ -132,7 +132,7 @@ html {
     justify-content: center;
   }
   
-  form input[type=text] {
+  form input[type=text], form input[type=password] {
     padding: 10px;
     margin-top: 1em;
     font-size: 17px;
@@ -142,6 +142,18 @@ html {
     width: 80%;
     background: #ffffff;
     box-shadow: 0 2px 3px rgba(0, 0, 0, 0.16);
+  }
+
+  .login {
+    width: 40%;
+  }
+
+  .login h2 {
+    text-align: left;
+  }
+
+  .login form {
+    margin-bottom: 2rem;
   }
   
   form button, .card button {

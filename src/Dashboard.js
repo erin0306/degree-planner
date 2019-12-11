@@ -11,7 +11,7 @@ export class DashboardPage extends Component {
                         <div className="profile">
                             <h2>Student Profile</h2>
                             <div className="card">
-                                <h3>Khoa Nguyen Luong</h3>
+                                <h3>{this.props.user['displayName']}</h3>
                                 <p>Junior</p>
                                 <p>ID: 9999999</p>
                             </div>

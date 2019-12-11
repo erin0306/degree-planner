@@ -60,14 +60,13 @@ class App extends Component {
         this.authUnregFunc();
     }
     //A callback function for registering new users
-    handleSignUp = (email, password, handle, avatar) => {
+    handleSignUp = (email, password, name) => {
         this.setState({ errorMessage: null }); //clear any old errors
 
         firebase.auth().createUserWithEmailAndPassword(email, password)
             .then((credentials) => {
                 return credentials.user.updateProfile({
-                    displayName: handle,
-                    photoURL: avatar
+                    displayName: name
                 })
             }).catch((error) => {
                 // console.log(error.message);
@@ -200,7 +199,9 @@ class RenderMain extends Component {
                 <main>
                     {/* {this.choosePage()} */}
                     <Switch>
-                        <Route path='/dashboard' component={DashboardPage} />
+                        <Route path='/dashboard' render={(routerProps) => (
+                            <DashboardPage {...routerProps} user={this.props.user} />
+                        )} />
                         <Route path='/findcourses' render={(routerProps) => (
                             <CoursePage {...routerProps} allCourses={this.props.allCourses} />
                         )} />
