@@ -48,10 +48,6 @@ class App extends Component {
 
     }
 
-    // componentDidMount() {
-
-    //   }
-
     componentWillUnmount() {
         this.authUnregFunc();
     }

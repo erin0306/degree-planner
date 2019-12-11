@@ -115,7 +115,6 @@ class RenderData extends Component {
             }
         }
 
-
     }
 
     render() {
