@@ -86,6 +86,7 @@ class SearchField extends Component {
             AofK: "",
             quarter: "",
             campus: "",
+            filterHidden: true
         }
     }
 
@@ -115,6 +116,11 @@ class SearchField extends Component {
         this.updateInput({ input: event.target.value });
     }
 
+    showFilter = (event) => {
+        this.setState({filterHidden : !this.state.filterHidden});
+        event.preventDefault();
+    }
+
     render() {
         return (
             <section className="schedule">
@@ -124,7 +130,10 @@ class SearchField extends Component {
                         placeholder="Enter department code (e.g INFO)" onChange={this.handleChange} ></input>
                     <button onClick={this.handleClick} className="searchButton"><FontAwesomeIcon icon={faSearch} aria-label="search" /></button>
                 </form>
-                <Filter filters={FILTERS} formCallback={this.updateForm} resetFilterCallback={this.resetFilter} />
+                <div onClick={this.showFilter} className="clickable card panel">
+                        <p>{(this.state.filterHidden ? 'Click here to show Filters' : 'Click here to hide Filters')}</p>
+                </div>
+                <Filter hidden={this.state.filterHidden} filters={FILTERS} formCallback={this.updateForm} resetFilterCallback={this.resetFilter} />
             </section>
         );
     }
@@ -137,8 +146,12 @@ class Filter extends Component {
                 <FilterCard key={i} filter={element} formCallback={this.props.formCallback} />
             );
         });
+        let classes = "subSection2 ";
+        if (this.props.hidden) {
+            classes += "hidden";
+        }
         return (
-            <section className="subSection2">
+            <section className={classes}>
                 <h2>Filters</h2>
                 <form>
                     {filterList}
