@@ -22,7 +22,6 @@ export class Completed extends Component {
     }
 
     render() {
-        // TODO: test no plans 
         if (!this.state.completed) return (
             <div id="main-element">
                 <Header page={"Completed"} signoutCallback={this.props.signoutCallback} />
@@ -37,13 +36,11 @@ export class Completed extends Component {
         );
 
         let completedKeys = Object.keys(this.state.completed);
-        console.log(completedKeys);
         let completedArr = completedKeys.map((key) => {
             let completedObj = this.state.completed[key];
             completedObj.id = key;
             return completedObj;
         })
-        console.log(completedArr);
 
         let data = completedArr.map((course) => {
             return <RenderData  user={this.props.user} key={course.id} course={course} />
