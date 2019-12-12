@@ -130,8 +130,8 @@ class SearchField extends Component {
                         placeholder="Enter department code (e.g INFO)" onChange={this.handleChange} ></input>
                     <button onClick={this.handleClick} className="searchButton"><FontAwesomeIcon icon={faSearch} aria-label="search" /></button>
                 </form>
-                <div className="clickable card panel">
-                        <p onClick={this.showFilter}>{(this.state.filterHidden ? 'Click here to show Filters' : 'Click here to hide Filters')}</p>
+                <div onClick={this.showFilter} className="clickable card panel">
+                        <p>{(this.state.filterHidden ? 'Click here to show Filters' : 'Click here to hide Filters')}</p>
                 </div>
                 <Filter hidden={this.state.filterHidden} filters={FILTERS} formCallback={this.updateForm} resetFilterCallback={this.resetFilter} />
             </section>
