@@ -2,8 +2,9 @@ import React, {Component} from 'react';
 import { BrowserRouter as Router, Route, Link, Switch, NavLink } from 'react-router-dom';
 import firebase from 'firebase/app';
 
-import { Header } from './Header.js'
-import { Footer } from './Footer.js'
+import { Header } from './Header.js';
+import { Footer } from './Footer.js';
+import MAJORS from './data/major.json';
 
 export class DashboardPage extends Component {
     constructor(props) {
@@ -35,8 +36,44 @@ export class DashboardPage extends Component {
         this.majorRef.off();
     }
 
+    calcCredits() {
+        let completedKeys = Object.keys(this.state.completed);
+        let completedArr = completedKeys.map((key) => {
+            let completedObj = this.state.completed[key];
+            completedObj.id = key;
+            return completedObj;
+        })
+        let allCreds = 0;
+        let majorCreds = 0;
+        for (let i = 0; i < completedArr.length; i++) {
+            if (completedArr[i]['Credits'] != "") {
+                allCreds += parseInt(completedArr[i]['Credits'], 10);
+            }
+        }
+        let majorInfo = MAJORS.filter(allMajor => allMajor['major'] === this.state.major);
+        
+        let completedInMajor = [];
+        for (let k = 0; k < completedArr.length; k++) {
+            if (majorInfo[0] != undefined) {
+                if (completedArr[k]['Department'] === majorInfo[0]['Abrev']) {
+                    completedInMajor.push(completedArr[k]);
+                }
+            }
+        }
+        for (let j = 0; j < completedInMajor.length; j++) {
+            if (completedInMajor[j]['Credits'] != "") {
+                majorCreds += parseInt(completedInMajor[j]['Credits'], 10);
+            }
+        }
+        return <div className="card">
+                    <h3>{allCreds} credits</h3>
+                    <p>{majorCreds} intended major credits</p>
+                </div>
+    }
+
     render() {
-        console.log(this.state.completed);
+        // console.log(this.state.completed);
+        let renderCredits = this.calcCredits();
         return (
             <div id="main-element">
                 <Header page={"Dashboard"} signoutCallback={this.props.signoutCallback}/>
@@ -61,10 +98,7 @@ export class DashboardPage extends Component {
                         </div>
                         <div className="profile">
                             <h2>Graduation Progress</h2>
-                            <div className="card">
-                                <h3>100 credits</h3>
-                                <p>40 intended major credits</p>
-                            </div>
+                            {renderCredits}
                         </div>
                     </section>
                     
@@ -101,7 +135,7 @@ export class DashboardPage extends Component {
 
 class RenderPlanned extends Component {
     render() {
-        console.log(this.props.plans);
+        // console.log(this.props.plans);
         if (this.props.plans === null) {
             return <section className="subSection">
                     <h2>Planned Courses</h2>
@@ -111,13 +145,13 @@ class RenderPlanned extends Component {
                 </section>
         }
         let planKeys = Object.keys(this.props.plans);
-        console.log(planKeys);
+        // console.log(planKeys);
         let planArr = planKeys.map((key) => {
             let planObj = this.props.plans[key];
             planObj.id = key;
             return planObj;
         })
-        console.log(planArr);
+        // console.log(planArr);
 
         let data = planArr.map((course) => {
             return <div key={course.Department + course.Code} className="card">
@@ -141,7 +175,7 @@ class RenderPlanned extends Component {
 }
 class RenderCompleted extends Component {
     render() {
-        console.log(this.props.completed);
+        // console.log(this.props.completed);
         if (this.props.completed === null) {
             return <section className="subSection">
                     <h2>Completed Courses</h2>
@@ -151,13 +185,13 @@ class RenderCompleted extends Component {
                 </section>
         }
         let completedKeys = Object.keys(this.props.completed);
-        console.log(completedKeys);
+        // console.log(completedKeys);
         let completedArr = completedKeys.map((key) => {
             let completedObj = this.props.completed[key];
             completedObj.id = key;
             return completedObj;
         })
-        console.log(completedArr);
+        // console.log(completedArr);
 
         let data = completedArr.map((course) => {
             return <div key={course.Department + course.Code} className="card">

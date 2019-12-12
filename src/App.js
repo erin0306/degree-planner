@@ -114,7 +114,7 @@ class App extends Component {
                     {/* <RenderMain user={this.state.user} signoutCallback={this.handleSignOut} page={this.state.page} allCourses={this.state.allCourses} /> */}
                     <Switch>
                         <Route path='/dashboard' render={(routerProps) => (
-                            <DashboardPage {...routerProps} user={this.state.user} signoutCallback={this.handleSignOut}/>
+                            <DashboardPage {...routerProps} user={this.state.user} signoutCallback={this.handleSignOut} allCourses={this.state.allCourses}/>
                         )} />
                         <Route path='/findcourses' render={(routerProps) => (
                             <CoursePage {...routerProps} allCourses={this.state.allCourses} signoutCallback={this.handleSignOut}/>
