@@ -13,12 +13,12 @@ export class ResultField extends Component {
 
     componentDidMount() {
         //get planned courses from firebase as objects
-        this.plansRef = firebase.database().ref('plannedCourses');
+        this.plansRef = firebase.database().ref(this.props.user.uid).child('plannedCourses');
         this.plansRef.on('value', (snapshot) => {
             let obj = snapshot.val();
             this.setState({ plans: obj }); 
         })
-        this.completedRef = firebase.database().ref('completedCourses');
+        this.completedRef = firebase.database().ref(this.props.user.uid).child('completedCourses');
         this.completedRef.on('value', (snapshot) => {
             let obj = snapshot.val();
             this.setState({ completed: obj }); 
@@ -36,7 +36,7 @@ export class ResultField extends Component {
         // console.log(this.props.loading);
 
         let data = this.props.displayCourses.map((course) => {
-            return <RenderData course={course} plans={this.state.plans} completed={this.state.completed} loadingCallback={this.props.loadingCallback} key={course.Department + course.Code} />
+            return <RenderData user={this.props.user} course={course} plans={this.state.plans} completed={this.state.completed} loadingCallback={this.props.loadingCallback} key={course.Department + course.Code} />
         });
         let spinner = null;
         if (this.props.loading === 'hidden') {
@@ -100,7 +100,7 @@ class RenderData extends Component {
         }
 
         // Insert new planned courses
-        let completedRef = firebase.database().ref('completedCourses').child(course.Department + course.Code);
+        let completedRef = firebase.database().ref(this.props.user.uid).child('completedCourses').child(course.Department + course.Code);
         completedRef.set(newCompleted)
 
         if (this.props.completed) { // if plans object retrieved from firebase is not empty
@@ -129,7 +129,7 @@ class RenderData extends Component {
         }
 
         // Insert new planned courses
-        let planRef = firebase.database().ref('plannedCourses').child(course.Department + course.Code);
+        let planRef = firebase.database().ref(this.props.user.uid).child('plannedCourses').child(course.Department + course.Code);
         planRef.set(newPlan)
 
         if (this.props.plans) { // if plans object retrieved from firebase is not empty

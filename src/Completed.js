@@ -11,7 +11,7 @@ export class Completed extends Component {
     }
 
     componentDidMount() {
-        this.completedRef = firebase.database().ref('completedCourses');
+        this.completedRef = firebase.database().ref(this.props.user.uid).child('completedCourses');
         this.completedRef.on('value', (snapshot) => {
             let obj = snapshot.val();
             this.setState({ completed: obj }); 
@@ -46,7 +46,7 @@ export class Completed extends Component {
         console.log(completedArr);
 
         let data = completedArr.map((course) => {
-            return <RenderData key={course.id} course={course} />
+            return <RenderData  user={this.props.user} key={course.id} course={course} />
         });
 
         return (
@@ -91,7 +91,7 @@ class RenderData extends Component {
     addRemove = (event) => {
         let course = this.props.course;
 
-        let completedRef = firebase.database().ref('completedCourses').child(course.Department + course.Code);
+        let completedRef = firebase.database().ref(this.props.user.uid).child('completedCourses').child(course.Department + course.Code);
         if (course) {
             console.log(this.state.buttonOutput);
             completedRef.set(null)

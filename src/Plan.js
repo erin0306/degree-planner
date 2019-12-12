@@ -11,7 +11,7 @@ export class Plan extends Component {
     }
 
     componentDidMount() {
-        this.plansRef = firebase.database().ref('plannedCourses');
+        this.plansRef = firebase.database().ref(this.props.user.uid).child('plannedCourses');
         this.plansRef.on('value', (snapshot) => {
             let obj = snapshot.val();
             this.setState({ plans: obj });
@@ -46,7 +46,7 @@ export class Plan extends Component {
         console.log(planArr);
 
         let data = planArr.map((course) => {
-            return <RenderData key={course.id} course={course} />
+            return <RenderData  user={this.props.user} key={course.id} course={course} />
         });
 
         return (
@@ -91,7 +91,7 @@ class RenderData extends Component {
     addRemove = (event) => {
         let course = this.props.course;
 
-        let planRef = firebase.database().ref('plannedCourses').child(course.Department + course.Code);
+        let planRef = firebase.database().ref(this.props.user.uid).child('plannedCourses').child(course.Department + course.Code);
 
         if (course) {
             console.log('planned');

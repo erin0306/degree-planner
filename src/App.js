@@ -41,6 +41,7 @@ class App extends Component {
         this.authUnregFunc = firebase.auth().onAuthStateChanged((firebaseUser) => {
             if (firebaseUser) { //firebaseUser defined: is logged in
                 this.setState({ user: firebaseUser })
+                
                 //do something with firebaseUser (e.g. assign with this.setState())
             }
             else { //firebaseUser undefined: is not logged in
@@ -118,11 +119,11 @@ class App extends Component {
                             <DashboardPage {...routerProps} user={this.state.user} signoutCallback={this.handleSignOut} allCourses={this.state.allCourses}/>
                         )} />
                         <Route path='/findcourses' render={(routerProps) => (
-                            <CoursePage {...routerProps} allCourses={this.state.allCourses} signoutCallback={this.handleSignOut}/>
+                            <CoursePage {...routerProps}  user={this.state.user} allCourses={this.state.allCourses} signoutCallback={this.handleSignOut}/>
                         )} />
                         
                         <Route exact path='/findprograms' render={(routerProps) => (
-                            <ProgramPage {...routerProps} signoutCallback={this.handleSignOut}/>
+                            <ProgramPage {...routerProps}  user={this.state.user} signoutCallback={this.handleSignOut}/>
                         )} />
                         <Route path='/findprograms/:major' render={(routerProps) => (
                             <ProgramDetail {...routerProps} user={this.state.user} signoutCallback={this.handleSignOut}/>

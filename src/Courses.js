@@ -23,7 +23,7 @@ export class CoursePage extends Component {
     }
 
     componentDidMount() {
-        this.completedRef = firebase.database().ref('completedCourses');
+        this.completedRef = firebase.database().ref(this.props.user.uid).child('completedCourses');
         this.completedRef.on('value', (snapshot) => {
             let obj = snapshot.val();
             this.setState({ completed: obj }); 
@@ -66,8 +66,8 @@ export class CoursePage extends Component {
                 <Header page={"Courses"}  signoutCallback={this.props.signoutCallback}/>
                 <main>
                     <div id="course-page">
-                        <SearchField allCourses={this.props.allCourses} updateDisplayCallback={this.updateDisplay} inputCallback={this.updateInput} />
-                        <ResultField loading={this.state.loading} loadingCallback={this.updateLoading} displayCourses={this.state.displayCourses} />
+                        <SearchField  allCourses={this.props.allCourses} updateDisplayCallback={this.updateDisplay} inputCallback={this.updateInput} />
+                        <ResultField  user={this.props.user} loading={this.state.loading} loadingCallback={this.updateLoading} displayCourses={this.state.displayCourses} />
                     </div>
                 </main>
                 <Footer />

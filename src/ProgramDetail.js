@@ -25,7 +25,7 @@ export class ProgramDetail extends Component {
         let majorObj = _.find(MAJORS, { major: majorName }); //find pet in data
         this.setState({ clickedMajor: majorObj });
 
-        this.majorRef = firebase.database().ref('major');
+        this.majorRef = firebase.database().ref(this.props.user.uid).child('major');
         this.majorRef.on('value', (snapshot) => {
             let obj = snapshot.val();
             this.setState({ currMajor: obj });
@@ -37,7 +37,7 @@ export class ProgramDetail extends Component {
 
     addRemovePlan = () => {
         let major = this.state.clickedMajor;
-        let majorRef = firebase.database().ref('major');
+        let majorRef = firebase.database().ref(this.props.user.uid).child('major');
         if (this.state.currMajor === major.major) {
             majorRef.set("Unknown");
         } else {
@@ -96,7 +96,7 @@ class RenderData extends Component {
     }
 
     addRemovePlan = () => {
-        let majorRef = firebase.database().ref('major');
+        let majorRef = firebase.database().ref(this.props.user.uid).child('major');
         if (this.props.currMajor === this.props.major.major) {
             majorRef.set("Unknown");
         } else {

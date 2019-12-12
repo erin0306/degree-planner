@@ -18,7 +18,7 @@ export class ProgramPage extends Component {
     }
 
     componentDidMount() {
-        this.majorRef = firebase.database().ref('major');
+        this.majorRef = firebase.database().ref(this.props.user.uid).child('major');
         this.majorRef.on('value', (snapshot) => {
             let obj = snapshot.val();
             // console.log(obj);
@@ -33,7 +33,7 @@ export class ProgramPage extends Component {
 
     render() { 
         let data = MAJORS.map((major) => {
-            return <RenderData major={major} currMajor={this.state.currMajor}/>
+            return <RenderData  user={this.props.user} major={major} currMajor={this.state.currMajor}/>
         })
         return (
             
@@ -59,7 +59,7 @@ class RenderData extends Component {
     }
 
     addRemovePlan = () => {
-        let majorRef = firebase.database().ref('major');
+        let majorRef = firebase.database().ref(this.props.user.uid).child('major');
         if (this.props.currMajor === this.props.major.major) {
             majorRef.set("Unknown");
         } else {
