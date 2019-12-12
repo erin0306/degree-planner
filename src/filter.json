@@ -1,15 +1,15 @@
 [
     {
-        "header" : "", 
-        "type" : "checkbox", 
-        "name" : "prereq", 
+        "header" : "",
+        "type" : "checkbox",
+        "name" : "prereq",
         "element" : [
-            {"value" : "prereq", "content" : "Include only courses you have prerequisites for"}
+            {"value" : "prereq", "content" : " Include only courses you have prerequisites for"}
         ]},
     {
-        "header" : "Area of Knowledge:", 
-        "type" : "radio", 
-        "name" : "AofK", 
+        "header" : "Area of Knowledge:",
+        "type" : "radio",
+        "name" : "AofK",
         "element" : [
             {"value" : "NW", "content" : " Natural World (NW)"},
             {"value" : "I&S", "content" : " Individual & Society (I&S)"},
@@ -17,7 +17,7 @@
             {"value" : "QSR", "content" : " Qualitative and Symbolic Resoning (QSR)"}
         ]},
     {
-        "header" : "Offered in:", 
+        "header" : "Offered in:",
         "type" : "radio",
         "name" : "quarter",
         "element" : [
@@ -28,7 +28,7 @@
         ]
     },
     {
-        "header" : "Campus:", 
+        "header" : "Campus:",
         "type" : "radio",
         "name" : "campus",
         "element" : [
