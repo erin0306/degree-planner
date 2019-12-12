@@ -8,7 +8,7 @@ import { Footer } from './Footer.js'
 export class DashboardPage extends Component {
     constructor(props) {
         super(props);
-        this.state = { plans: [], completed: [] };
+        this.state = { plans: [], completed: [], major : "Unknown" };
     }
 
     componentDidMount() {
@@ -16,18 +16,23 @@ export class DashboardPage extends Component {
         this.completedRef.on('value', (snapshot) => {
             let obj = snapshot.val();
             this.setState({ completed: obj }); 
-        })
+        });
         this.plansRef = firebase.database().ref('plannedCourses');
         this.plansRef.on('value', (snapshot) => {
             let obj = snapshot.val();
             this.setState({ plans: obj });
+        });
+
+        this.majorRef = firebase.database().ref('major');
+        this.majorRef.on('value', (snapshot) => {
+            let obj = snapshot.val();
+            this.setState({ major: obj });
         })
-        
     }
     componentWillUnmount() {
         this.plansRef.off();
         this.completedRef.off();
-
+        this.majorRef.off();
     }
 
     render() {
@@ -50,8 +55,8 @@ export class DashboardPage extends Component {
                         <div className="profile">
                             <h2>Intended Major</h2>
                             <div className="card">
-                                <h3>Informatics</h3>
-                                <p>HCI Track</p>
+                                <h3>{this.state.major}</h3>
+                                <p>Custom Track</p>
                             </div>
                         </div>
                         <div className="profile">

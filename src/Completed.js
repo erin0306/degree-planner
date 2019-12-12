@@ -70,6 +70,7 @@ class RenderData extends Component {
 
         this.state = {
             output: "",
+            buttonOutput: "Remove from Completed"
         }
     }
 
@@ -91,9 +92,8 @@ class RenderData extends Component {
         let course = this.props.course;
 
         let completedRef = firebase.database().ref('completedCourses').child(course.Department + course.Code);
-
         if (course) {
-            console.log('planned');
+            console.log(this.state.buttonOutput);
             completedRef.set(null)
                 .catch((error) => {
                     console.log(error.message);
@@ -113,7 +113,7 @@ class RenderData extends Component {
                     <span>Prerequisites: </span>{course.Prereqs}<br></br>
                     <span>Quarter(s) Offered: </span>{course.Quarters}<br></br>
 
-                    <span><button className="clickable added" onClick={this.addRemove}>Remove from Completed</button> </span> <br></br>
+                    <span><button className="clickable added" onClick={this.addRemove}>{this.state.buttonOutput}</button> </span> <br></br>
                 </div>
             </div>
         );
