@@ -15,11 +15,13 @@ The purpose of this web app is to help UW students explore different classes or 
 
 Upon login, students should be able to add completed courses and planned courses through clicking on links on the dashboard, or they can access those feature through the side navigation. 
 
-Once they have added completed courses, students can filter courses based on prerequisites to see the ones they are eligible to take.
+Once they have added completed courses, they can see their graduation progress through the dashboard and can filter courses based on prerequisites to see the ones they are eligible to take. 
 
-Students can type in the department code and filter courses based on Areas of Knowledge, quarter offered, campus, etc. They can also add courses to their future plan. They can remove planned courses on search result or on Your Plan page.
+If students have yet to add any completed courses, they will only see courses without any prerequisites.
 
-Students can explore different programs and see description and requirement of each program by clicking on any one of the program in the list.
+Students can type in the department code and filter courses based on Areas of Knowledge, quarter offered, campus, etc. They can also add courses to their future plan. They can remove planned courses in the search result or on Your Plan page.
+
+On the Program page, students can explore different programs by clicking on any one of the programs in the list. It will lead them to another page with detailed description and requirement of each program. They can add any of them to their plan and it will be updated in their dashboard.
 
 
 
