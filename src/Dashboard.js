@@ -16,7 +16,6 @@ export class DashboardPage extends Component {
         this.completedRef = firebase.database().ref(this.props.user.uid).child('completedCourses');
         this.completedRef.on('value', (snapshot) => {
             let obj = snapshot.val();
-            console.log(obj)
             this.setState({ completed: obj });
             
         });
@@ -41,7 +40,7 @@ export class DashboardPage extends Component {
     calcCredits() {
         let allCreds = 0;
         let majorCreds = 0;
-        if (this.state.completed) { 
+        if (this.state.completed) { // if completed courses isn't undefined
             let completedKeys = Object.keys(this.state.completed);
             let completedArr = completedKeys.map((key) => {
                 let completedObj = this.state.completed[key];
@@ -78,7 +77,6 @@ export class DashboardPage extends Component {
     }
 
     render() {
-        // console.log(this.state.completed);
         let renderCredits = this.calcCredits();
         return (
             <div id="main-element">
@@ -90,7 +88,7 @@ export class DashboardPage extends Component {
                                 <div className="profile">
                                     <h2>Student Profile</h2>
                                     <div className="card">
-                                        <h3>{this.props.user['displayName']}</h3>
+                                        <h3>{this.props.user.displayName}</h3>
                                         <p>Junior</p>
                                         <p>ID: 9999999</p>
                                     </div>
@@ -141,7 +139,6 @@ export class DashboardPage extends Component {
 
 class RenderPlanned extends Component {
     render() {
-        // console.log(this.props.plans);
         if (this.props.plans === null) {
             return <section className="subSection">
                 <h2>Planned Courses</h2>
@@ -151,13 +148,11 @@ class RenderPlanned extends Component {
             </section>
         }
         let planKeys = Object.keys(this.props.plans);
-        // console.log(planKeys);
         let planArr = planKeys.map((key) => {
             let planObj = this.props.plans[key];
             planObj.id = key;
             return planObj;
         })
-        // console.log(planArr);
 
         let data = planArr.map((course) => {
             return <div key={course.Department + course.Code} className="card">
@@ -181,7 +176,6 @@ class RenderPlanned extends Component {
 }
 class RenderCompleted extends Component {
     render() {
-        // console.log(this.props.completed);
         if (this.props.completed === null) {
             return <section className="subSection">
                 <h2>Completed Courses</h2>
@@ -191,13 +185,11 @@ class RenderCompleted extends Component {
             </section>
         }
         let completedKeys = Object.keys(this.props.completed);
-        // console.log(completedKeys);
         let completedArr = completedKeys.map((key) => {
             let completedObj = this.props.completed[key];
             completedObj.id = key;
             return completedObj;
         })
-        // console.log(completedArr);
 
         let data = completedArr.map((course) => {
             return <div key={course.Department + course.Code} className="card">

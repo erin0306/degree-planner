@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import firebase from 'firebase/app';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faSearch, faArrowAltCircleDown, faArrowAltCircleUp } from "@fortawesome/free-solid-svg-icons";
 
 import { Header } from './Header.js'
 import { Footer } from './Footer.js'
@@ -86,7 +86,7 @@ class SearchField extends Component {
             AofK: "",
             quarter: "",
             campus: "",
-            filterHidden: true
+            filterHidden: false
         }
     }
 
@@ -116,11 +116,6 @@ class SearchField extends Component {
         this.updateInput({ input: event.target.value });
     }
 
-    showFilter = (event) => {
-        this.setState({filterHidden : !this.state.filterHidden});
-        event.preventDefault();
-    }
-
     render() {
         return (
             <section className="schedule">
@@ -130,30 +125,37 @@ class SearchField extends Component {
                         placeholder="Enter department code (e.g INFO)" onChange={this.handleChange} ></input>
                     <button onClick={this.handleClick} className="searchButton"><FontAwesomeIcon icon={faSearch} aria-label="search" /></button>
                 </form>
-                <div onClick={this.showFilter} className="clickable card panel">
-                        <p>{(this.state.filterHidden ? 'Click here to show Filters' : 'Click here to hide Filters')}</p>
-                </div>
-                <Filter hidden={this.state.filterHidden} filters={FILTERS} formCallback={this.updateForm} resetFilterCallback={this.resetFilter} />
-            </section>
+                <Filter filters={FILTERS} formCallback={this.updateForm} resetFilterCallback={this.resetFilter} />
+            </section> 
         );
     }
 }
 
 class Filter extends Component {
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            filterHidden: true
+        }
+    }
+
+    showFilter = (event) => {
+        this.setState({filterHidden : !this.state.filterHidden});
+        event.preventDefault();
+    }
+
     render() {
         let filterList = this.props.filters.map((element, i) => {
             return (
                 <FilterCard key={i} filter={element} formCallback={this.props.formCallback} />
             );
         });
-        let classes = "subSection2 ";
-        if (this.props.hidden) {
-            classes += "hidden";
-        }
+
         return (
-            <section className={classes}>
-                <h2>Filters</h2>
-                <form>
+            <section className="subSection2">
+                <h2 onClick={this.showFilter}>Filters <FontAwesomeIcon icon={this.state.filterHidden ? faArrowAltCircleDown : faArrowAltCircleUp} aria-label={this.state.filterHidden? "expand filter" : "hide filter"} /> </h2> 
+                <form className={this.state.filterHidden? "hidden" : ""}>
                     {filterList}
                     <div className="card">
                         <button id="reset-btn" onClick={this.props.resetFilterCallback}>Reset</button>

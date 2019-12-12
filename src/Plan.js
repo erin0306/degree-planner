@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Route, Link, Switch, NavLink, Redirect } from 'react-router-dom';
 import firebase from 'firebase/app';
 
 import { Header } from './Header.js'
@@ -28,7 +29,7 @@ export class Plan extends Component {
                 <Header page={"Your Plan"} signoutCallback={this.props.signoutCallback} />
                 <main>
                     <div className="card panel">
-                        <p> No planned courses. Go to Courses to add new plans!</p>
+                        <p> No planned courses. Go to <Link to='/findcourses'>Courses</Link> to add new plans!</p>
                     </div>
                 </main>
                 <Footer />
@@ -87,7 +88,6 @@ class RenderData extends Component {
         }
     }
 
-    // Using planned courses to test firebase add/remove because the button is always there
     addRemove = (event) => {
         let course = this.props.course;
 
