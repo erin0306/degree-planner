@@ -160,7 +160,7 @@ class RenderPlanned extends Component {
                 </div>
         });
         if (data.length > 5) {
-            data = data.slice(0, 6);
+            data = data.slice(0, 5);
         }
         return (
             <section className="subSection">
@@ -200,7 +200,7 @@ class RenderCompleted extends Component {
                 </div>
         });
         if (data.length > 5) {
-            data = data.slice(0, 6);
+            data = data.slice(0, 5);
         }
         return (
             <section className="subSection">
