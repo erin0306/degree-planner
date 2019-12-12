@@ -114,10 +114,6 @@ html {
     display: block;
   }
   
-  main {
-    /* padding-left: 1rem; */
-  }
-  
   p {
       line-height: 1.5;
   }
@@ -195,6 +191,13 @@ html {
     background-repeat: no-repeat;
     background-size: 50rem;
     background-blend-mode: overlay;
+    display: flex;
+    flex-direction: column;
+  }
+  footer {
+    flex-direction: row;
+    margin-right: 20vw;
+    align-items: center;
   }
   
   #nav-element {
@@ -327,7 +330,17 @@ html {
     flex-direction: column;
     display: flex;
   }
-  
+
+  footer {
+    margin-top: auto;
+  }
+  main  {
+
+  }
+  footer {
+    align-self:flex-end;
+  }
+
   @media (min-width: 700px) {
     .subSection {
       flex-basis: auto;
@@ -357,6 +370,7 @@ html {
     .login {
       width: 45%;
     }
+
   }
   
   @media (min-width: 1200px) {

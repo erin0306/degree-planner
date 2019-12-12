@@ -156,9 +156,7 @@ class RenderData extends Component {
         return (
             <div>
             <div className="clickable card" onClick={this.handleClick}>
-                <h3>{this.props.course.Department} {this.props.course.Code} {this.props.course.Name}</h3>
-                <p>Because you searched for {this.props.course.Department}</p>
-                
+                <h3>{this.props.course.Department} {this.props.course.Code} {this.props.course.Name}</h3>                
             </div>
                 {popPanel}
             </div>
