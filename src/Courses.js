@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import firebase from 'firebase/app';
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
@@ -15,8 +17,20 @@ export class CoursePage extends Component {
 
         this.state = {
             displayCourses: [],
+            completed: [],
             loading: 'hidden',
         }
+    }
+
+    componentDidMount() {
+        this.completedRef = firebase.database().ref('completedCourses');
+        this.completedRef.on('value', (snapshot) => {
+            let obj = snapshot.val();
+            this.setState({ completed: obj }); 
+        })
+    }
+    componentWillUnmount() {
+        this.completedRef.off();
     }
 
     updateLoading = () => {
@@ -24,14 +38,25 @@ export class CoursePage extends Component {
         console.log('updateLoading');
     }
 
-    updateDisplay = (input, AofK, quarter, campus) => {
+    updateDisplay = (prereq, input, AofK, quarter, campus) => {
         this.setState({ loading: '' });
-        console.log("loading: ''");
-        let result = this.props.allCourses.filter(course => course["Department"].includes(input));
+        console.log("updatedisplay");
+        let result = this.props.allCourses.filter(course => course["Department"].includes(input.toUpperCase()));
         result = result.filter(course => course["Areas of Knowledge"].includes(AofK));
         result = result.filter(course => course["Offered"].includes(quarter));
         result = result.filter(course => course["Campus"].includes(campus));
-
+        if (prereq) { 
+            let completedKeys = Object.keys(this.state.completed);
+            result = result.filter(course => {
+                let includes = false;
+                for (let i = 0; i < completedKeys.length; i++) {
+                    if(course["Prerequisites"].includes(completedKeys[i])) {
+                        includes = true;
+                    }
+                }
+                return (includes || course["Prerequisites"] === "");
+            });
+        }
         this.setState({ displayCourses: result });
     }
 
@@ -57,7 +82,7 @@ class SearchField extends Component {
 
         this.state = {
             input: "",
-            prereq: "",
+            prereq: false,
             AofK: "",
             quarter: "",
             campus: "",
@@ -66,7 +91,8 @@ class SearchField extends Component {
 
     updateForm = (nameValueObj) => {
         this.setState(nameValueObj, () => {
-            this.props.updateDisplayCallback(this.state.input, this.state.AofK, this.state.quarter, this.state.campus);
+                this.props.updateDisplayCallback(this.state.prereq, this.state.input, this.state.AofK, this.state.quarter, this.state.campus);
+                console.log(this.state);
         });
     }
 
@@ -81,9 +107,7 @@ class SearchField extends Component {
     }
 
     handleClick = (event) => {
-        // let filteredData = this.searchCourse();
-        // this.props.updateDisplayCallback({displayCourses : filteredData});
-        this.props.updateDisplayCallback(this.state.input, this.state.AofK, this.state.quarter, this.state.campus);
+        this.props.updateDisplayCallback(this.state.prereq, this.state.input, this.state.AofK, this.state.quarter, this.state.campus);
         event.preventDefault();
     }
 
@@ -128,16 +152,32 @@ class Filter extends Component {
 }
 
 class FilterCard extends Component {
+    constructor(props) {
+        super(props);
+        this.state = { prereqChecked: false };
+    }
+
     handleChange = (evt) => {
-        this.Obj = { [evt.target.name]: evt.target.value };
-        this.props.formCallback(this.Obj);
+        evt.persist();
+        if(evt.target.name === 'prereq') {
+            this.setState({prereqChecked: !this.state.prereqChecked}, ()=> {
+            console.log([evt.target.value], this.state.prereqChecked);
+            this.Obj = { [evt.target.name]: this.state.prereqChecked };
+            this.props.formCallback(this.Obj);
+            })
+        } else {
+            this.Obj = { [evt.target.name]: evt.target.value };
+            console.log(evt.target.name, this.state.prereqChecked);
+            this.props.formCallback(this.Obj);
+        }
+        
     }
 
     render() {
         let filter = this.props.filter;
         let choices = this.props.filter.element.map((choice) => {
             return (
-                <p key={choice.value}><input type={filter.type} name={filter.name} value={choice.value} onChange={this.handleChange}></input>{choice.content}<br></br></p>
+                <p key={choice.value}><input type={filter.type} defaultChecked={this.state.prereqChecked} name={filter.name} value={choice.value} onChange={this.handleChange}></input>{choice.content}<br></br></p>
             );
         });
 
