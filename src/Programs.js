@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import firebase from 'firebase/app';
+import {Redirect} from 'react-router-dom';
 
 import { Header } from './Header.js'
 import { Footer } from './Footer.js'
@@ -68,23 +69,13 @@ class RenderData extends Component {
     }
 
     handleClick = (event) => {
-        let newClicked = !this.state.clicked
-        this.setState({ clicked : newClicked });
+        this.setState({clicked : true})
         event.preventDefault();
     }
 
     render() {
-        this.added = false;
-        if (this.props.currMajor === this.props.major.major) {
-            this.added = true;
-        }
-        let popPanel = "";
         if (this.state.clicked) {
-            popPanel = <div className="card panel">
-                        <span>Credits Required for Graduation: </span>{this.props.major.credits}<br></br>
-                        <span>Required Courses</span>Will add later <br></br>
-                        <span><button className={"clickable " + (this.state.added ? 'added' : '')} onClick={this.addRemovePlan}>{(this.added ? 'Remove from Plan' : 'Add to Plan')}</button> </span> <br></br>
-                    </div>
+            return <Redirect push to={"/findprograms/" + this.props.major.major}/>
         }
         return (
             <section id="course-results" className="schedule searchResult">
@@ -92,7 +83,6 @@ class RenderData extends Component {
                 <div onClick={this.handleClick} className="clickable card">
                     <h3>{this.props.major.major}</h3>
                 </div>
-                {popPanel}
             </section>
         );
     }
