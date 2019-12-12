@@ -144,10 +144,6 @@ html {
     box-shadow: 0 2px 3px rgba(0, 0, 0, 0.16);
   }
 
-  .login {
-    width: 40%;
-  }
-
   .login h2 {
     text-align: left;
   }
@@ -358,7 +354,9 @@ html {
     .dropdown {
       display: none;
     }
-
+    .login {
+      width: 45%;
+    }
   }
   
   @media (min-width: 1200px) {
