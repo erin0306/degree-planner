@@ -8,7 +8,7 @@ Access the web app [here](https://uw-course-and-degree-planner.firebaseapp.com/)
 
 ### Purpose
 
-The purpose of this web app is to help UW students explore different classes or programs and plan their degree accordingly. Students will be able to find courses through using keywords and filters, or they can look at the recommendation made to them based on their program and completed courses.
+The purpose of this web app is to help UW students explore different classes or programs and plan their degree accordingly. Students will be able to find courses through using keywords and filters.
 
 
 ### Instruction
