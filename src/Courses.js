@@ -35,12 +35,10 @@ export class CoursePage extends Component {
 
     updateLoading = () => {
         this.setState({ loading: 'hidden' });
-        console.log('updateLoading');
     }
 
     updateDisplay = (prereq, input, AofK, quarter, campus) => {
         this.setState({ loading: '' });
-        console.log("updatedisplay");
         let result = this.props.allCourses.filter(course => course["Department"].includes(input.toUpperCase()));
         result = result.filter(course => course["Areas of Knowledge"].includes(AofK));
         result = result.filter(course => course["Offered"].includes(quarter));
@@ -96,7 +94,6 @@ class SearchField extends Component {
     updateForm = (nameValueObj) => {
         this.setState(nameValueObj, () => {
                 this.props.updateDisplayCallback(this.state.prereq, this.state.input, this.state.AofK, this.state.quarter, this.state.campus);
-                console.log(this.state);
         });
     }
 
@@ -179,13 +176,11 @@ class FilterCard extends Component {
         evt.persist();
         if(evt.target.name === 'prereq') {
             this.setState({prereqChecked: !this.state.prereqChecked}, ()=> {
-            console.log([evt.target.value], this.state.prereqChecked);
             this.Obj = { [evt.target.name]: this.state.prereqChecked };
             this.props.formCallback(this.Obj);
             })
         } else {
             this.Obj = { [evt.target.name]: evt.target.value };
-            console.log(evt.target.name, this.state.prereqChecked);
             this.props.formCallback(this.Obj);
         }
         

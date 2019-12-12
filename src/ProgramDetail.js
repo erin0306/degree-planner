@@ -18,7 +18,6 @@ export class ProgramDetail extends Component {
     }
 
     componentDidMount() {
-        console.log(this.props.match.params.major);
         let majorName = this.props.match.params.major;
         let majorObj = _.find(MAJORS, { major: majorName }); //find pet in data
         this.setState({ clickedMajor: majorObj });

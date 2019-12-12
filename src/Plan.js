@@ -23,7 +23,6 @@ export class Plan extends Component {
     }
 
     render() {
-        // TODO: test no plans 
         if (!this.state.plans) return (
             <div id="main-element">
                 <Header page={"Your Plan"} signoutCallback={this.props.signoutCallback} />
@@ -73,7 +72,6 @@ class RenderData extends Component {
     }
 
     componentDidMount() {
-        console.log('componentDidMount');
         this.setState({ loading: 'hidden' });
 
     }
@@ -92,7 +90,6 @@ class RenderData extends Component {
         let planRef = firebase.database().ref(this.props.user.uid).child('plannedCourses').child(course.Department + course.Code);
 
         if (course) {
-            console.log('planned');
             planRef.set(null)
                 .catch((error) => {
                     console.log(error.message);
