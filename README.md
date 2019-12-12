@@ -15,7 +15,7 @@ The purpose of this web app is to help UW students explore different classes or 
 
 Upon login, students should be able to add completed courses and planned courses through clicking on links on the dahsboard, or they can access those feature through the side navigation. 
 
-In the Courses page, students can filter courses based on department, Areas of Knowledge, quarter offered, campus, prerequisites, etc. They can add a course to their future plan. They can remove planned courses on search result or on Your Plan page.
+In the Courses page, students can filter courses based on prerequisites (if they have added completed courses), department, Areas of Knowledge, quarter offered, campus, etc. They can add a course to their future plan. They can remove planned courses on search result or on Your Plan page.
 
 Students can explore different programs and see description and requirement of each program by clicking on any one of the program in the list.
 
