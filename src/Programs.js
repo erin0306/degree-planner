@@ -22,7 +22,6 @@ export class ProgramPage extends Component {
         this.majorRef = firebase.database().ref(this.props.user.uid).child('major');
         this.majorRef.on('value', (snapshot) => {
             let obj = snapshot.val();
-            // console.log(obj);
             this.setState({ currMajor: obj });
             
         })
@@ -34,7 +33,7 @@ export class ProgramPage extends Component {
 
     render() { 
         let data = MAJORS.map((major) => {
-            return <RenderData  user={this.props.user} major={major} currMajor={this.state.currMajor}/>
+            return <RenderData  key={major.major} user={this.props.user} major={major} currMajor={this.state.currMajor}/>
         })
         return (
             

@@ -38,13 +38,11 @@ export class Plan extends Component {
         );
 
         let planKeys = Object.keys(this.state.plans);
-        console.log(planKeys);
-        let planArr = planKeys.map((key) => {
+            let planArr = planKeys.map((key) => {
             let planObj = this.state.plans[key];
             planObj.id = key;
             return planObj;
         })
-        console.log(planArr);
 
         let data = planArr.map((course) => {
             return <RenderData  user={this.props.user} key={course.id} course={course} />
