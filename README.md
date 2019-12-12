@@ -13,7 +13,7 @@ The purpose of this web app is to help UW students explore different classes or 
 
 ### Instruction
 
-Upon login, students should be able to add completed courses and planned courses through clicking on links on the dahsboard, or they can access those feature through the side navigation. 
+Upon login, students should be able to add completed courses and planned courses through clicking on links on the dashboard, or they can access those feature through the side navigation. 
 
 Once they have added completed courses, students can filter courses based on prerequisites to see the ones they are eligible to take.
 
