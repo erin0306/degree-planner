@@ -46,7 +46,10 @@ export class CoursePage extends Component {
         result = result.filter(course => course["Offered"].includes(quarter));
         result = result.filter(course => course["Campus"].includes(campus));
         if (prereq) { 
-            let completedKeys = Object.keys(this.state.completed);
+            let completedKeys = [];
+            if (this.state.completed) {
+                completedKeys = Object.keys(this.state.completed);
+            }
             result = result.filter(course => {
                 let includes = false;
                 for (let i = 0; i < completedKeys.length; i++) {
