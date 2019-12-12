@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import firebase from 'firebase/app';
 import _ from 'lodash';
 
@@ -51,16 +49,21 @@ export class ProgramDetail extends Component {
         if (this.state.currMajor === major.major) {
             this.added = true;
         }
+        let requiredCourses = "None"
+        if (major['required-courses'] !== undefined) {
+            if(major['required-courses'].length > 0) {
+                requiredCourses = "";
+                for (let i = 0; i < major['required-courses'].length; i++) {
+                    requiredCourses += major['required-courses'][i]['Department'] + " " + major['required-courses'][i]['Code'] + " ";
+                }
+            }
+        }
         return (
-
             <div id="main-element">
                 <Header page={"Programs"} signoutCallback={this.props.signoutCallback} />
                 <main>
                     <section id="course-results" className="schedule searchResult">
                         <h2>More About {major.major} Major</h2>
-                        <div onClick={this.handleClick} className="clickable card">
-                            
-                        </div>
                         <div className="card panel">
                             <h3>Description</h3>
                             <p>{major.description}</p>
@@ -69,20 +72,15 @@ export class ProgramDetail extends Component {
                             <h3>Credits Required for Graduation: </h3>
                             <p>{major.credits}</p>
                             <h3>Required Courses: </h3>
-                            {/* {data} */}
-                            Will add later <br></br>
+                            <p>{requiredCourses}</p><br></br>
+                            <p><a href={major.website}>Click here to access the department website</a></p>
                             <p><button className={"clickable " + (this.state.added ? 'added' : '')} onClick={this.addRemovePlan}>{(this.added ? 'Remove from Plan' : 'Add to Plan')}</button> </p> <br></br>
                         </div>
                     </section>
-
-
-
-                    
                 </main>
                 <Footer />
             </div>
-        )
-            ;
+        );
     }
 }
 
