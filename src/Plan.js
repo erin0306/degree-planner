@@ -37,13 +37,11 @@ export class Plan extends Component {
         );
 
         let planKeys = Object.keys(this.state.plans);
-        console.log(planKeys);
         let planArr = planKeys.map((key) => {
             let planObj = this.state.plans[key];
             planObj.id = key;
             return planObj;
         })
-        console.log(planArr);
 
         let data = planArr.map((course) => {
             return <RenderData  user={this.props.user} key={course.id} course={course} />
@@ -94,7 +92,6 @@ class RenderData extends Component {
         let planRef = firebase.database().ref(this.props.user.uid).child('plannedCourses').child(course.Department + course.Code);
 
         if (course) {
-            console.log('planned');
             planRef.set(null)
                 .catch((error) => {
                     console.log(error.message);

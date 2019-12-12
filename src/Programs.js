@@ -22,7 +22,6 @@ export class ProgramPage extends Component {
         this.majorRef = firebase.database().ref(this.props.user.uid).child('major');
         this.majorRef.on('value', (snapshot) => {
             let obj = snapshot.val();
-            // console.log(obj);
             this.setState({ currMajor: obj });
             
         })

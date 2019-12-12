@@ -16,7 +16,6 @@ export class DashboardPage extends Component {
         this.completedRef = firebase.database().ref(this.props.user.uid).child('completedCourses');
         this.completedRef.on('value', (snapshot) => {
             let obj = snapshot.val();
-            console.log(obj)
             this.setState({ completed: obj });
             
         });
@@ -78,7 +77,6 @@ export class DashboardPage extends Component {
     }
 
     render() {
-        // console.log(this.state.completed);
         let renderCredits = this.calcCredits();
         return (
             <div id="main-element">
@@ -141,7 +139,6 @@ export class DashboardPage extends Component {
 
 class RenderPlanned extends Component {
     render() {
-        // console.log(this.props.plans);
         if (this.props.plans === null) {
             return <section className="subSection">
                 <h2>Planned Courses</h2>
@@ -151,13 +148,11 @@ class RenderPlanned extends Component {
             </section>
         }
         let planKeys = Object.keys(this.props.plans);
-        // console.log(planKeys);
         let planArr = planKeys.map((key) => {
             let planObj = this.props.plans[key];
             planObj.id = key;
             return planObj;
         })
-        // console.log(planArr);
 
         let data = planArr.map((course) => {
             return <div key={course.Department + course.Code} className="card">
