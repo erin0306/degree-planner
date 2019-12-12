@@ -61,9 +61,9 @@ export class SignIn extends Component {
                     <div className="loginBox">
                         {/* <input id="email" type="email" name="email" onChange={this.handleChange} /> */}
                         <div>
-                            <input id="email" type="text" name="email" placeholder="Username" onChange={this.handleChange} />
+                            <input id="emailSignup" type="text" name="email" placeholder="Username" onChange={this.handleChange} />
                             {/* <input id="password" type="text" title="searchBox" placeholder="Password"></input> */}
-                            <input id="password" type="password" name="password" placeholder="Password" onChange={this.handleChange} />
+                            <input id="passwordSignup" type="password" name="password" placeholder="Password" onChange={this.handleChange} />
                             <input id="name" type="text" name="name" placeholder="Full Name (e.g Joseph Joestar)" onChange={this.handleChange} />
                         </div>
 
