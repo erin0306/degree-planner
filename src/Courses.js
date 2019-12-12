@@ -66,7 +66,6 @@ class SearchField extends Component {
 
     updateForm = (nameValueObj) => {
         this.setState(nameValueObj, () => {
-            // plz don't delete this callback Tim wants filters applied directly
             this.props.updateDisplayCallback(this.state.input, this.state.AofK, this.state.quarter, this.state.campus);
         });
     }

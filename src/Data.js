@@ -18,9 +18,15 @@ export class ResultField extends Component {
             let obj = snapshot.val();
             this.setState({ plans: obj }); 
         })
+        this.completedRef = firebase.database().ref('completedCourses');
+        this.completedRef.on('value', (snapshot) => {
+            let obj = snapshot.val();
+            this.setState({ completed: obj }); 
+        })
     }
     componentWillUnmount() {
         this.plansRef.off();
+        this.completedRef.off();
     }
 
     render() {
@@ -30,7 +36,7 @@ export class ResultField extends Component {
         // console.log(this.props.loading);
 
         let data = this.props.displayCourses.map((course) => {
-            return <RenderData course={course} plans={this.state.plans} loadingCallback={this.props.loadingCallback} key={course.Department + course.Code} />
+            return <RenderData course={course} plans={this.state.plans} completed={this.state.completed} loadingCallback={this.props.loadingCallback} key={course.Department + course.Code} />
         });
         let spinner = null;
         if (this.props.loading === 'hidden') {
@@ -79,7 +85,36 @@ class RenderData extends Component {
 
     }
 
-    addRemove = (event) => {
+    addRemoveCompleted = (event) => {
+        let course = this.props.course; 
+        let newCompleted = {
+            Department: this.props.course.Department,
+            Code: this.props.course.Code,
+            Name: this.props.course.Name,
+            Campus: this.props.course["Campus"],
+            AofK: this.props.course['Areas of Knowledge'],
+            Prereqs: this.props.course["Prerequisites"],
+            Quarters: this.props.course.Offered,
+            Credits: this.props.course.Credits,
+
+        }
+
+        // Insert new planned courses
+        let completedRef = firebase.database().ref('completedCourses').child(course.Department + course.Code);
+        completedRef.set(newCompleted)
+
+        if (this.props.completed) { // if plans object retrieved from firebase is not empty
+            if (this.props.completed[course.Department + course.Code]) { // if the course is in plannedCourses
+                completedRef.set(null) // Delete from database
+                    .catch((error) => {
+                        console.log(error.message);
+                    });
+            }
+        }
+
+    }
+
+    addRemovePlan = (event) => {
         let course = this.props.course; 
         let newPlan = {
             Department: this.props.course.Department,
@@ -97,11 +132,6 @@ class RenderData extends Component {
         let planRef = firebase.database().ref('plannedCourses').child(course.Department + course.Code);
         planRef.set(newPlan)
 
-        // planRef.on('value', (snapshot) => {
-        //     let obj = snapshot.val();
-        //     this.setState({ firebasePlan: obj });
-        // })
-
         if (this.props.plans) { // if plans object retrieved from firebase is not empty
             if (this.props.plans[course.Department + course.Code]) { // if the course is in plannedCourses
                 planRef.set(null) // Delete from database
@@ -116,6 +146,14 @@ class RenderData extends Component {
     render() {
         let popPanel = null;
         this.planned = false;
+        this.completed = false;
+        if (this.props.completed) { // if there's anything in completedCourses
+            let completedKeys = Object.keys(this.props.completed); // get list of course id
+            if (completedKeys.includes(this.props.course.Department + this.props.course.Code)) { // if this course matches any in completedCourses
+                this.completed = true; 
+            }
+
+        }
         if (this.props.plans) { // if there's anything in plannedCourses
             let planKeys = Object.keys(this.props.plans); // get list of course id
             if (planKeys.includes(this.props.course.Department + this.props.course.Code)) { // if this course matches any in plannedCourses
@@ -131,7 +169,9 @@ class RenderData extends Component {
                 <span>Areas of Knowledge: </span>{this.props.course["Areas of Knowledge"]}<br></br>
                 <span>Prerequisites: </span>{this.props.course["Prerequisites"]}<br></br>
                 <span>Quarter(s) Offered: </span>{this.props.course.Offered}<br></br>
-                <span><button className={"clickable " + (this.planned ? 'added' : '')} onClick={this.addRemove}>{(this.planned ? 'Remove from Plan' : 'Add to Plan')}</button> </span> <br></br>
+                {/* TODO: change to completed */}
+                <span><button className={"clickable " + (this.completed ? 'added' : '')} onClick={this.addRemoveCompleted}>{(this.completed ? 'Remove from Completed' : 'Add to Completed')}</button> </span>
+                <span><button className={"clickable " + (this.planned ? 'added' : '')} onClick={this.addRemovePlan}>{(this.planned ? 'Remove from Plan' : 'Add to Plan')}</button> </span> 
             </div>
         );
         } 

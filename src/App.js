@@ -9,6 +9,7 @@ import { DashboardPage } from './Dashboard.js';
 import { CoursePage } from './Courses.js'
 import { ProgramPage } from './Programs.js'
 import { Plan } from './Plan.js'
+import { Completed } from './Completed.js'
 import { Header } from './Header.js'
 import { Footer } from './Footer.js'
 import { SignIn } from './SignIn.js'
@@ -125,6 +126,10 @@ class App extends Component {
                         <Route path='/yourplan' render={(routerProps) => (
                             <Plan {...routerProps} allCourses={this.state.allCourses} user={this.state.user} signoutCallback={this.handleSignOut}/>
                         )} />
+                        {/* {TODO: completed} */}
+                        <Route path='/yourcompleted' render={(routerProps) => (
+                            <Completed {...routerProps} allCourses={this.state.allCourses} user={this.state.user} signoutCallback={this.handleSignOut}/>
+                        )} />
                         <Redirect to='/dashboard' />
                     </Switch>
                 </div>
@@ -137,7 +142,6 @@ class App extends Component {
 }
 
 class RenderNav extends Component {
-
 
     render() {
         return (

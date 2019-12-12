@@ -8,21 +8,30 @@ import { Footer } from './Footer.js'
 export class DashboardPage extends Component {
     constructor(props) {
         super(props);
-        this.state = { plans: [] };
+        this.state = { plans: [], completed: [] };
     }
 
     componentDidMount() {
+        this.completedRef = firebase.database().ref('completedCourses');
+        this.completedRef.on('value', (snapshot) => {
+            let obj = snapshot.val();
+            this.setState({ completed: obj }); 
+        })
         this.plansRef = firebase.database().ref('plannedCourses');
         this.plansRef.on('value', (snapshot) => {
             let obj = snapshot.val();
             this.setState({ plans: obj });
         })
+        
     }
     componentWillUnmount() {
         this.plansRef.off();
+        this.completedRef.off();
+
     }
 
     render() {
+        console.log(this.state.completed);
         return (
             <div id="main-element">
                 <Header page={"Dashboard"} signoutCallback={this.props.signoutCallback}/>
@@ -53,7 +62,9 @@ export class DashboardPage extends Component {
                             </div>
                         </div>
                     </section>
-                    <RenderData plans={this.state.plans}/>
+                    
+                    <RenderPlanned plans={this.state.plans}/>
+                    <RenderCompleted completed={this.state.completed}/>
                 </div>
                 <section className="schedule">
                     <h2>Recommended Courses</h2>
@@ -83,8 +94,9 @@ export class DashboardPage extends Component {
     }
 }
 
-class RenderData extends Component {
+class RenderPlanned extends Component {
     render() {
+        console.log(this.props.plans);
         if (this.props.plans === null) {
             return <section className="subSection">
                     <h2>Planned Courses</h2>
@@ -111,12 +123,55 @@ class RenderData extends Component {
         if (data.length > 5) {
             data = data.slice(0, 6);
         }
-        return <section className="subSection">
+        return (
+            <section className="subSection">
                     <h2>Planned Courses</h2>
                     {data}
                     <div className="card">
                         <p><Link to='/yourplan'>View All Planned Courses</Link></p>
                     </div>
                 </section>
+        )
     }
 }
+class RenderCompleted extends Component {
+    render() {
+        console.log(this.props.completed);
+        if (this.props.completed === null) {
+            return <section className="subSection">
+                    <h2>Completed Courses</h2>
+                    <div className="card">
+                        <p><Link to='/findcourses'>Click here to add courses</Link></p>
+                    </div>
+                </section>
+        }
+        let completedKeys = Object.keys(this.props.completed);
+        console.log(completedKeys);
+        let completedArr = completedKeys.map((key) => {
+            let completedObj = this.props.completed[key];
+            completedObj.id = key;
+            return completedObj;
+        })
+        console.log(completedArr);
+
+        let data = completedArr.map((course) => {
+            return <div key={course.Department + course.Code} className="card">
+                    <h3>{course['Department'] + ' ' + course['Code']}</h3>
+                    <p>{course['Credits'] +  ' credits | ' + course['AofK']}</p>
+                </div>
+        });
+        if (data.length > 5) {
+            data = data.slice(0, 6);
+        }
+        return (
+            <section className="subSection">
+                    <h2>Completed Courses</h2>
+                    {data}
+                    <div className="card">
+                        <p><Link to='/yourcompleted'>View All Completed Courses</Link></p>
+                    </div>
+                </section>
+        )
+    }
+}
+
