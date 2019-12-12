@@ -77,7 +77,7 @@ class RenderData extends Component {
     }
 
     handleClick = () => {
-        if (this.state.clicked == false) {
+        if (this.state.clicked === false) {
             this.setState({ clicked: true });
         } else {
             this.setState({ clicked: false });

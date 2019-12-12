@@ -20,5 +20,42 @@
         ],
         "description" : "The School of Art serves a dual role within the University of Washington — both a professional school and an academic department. As a professional school it trains students for active careers in the visual arts; as a school of the College of Arts and Sciences it offers studio and lecture courses. All course offerings and curriculum requirements are based on the underlying philosophy that an awareness and understanding of the visual arts are necessary to a liberal education, and that a liberal education is necessary to the training of a professional artist.",
         "website" : "https://art.washington.edu/"
+    },
+    {"major" : "Computer Science", "Abrev" : "CSE", "credits" : 70, "type" : "Capacity-Constrained",
+        "required-courses" : [
+          {"Department" : "CSE", "Code" : [142, 143]},
+          {"Department" : "MATH", "Code" : [124, 125, 126]},
+          {"Department" : "CHEM", "Code" : 142},
+          {"Department" : "PHYS", "Code" : 121}
+        ],
+        "description" : "CSE is a broad field, and our courses cover a wide range of subjects. Our students start with the basics in our popular introductory programming courses — no prior experience required! Then they learn the mathematical foundations of computing; get hands-on experience building software and hardware; and choose advanced courses such as human-computer interaction, computer graphics and animation, artificial intelligence, machine learning, robotics, data science, natural language processing, computer networking, computational biology, computer security and privacy, and much more.",
+        "website" : "https://www.cs.washington.edu/"
+    },
+    {"major" : "American Ethnics Studies", "Abrev" : "AIS", "credits" : 60, "type" : "Open",
+        "required-courses" : [],
+        "description" : "AES is a multicultural and multidisciplinary research and teaching unit dedicated to the production and transmission of knowledge on key aspects and issues of race and ethnicity. Through the courses we offer in our four areas of concentration, students have the opportunity to learn interdisciplinary, ethnic-specific, and comparative concepts, theories, and methods of inquiry as applied to the study of selected U.S. ethnic groups. Our aim is to help students become knowledgeable citizens with an advanced sense of critical thinking and respect for diversity.",
+        "website" : "https://aes.washington.edu/"
+    },
+    {"major" : "American Indian Studies", "Abrev" : "AAS", "credits" : 60, "type" : "Minimum",
+        "required-courses" : [],
+        "description" : "American Indian Studies approaches its teaching and research from a decolonized, community-based and global perspective. American Indian Studies faculty and students strive to develop innovative theories and methodologies that increase knowledge about Indigenous Peoples and support the needs of Indigenous communities. The department promotes faculty and student exchange programs with institutions that are committed to a deeper understanding of Indigenous communities and Peoples throughout the world. Graduates of this degree pursue a variety of careers such as cultural resource management, tribal administration, business, education, nonprofit, writing, museum curation and research.",
+        "website" : "https://ais.washington.edu/"
+    },
+    {"major" : "Economics", "Abrev" : "ECON", "credits" : 70, "type" : "Capacity-Constrained",
+        "required-courses" : [
+          {"Department" : "ECON", "Code" : [200, 201]},
+          {"Department" : "ENGL", "Code" : [111, 121, 131, 182]},
+          {"Department" : "STAT", "Code" : 311},
+          {"Department" : "MATH", "Code" : 124}
+        ],
+        "description" : "Economics studies the institutions and arrangements that are used to create, protect and allocate scarce resources, and advances our understanding of the behavior of individuals, firms, governments and other organizations. The BA is for students who are intrigued by economic problems and are attracted to an analytical approach to explaining social phenomena. The BA provides an excellent preparation for employment in the private and public sectors and for graduate study in a variety of fields, such as public policy, law and business. The BS requires a more intensive background in math and statistics, reflecting the quantitative character of modern economics. It is especially suitable for students interested in graduate study in economics and in such fields as computational finance and data science.",
+        "website" : "https://econ.washington.edu/"
+    },
+    {"major" : "History", "Abrev" : "HSTRY", "credits" : 60, "type" : "Minimum",
+        "required-courses" : [
+          {"Department" : "ENGL", "Code" : [111, 121, 131, 182]}
+        ],
+        "description" : "The Department of History cultivates in undergraduates a lasting curiosity about the world and imparts useful tools for understanding and participating in it responsibly. With an emphasis on critical reading and writing, discriminating research skills and persuasive communication, the history major prepares students for a variety of occupations in the fields of business, government, nonprofit, education and many more. Our courses frequently focus on themes such as the history of Gender, Race and Power; War and Society; Empire and Colonialism; and Religion and Society, and students may choose history majors or minors focusing on any of these themes or choose general history. Students are guided in their path by a diverse faculty that includes fourteen recipients of the UW Distinguished Teaching Award — more than any other unit on campus. Our faculty’s expertise covers nearly every continent on earth, throughout the chronological span of written history.",
+        "website" : "https://ais.washington.edu/"
     }
 ]

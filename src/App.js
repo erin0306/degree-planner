@@ -1,6 +1,6 @@
 //Import Packages
 import React, { Component } from 'react';
-import { faSpinner, faGripLines, faHome, faBookOpen, faGraduationCap, faUserAlt, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
+import { faHome, faBookOpen, faGraduationCap, faUserAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as d3 from 'd3';
 
@@ -11,15 +11,13 @@ import { ProgramPage } from './Programs.js'
 import {ProgramDetail} from './ProgramDetail.js'
 import { Plan } from './Plan.js'
 import { Completed } from './Completed.js'
-import { Header } from './Header.js'
-import { Footer } from './Footer.js'
 import { SignIn } from './SignIn.js'
 import logo from './img/logo.png';
 import data from './data/uwcourses.csv';
 import firebase from 'firebase/app';
 
 // Router
-import { BrowserRouter as Router, Route, Link, Switch, NavLink, Redirect } from 'react-router-dom';
+import { Route, Switch, NavLink, Redirect } from 'react-router-dom';
 //App Render
 class App extends Component {
     constructor(props) {

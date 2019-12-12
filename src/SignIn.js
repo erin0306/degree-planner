@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import './index.css';
-import { faGripLines, faHome, faBookOpen, faGraduationCap, faUserAlt, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export class SignIn extends Component {
     constructor(props) {

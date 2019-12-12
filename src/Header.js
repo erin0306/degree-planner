@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { faSpinner, faGripLines, faHome, faBookOpen, faGraduationCap, faUserAlt, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
+import { faGripLines, faHome, faBookOpen, faGraduationCap, faUserAlt, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { BrowserRouter as Router, Route, Link, Switch, NavLink, Redirect } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 
 export class Header extends Component {

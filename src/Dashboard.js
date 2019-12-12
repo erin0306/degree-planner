@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Link, Switch, NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import firebase from 'firebase/app';
 
 import { Header } from './Header.js';
@@ -49,7 +49,7 @@ export class DashboardPage extends Component {
             })
 
             for (let i = 0; i < completedArr.length; i++) {
-                if (completedArr[i]['Credits'] != "") {
+                if (completedArr[i]['Credits'] !== "") {
                     allCreds += parseInt(completedArr[i]['Credits'], 10);
                 }
             }
@@ -57,14 +57,14 @@ export class DashboardPage extends Component {
 
             let completedInMajor = [];
             for (let k = 0; k < completedArr.length; k++) {
-                if (majorInfo[0] != undefined) {
+                if (majorInfo[0] !== undefined) {
                     if (completedArr[k]['Department'] === majorInfo[0]['Abrev']) {
                         completedInMajor.push(completedArr[k]);
                     }
                 }
             }
             for (let j = 0; j < completedInMajor.length; j++) {
-                if (completedInMajor[j]['Credits'] != "") {
+                if (completedInMajor[j]['Credits'] !== "") {
                     majorCreds += parseInt(completedInMajor[j]['Credits'], 10);
                 }
             }
