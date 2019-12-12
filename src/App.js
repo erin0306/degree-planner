@@ -105,13 +105,12 @@ class App extends Component {
                         signInCallback={this.handleSignIn} errorMessage={this.state.errorMessage} />
                 );
             }
-        } else { //if logged in, show welcome message
+        } else { 
             content = (
                 <div className="body-flex">
                     <div id="nav-element">
                         <RenderNav />
                     </div>
-                    {/* <RenderMain user={this.state.user} signoutCallback={this.handleSignOut} page={this.state.page} allCourses={this.state.allCourses} /> */}
                     <Switch>
                         <Route path='/dashboard' render={(routerProps) => (
                             <DashboardPage {...routerProps} user={this.state.user} signoutCallback={this.handleSignOut} allCourses={this.state.allCourses}/>
@@ -162,32 +161,5 @@ class RenderNav extends Component {
     }
 }
 
-// class RenderMain extends Component {
-
-//     render() {
-//         return (
-//             <div id="main-element">
-
-//                 <Header page={this.props.page} />
-//                 <main>
-//                     <Switch>
-//                         <Route path='/dashboard' render={(routerProps) => (
-//                             <DashboardPage {...routerProps} user={this.props.user} />
-//                         )} />
-//                         <Route path='/findcourses' render={(routerProps) => (
-//                             <CoursePage {...routerProps} allCourses={this.props.allCourses} />
-//                         )} />
-//                         <Route path='/findprograms' component={ProgramPage} />
-//                         <Route path='/yourplan' render={(routerProps) => (
-//                             <Plan {...routerProps} allCourses={this.props.allCourses} user={this.props.user} />
-//                         )} />
-//                         <Redirect to='/dashboard' />
-//                     </Switch>
-//                 </main>
-//                 {/* <Footer /> */}
-//             </div>
-//         );
-//     }
-// }
 
 export default App;

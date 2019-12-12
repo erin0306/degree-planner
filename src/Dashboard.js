@@ -47,14 +47,15 @@ export class DashboardPage extends Component {
                 completedObj.id = key;
                 return completedObj;
             })
-
+            // count total credits
             for (let i = 0; i < completedArr.length; i++) {
                 if (completedArr[i]['Credits'] !== "") {
                     allCreds += parseInt(completedArr[i]['Credits'], 10);
                 }
             }
-            let majorInfo = MAJORS.filter(allMajor => allMajor['major'] === this.state.major);
 
+            // count total in-major credits
+            let majorInfo = MAJORS.filter(allMajor => allMajor['major'] === this.state.major);
             let completedInMajor = [];
             for (let k = 0; k < completedArr.length; k++) {
                 if (majorInfo[0] !== undefined) {
@@ -109,26 +110,6 @@ export class DashboardPage extends Component {
                             <RenderPlanned plans={this.state.plans} user={this.props.user} />
                             <RenderCompleted completed={this.state.completed} user={this.props.user} />
                         </div>
-                        <section className="schedule">
-                            <h2>Recommended Courses</h2>
-                            <div className="clickable card">
-                                <h3>INFO 340 Client-Side Development</h3>
-                                <p>You have prereqs for this class: CSE 142 or CSE 143; and INFO 201</p>
-                            </div>
-                            <div className="clickable card">
-                                <h3>EDUC 251 Seeking Educational Equity and Diversity</h3>
-                                <p>Because you need DIV credits</p>
-                            </div>
-                            <div className="clickable card">
-                                <h3>MKTG 301 Marketing Concepts</h3>
-                                <p>You have prereqs for this class: ECON 200 <br></br>>
-                            It is an eligible elective for your program</p>
-                            </div>
-                            <div className="clickable card">
-                                <h3>INFO 350 Information Ethics And Policy</h3>
-                                <p>It is a graduation requirement <br></br> Because you need W credits</p>
-                            </div>
-                        </section>
                     </div>
                 </main>
                 <Footer />

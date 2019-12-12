@@ -7,7 +7,6 @@ export class ResultField extends Component {
 
         this.state = {
             displayCourses: [],
-            //   loading: '',
         }
     }
 
@@ -23,6 +22,7 @@ export class ResultField extends Component {
             let obj = snapshot.val();
             this.setState({ completed: obj }); 
         })
+
     }
     componentWillUnmount() {
         this.plansRef.off();
@@ -30,28 +30,14 @@ export class ResultField extends Component {
     }
 
     render() {
-
         let data = this.props.displayCourses.map((course) => {
-            return <RenderData user={this.props.user} course={course} plans={this.state.plans} completed={this.state.completed} loadingCallback={this.props.loadingCallback} key={course.Department + course.Code} />
+            return <RenderData user={this.props.user} course={course} plans={this.state.plans} completed={this.state.completed} key={course.Department + course.Code} />
         });
-        let spinner = null;
-        if (this.props.loading === 'hidden') {
-            spinner = (
-                null
-            );
-        } else {
-            spinner = (
-                <p>Loading data...</p>
-            );
-        }
+        
         return (
             <section id="course-results" className="schedule searchResult">
                 <h2>Recommended Courses</h2>
-
-                {/* <p className={this.state.loading}>Loading data...</p> */}
-                {spinner}
                 {data}
-                {/* {result} */}
             </section>
         );
     }
@@ -60,15 +46,12 @@ export class ResultField extends Component {
 class RenderData extends Component {
     constructor(props) {
         super(props);
-
+        
         this.state = {
             output: "",
             clicked: false,
         }
-    }
-    componentDidMount() {
-        // this.setState({loading: 'hidden'});
-        this.props.loadingCallback();
+        
     }
 
     handleClick = () => {
@@ -80,7 +63,7 @@ class RenderData extends Component {
 
     }
 
-    addRemoveCompleted = (event) => {
+    addRemoveCompleted = () => {
         let course = this.props.course; 
         let newCompleted = {
             Department: this.props.course.Department,
@@ -109,7 +92,7 @@ class RenderData extends Component {
 
     }
 
-    addRemovePlan = (event) => {
+    addRemovePlan = () => {
         let course = this.props.course; 
         let newPlan = {
             Department: this.props.course.Department,

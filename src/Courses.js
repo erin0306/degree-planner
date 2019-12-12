@@ -18,7 +18,6 @@ export class CoursePage extends Component {
         this.state = {
             displayCourses: [],
             completed: [],
-            loading: 'hidden',
         }
     }
 
@@ -33,19 +32,15 @@ export class CoursePage extends Component {
         this.completedRef.off();
     }
 
-    updateLoading = () => {
-        this.setState({ loading: 'hidden' });
-    }
-
     updateDisplay = (prereq, input, AofK, quarter, campus) => {
-        this.setState({ loading: '' });
+
         let result = this.props.allCourses.filter(course => course["Department"].includes(input.toUpperCase()));
         result = result.filter(course => course["Areas of Knowledge"].includes(AofK));
         result = result.filter(course => course["Offered"].includes(quarter));
         result = result.filter(course => course["Campus"].includes(campus));
         if (prereq) { 
             let completedKeys = [];
-            if (this.state.completed) {
+            if (this.state.completed) { // filter with completed courses if user has any
                 completedKeys = Object.keys(this.state.completed);
             }
             result = result.filter(course => {
@@ -55,7 +50,7 @@ export class CoursePage extends Component {
                         includes = true;
                     }
                 }
-                return (includes || course["Prerequisites"] === "");
+                return (includes || course["Prerequisites"] === ""); // eligible courses or courses without any prereqs
             });
         }
         this.setState({ displayCourses: result });
@@ -68,7 +63,7 @@ export class CoursePage extends Component {
                 <main>
                     <div id="course-page">
                         <SearchField  allCourses={this.props.allCourses} updateDisplayCallback={this.updateDisplay} inputCallback={this.updateInput} />
-                        <ResultField  user={this.props.user} loading={this.state.loading} loadingCallback={this.updateLoading} displayCourses={this.state.displayCourses} />
+                        <ResultField  user={this.props.user}  displayCourses={this.state.displayCourses} />
                     </div>
                 </main>
                 <Footer />
@@ -146,9 +141,9 @@ class Filter extends Component {
     }
 
     render() {
-        let filterList = this.props.filters.map((element, i) => {
+        let filterList = this.props.filters.map((element, key) => {
             return (
-                <FilterCard key={i} filter={element} formCallback={this.props.formCallback} />
+                <FilterCard key={key} filter={element} formCallback={this.props.formCallback} />
             );
         });
 
@@ -174,7 +169,7 @@ class FilterCard extends Component {
 
     handleChange = (evt) => {
         evt.persist();
-        if(evt.target.name === 'prereq') {
+        if(evt.target.name === 'prereq') { // if prereq filter is clicked
             this.setState({prereqChecked: !this.state.prereqChecked}, ()=> {
             this.Obj = { [evt.target.name]: this.state.prereqChecked };
             this.props.formCallback(this.Obj);

@@ -19,7 +19,7 @@ export class ProgramDetail extends Component {
 
     componentDidMount() {
         let majorName = this.props.match.params.major;
-        let majorObj = _.find(MAJORS, { major: majorName }); //find pet in data
+        let majorObj = _.find(MAJORS, { major: majorName }); //find major in data
         this.setState({ clickedMajor: majorObj });
 
         this.majorRef = firebase.database().ref(this.props.user.uid).child('major');
@@ -45,7 +45,7 @@ export class ProgramDetail extends Component {
     render() {
         let major = this.state.clickedMajor;
         this.added = false;
-        if (this.state.currMajor === major.major) {
+        if (this.state.currMajor === major.major) { // if selected major is user's current major
             this.added = true;
         }
         let requiredCourses = "None"

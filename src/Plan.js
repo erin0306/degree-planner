@@ -23,7 +23,7 @@ export class Plan extends Component {
     }
 
     render() {
-        if (!this.state.plans) return (
+        if (!this.state.plans) return (  // if there's no planned course
             <div id="main-element">
                 <Header page={"Your Plan"} signoutCallback={this.props.signoutCallback} />
                 <main>
@@ -71,11 +71,6 @@ class RenderData extends Component {
         }
     }
 
-    componentDidMount() {
-        this.setState({ loading: 'hidden' });
-
-    }
-
     removePlan = () => {
         if (this.state.added) {
             this.setState({ added: false });
@@ -84,13 +79,13 @@ class RenderData extends Component {
         }
     }
 
-    addRemove = (event) => {
+    addRemove = () => {
         let course = this.props.course;
 
         let planRef = firebase.database().ref(this.props.user.uid).child('plannedCourses').child(course.Department + course.Code);
 
         if (course) {
-            planRef.set(null)
+            planRef.set(null) // remove planned course
                 .catch((error) => {
                     console.log(error.message);
                 });

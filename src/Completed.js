@@ -71,11 +71,6 @@ class RenderData extends Component {
         }
     }
 
-    componentDidMount() {
-        this.setState({ loading: 'hidden' });
-
-    }
-
     remove = () => {
         if (this.state.added) {
             this.setState({ added: false });
@@ -84,7 +79,7 @@ class RenderData extends Component {
         }
     }
 
-    addRemove = (event) => {
+    addRemove = () => {
         let course = this.props.course;
 
         let completedRef = firebase.database().ref(this.props.user.uid).child('completedCourses').child(course.Department + course.Code);
