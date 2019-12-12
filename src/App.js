@@ -8,6 +8,7 @@ import * as d3 from 'd3';
 import { DashboardPage } from './Dashboard.js';
 import { CoursePage } from './Courses.js'
 import { ProgramPage } from './Programs.js'
+import {ProgramDetail} from './ProgramDetail.js'
 import { Plan } from './Plan.js'
 import { Completed } from './Completed.js'
 import { Header } from './Header.js'
@@ -120,8 +121,11 @@ class App extends Component {
                             <CoursePage {...routerProps} allCourses={this.state.allCourses} signoutCallback={this.handleSignOut}/>
                         )} />
                         
-                        <Route path='/findprograms' render={(routerProps) => (
+                        <Route exact path='/findprograms' render={(routerProps) => (
                             <ProgramPage {...routerProps} signoutCallback={this.handleSignOut}/>
+                        )} />
+                        <Route path='/findprograms/:major' render={(routerProps) => (
+                            <ProgramDetail {...routerProps} user={this.state.user} signoutCallback={this.handleSignOut}/>
                         )} />
                         <Route path='/yourplan' render={(routerProps) => (
                             <Plan {...routerProps} allCourses={this.state.allCourses} user={this.state.user} signoutCallback={this.handleSignOut}/>

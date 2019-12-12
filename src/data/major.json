@@ -5,14 +5,18 @@
         {"Department" : "STAT", "Code" : [221, 220]},
         {"Department" : "CSE", "Code" : 142},
         {"Department" : "ENGL", "Code" : [111, 121, 131]}
-    ]
+    ],
+    "description" : "The School offers four degree programs, leading to the Bachelor of Science in Informatics, Master of Library and Information Science, Master of Science in Information Management, and PhD in Information Science. The School also offers a certificate program, continuing education opportunities for professionals, and service courses for undergraduates in information fluency, research strategies, and technology. Graduates of the School assume a variety of professional roles in the public, private, and non-profit sectors, with positions that span from information architects to children's librarians, from web developers to information technology (IT) managers, from network and information assurance professionals to researchers and faculty in the information field."
     },
     {"major" : "Geography", "Abrev" : "GEOG", "credits" : 60, "type" : "Open",
-        "required-courses" : []
+        "required-courses" : [],
+        "description" : "Geography is about the relationship between people and the environment. It provides important insights into the spatial transformations associated with globalization, environmental change, migration, health, development, and many other contemporary processes. The Department of Geography has a strong commitment to social justice and public scholarship, and provides a rich undergraduate experience for those who are passionate about exploring our world and understanding the social and spatial processes that shape it."
+
     },
     {"major" : "Art", "Abrev" : "ART", "credits" : 60, "type" : "Minimum",
         "required-courses" : [
             {"Department" : "ART", "Code" : 190}
-        ]
+        ],
+        "description" : "The School of Art serves a dual role within the University of Washington — both a professional school and an academic department. As a professional school it trains students for active careers in the visual arts; as a school of the College of Arts and Sciences it offers studio and lecture courses. All course offerings and curriculum requirements are based on the underlying philosophy that an awareness and understanding of the visual arts are necessary to a liberal education, and that a liberal education is necessary to the training of a professional artist."
     }
 ]

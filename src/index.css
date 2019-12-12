@@ -360,7 +360,7 @@ html {
   }
   
   @media (min-width: 1200px) {
-    #element-2 {
+    #main-element {
       background-image: url("./img/husky-background-large.png");
 
     }
