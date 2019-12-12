@@ -72,7 +72,6 @@ class RenderData extends Component {
     }
 
     componentDidMount() {
-        console.log('componentDidMount');
         this.setState({ loading: 'hidden' });
 
     }
@@ -90,7 +89,6 @@ class RenderData extends Component {
 
         let completedRef = firebase.database().ref(this.props.user.uid).child('completedCourses').child(course.Department + course.Code);
         if (course) {
-            console.log(this.state.buttonOutput);
             completedRef.set(null)
                 .catch((error) => {
                     console.log(error.message);

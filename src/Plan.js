@@ -23,7 +23,6 @@ export class Plan extends Component {
     }
 
     render() {
-        // TODO: test no plans 
         if (!this.state.plans) return (
             <div id="main-element">
                 <Header page={"Your Plan"} signoutCallback={this.props.signoutCallback} />
@@ -38,7 +37,7 @@ export class Plan extends Component {
         );
 
         let planKeys = Object.keys(this.state.plans);
-        let planArr = planKeys.map((key) => {
+            let planArr = planKeys.map((key) => {
             let planObj = this.state.plans[key];
             planObj.id = key;
             return planObj;
@@ -73,7 +72,6 @@ class RenderData extends Component {
     }
 
     componentDidMount() {
-        console.log('componentDidMount');
         this.setState({ loading: 'hidden' });
 
     }

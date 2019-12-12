@@ -30,10 +30,6 @@ export class ResultField extends Component {
     }
 
     render() {
-        // let data = this.props.displayCourses.map((course) => {
-        //     return <RenderData course={course} key={course.Department + course.Code}/>
-        // });
-        // console.log(this.props.loading);
 
         let data = this.props.displayCourses.map((course) => {
             return <RenderData user={this.props.user} course={course} plans={this.state.plans} completed={this.state.completed} loadingCallback={this.props.loadingCallback} key={course.Department + course.Code} />
@@ -48,7 +44,6 @@ export class ResultField extends Component {
                 <p>Loading data...</p>
             );
         }
-        // console.log(spinner);
         return (
             <section id="course-results" className="schedule searchResult">
                 <h2>Recommended Courses</h2>
@@ -169,7 +164,6 @@ class RenderData extends Component {
                 <span>Areas of Knowledge: </span>{this.props.course["Areas of Knowledge"]}<br></br>
                 <span>Prerequisites: </span>{this.props.course["Prerequisites"]}<br></br>
                 <span>Quarter(s) Offered: </span>{this.props.course.Offered}<br></br>
-                {/* TODO: change to completed */}
                 <span><button className={"clickable " + (this.completed ? 'added' : '')} onClick={this.addRemoveCompleted}>{(this.completed ? 'Remove from Completed' : 'Add to Completed')}</button> </span>
                 <span><button className={"clickable " + (this.planned ? 'added' : '')} onClick={this.addRemovePlan}>{(this.planned ? 'Remove from Plan' : 'Add to Plan')}</button> </span> 
             </div>
